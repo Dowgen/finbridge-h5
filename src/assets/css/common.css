@@ -1,0 +1,175 @@
+/* 
+@font-face { 
+  font-family: AdobeHeitiStd-Regular; 这里是说明调用来的字体名字 
+  src: url('AdobeHeitiStd-Regular.otf'); 这里是字体文件路径 
+}  */
+/* @font-face { 
+  font-family: PingFang-SC-Regular; 这里是说明调用来的字体名字 
+  src: url('PingFang-SC-Regular.ttf'); 这里是字体文件路径 
+}  */
+[v-cloak] {
+  display: none;
+}
+
+body,
+html,
+li,
+input,
+gloabl,
+h2,
+th,
+input,
+nav,
+td,
+h1,
+embed,
+blockquote,
+ol,
+xml,
+div,
+dl,
+dt,
+dd,
+ul,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+abbr,
+p,
+header,
+hgroup,
+Section,
+figure,
+section,
+nav,
+article,
+aside,
+canvas {
+	margin: 0;
+	padding: 0;
+}
+img {
+	border: 0;
+	padding: 0;
+	
+	margin: 0;
+}
+a {
+	font-size: 100%;
+	border: 0;
+	color: #333;
+	text-decoration: none;
+}
+ol,
+ul,
+li {
+	list-style: none;
+}
+
+input,textarea{
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  	-webkit-appearance: none; 
+}
+input{
+    background: rgba(0,0,0,0);
+}
+
+body{
+	color: #444;
+	padding: 0;
+	margin: 0;
+}
+body{
+    box-sizing: border-box;
+    background: #f2f2f2;
+    max-width: 640px;
+    position: relative; /*!important;  此处important为了覆盖vux设置的fixed */
+    min-height: 100%;
+    margin:0 auto !important;
+    padding-bottom: 3.065rem;
+}
+/* font-size订制 */
+html {
+    font-size: 16px;
+    /* font-family: "PingFang-SC-Regular" !important; */
+    height: 100%;
+}
+@media screen and (min-width: 300px) {
+    html {
+        /* iPhone6的375px尺寸作为16px基准，414px正好18px大小, 600 20px */
+        font-size: calc(100% + 2 * (100vw - 375px) / 500);
+        font-size: calc(14px + 2 * (100vw - 375px) / 500);
+    }
+}
+@media screen and (min-width: 355px) {
+    html {
+        /* iPhone6的375px尺寸作为16px基准，414px正好18px大小, 600 20px */
+        font-size: calc(100% + 2 * (100vw - 375px) / 39);
+        font-size: calc(16px + 2 * (100vw - 375px) / 39);
+    }
+}
+@media screen and (min-width: 414px) {
+    html {
+        /* 414px-1000px每100像素宽字体增加1px(18px-22px) */
+        font-size: calc(112.5% + 4 * (100vw - 414px) / 586);
+        font-size: calc(18px + 4 * (100vw - 414px) / 586);
+    }
+}
+@media screen and (min-width: 600px) {
+    html {
+        /* 600px-1000px每100像素宽字体增加1px(20px-24px) */
+        font-size: calc(125% + 4 * (100vw - 600px) / 400);
+        font-size: calc(20px + 4 * (100vw - 600px) / 400);
+    }
+}
+@media screen and (min-width: 1000px) {
+    html {
+        /* 1000px往后是每100像素0.5px增加 */
+        font-size: calc(137.5% + 6 * (100vw - 1000px) / 1000);
+        font-size: calc(22px + 6 * (100vw - 1000px) / 1000);
+    }
+}
+
+/* vux自定义 */
+.weui-btn{
+    font-size: 1.125rem !important;
+}
+.vux-cell-box{
+	opacity: 0;
+}
+.vux-tap-active{
+	height:2rem;
+}
+
+/* placeholder颜色 */
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #c6c7cc;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #c6c7cc;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #c6c7cc;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #c6c7cc;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #c6c7cc;
+}
+
+/* 自定义background */
+/* .loginBackground{
+    background-image: url('../assets/bg1.png');
+} */
+
+
+
+
+
