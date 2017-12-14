@@ -6,9 +6,9 @@ import axios from 'axios';
 (function(){
     let u = navigator.userAgent, app = navigator.appVersion;
     //android终端或者uc浏览器
-    let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; 
+    let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
     //ios终端
-    let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); 
+    let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
     //需要传给后端的device类型
     let device = 0;
     if(isAndroid) device=3
@@ -39,11 +39,11 @@ function getToken(){
     }).then(function(res){
         vm.$vux.loading.hide();
         if(res.status == 200 ){
-            localStorage.token = res.data.access_token;   
-            window.location.reload();         
+            localStorage.token = res.data.access_token;
+            window.location.reload();
         }else{
             vm.$vux.toast.text('获取token异常！请重试')
-        } 
+        }
     }).catch(function (error){
         vm.$vux.loading.hide();
         vm.$vux.toast.text('获取token异常！请重试')
@@ -75,14 +75,14 @@ var Rxports = {
 	  * @param {Object} headers			自定义请求headers
 	  * @param {Function} success		请求成功后，这里会有两个参数,服务器返回数据，返回状态，[data, res]
 	  * @param {Function} error		发送请求前
-	  * @param return 
+	  * @param return
 	*/
 	ajax:function (opt){
 		vm.$vux.loading.show({
             text: '请稍等'
         });
 		var opts = opt || {};
-		
+
 		if (!opts.url) {
 			alert('请填写接口地址');
 			return false;
@@ -100,19 +100,19 @@ var Rxports = {
                             // 返回 303 清除localStorage并跳转到登录页面
                             vm.$vux.toast.text('session过期，请重新登录！','middle');
                             /*localStorage.clear();*/
-                            setTimeout("window.location.href = '/views/cashloan/login.html'",1200);  
-                            break;
+                            setTimeout("window.location.href = Login",1200);
+                      break;
                         case 401:
                             // 返回 401 重新获取token并刷新当前页面
                             getToken();
                             break;
-                        default: vm.$vux.toast.text('请求异常！请重试','middle')   
+                        default: vm.$vux.toast.text('请求异常！请重试','middle')
                     }
                 }
                 return Promise.reject(error)   // 返回接口返回的错误信息
             }
         );
-		
+
 		axios({
 			method: opts.type || 'post',
 			url: opts.url,
@@ -132,22 +132,22 @@ var Rxports = {
 		}).then(function(res){
             vm.$vux.loading.hide();
 			if(res.status == 200 ){
-				
+
 				if(opts.success){
 					opts.success(res.data,res);
 				}
-				
+
 			}else{
-				
+
 				if (opts.error) {
 					opts.error(res.error);
 				}else{
                     console.error('then:'+res.error);
                 }
-                
+
             }
-            
-                
+
+
         }).catch(function (error){
             vm.$vux.loading.hide();
             if (opts.error) {
@@ -156,7 +156,7 @@ var Rxports = {
 				console.error('catch:'+error);
 			}
 		});
-			
+
 	},
 	/*判定是否类数组，如节点集合，纯数组，arguments与拥有非负整数的length属性的纯JS对象*/
 	isArrayLike:function(obj) {
@@ -210,7 +210,7 @@ var Rxports = {
         var r = window.location.search.substr(1).match(reg);
         if(r!=null)return  unescape(r[2]); return null;
     },
-    
+
     isPhoneWrong:function (num){
       if (!num || !num.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[6780]|18[0-9]|14[57])[0-9]{8}$/)) {
         return true;
