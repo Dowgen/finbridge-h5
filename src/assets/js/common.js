@@ -1,6 +1,40 @@
 import * as pickerList from './pickerList'; /* popup-picker所需的列表数据 */
+import { ToastPlugin,LoadingPlugin } from 'vux'
 import Vue from 'vue';
 import axios from 'axios';
+Vue.use(ToastPlugin); 
+Vue.use(LoadingPlugin); 
+
+
+//定义一个空vue对象，以备后用
+var vm = new Vue({});
+
+// axios response 拦截器
+axios.interceptors.response.use(
+    response => {
+        return response;
+    },
+    error => {
+        if (error.response) {
+            vm.$vux.loading.hide();
+            switch (error.response.status) {
+                case 303:
+                    // 返回 303 清除localStorage并跳转到登录页面
+                    vm.$vux.toast.text('session过期，请重新登录！','middle');
+                    /*localStorage.clear();*/
+                    setTimeout("window.location.href = '/views/cashloan/login.html'",1200);  
+                    break;
+                case 401:
+                    // 返回 401 重新获取token并刷新当前页面
+                    getToken();
+                    break;
+                default: vm.$vux.toast.text('请求异常！请重试','middle')   
+            }
+        }
+        return Promise.reject(error)   // 返回接口返回的错误信息
+    }
+);
+        
 
 /* 进页面的时候就判断一下设备是安卓还是ios */
 (function(){
@@ -50,10 +84,6 @@ function getToken(){
     });
 }
 
-
-var vm = new Vue({});
-var oproto = Object.prototype;
-var serialize = oproto.toString;
 var Rxports = {
 	/* wb add start */
     /**    列表    **/
@@ -87,32 +117,7 @@ var Rxports = {
 			alert('请填写接口地址');
 			return false;
 		}
-        // http response 拦截器
-        axios.interceptors.response.use(
-            response => {
-                return response;
-            },
-            error => {
-                if (error.response) {
-                    vm.$vux.loading.hide();
-                    switch (error.response.status) {
-                        case 303:
-                            // 返回 303 清除localStorage并跳转到登录页面
-                            vm.$vux.toast.text('session过期，请重新登录！','middle');
-                            /*localStorage.clear();*/
-                            setTimeout("window.location.href = '/views/cashloan/login.html'",1200);  
-                            break;
-                        case 401:
-                            // 返回 401 重新获取token并刷新当前页面
-                            getToken();
-                            break;
-                        default: vm.$vux.toast.text('请求异常！请重试','middle')   
-                    }
-                }
-                return Promise.reject(error)   // 返回接口返回的错误信息
-            }
-        );
-		
+
 		axios({
 			method: opts.type || 'post',
 			url: opts.url,
@@ -158,47 +163,6 @@ var Rxports = {
 		});
 			
 	},
-	/*判定是否类数组，如节点集合，纯数组，arguments与拥有非负整数的length属性的纯JS对象*/
-	isArrayLike:function(obj) {
-    if (!obj)
-        return false
-    var n = obj.length
-    if (n === (n >>> 0)) { //检测length属性是否为非负整数
-        var type = serialize.call(obj).slice(8, -1)
-        if (/(?:regexp|string|function|window|global)$/i.test(type))
-            return false
-        if (type === "Array")
-            return true
-        try {
-            if ({}.propertyIsEnumerable.call(obj, "length") === false) { //如果是原生对象
-                return /^\s?function/.test(obj.item || obj.callee)
-            }
-            return true
-        } catch (e) { //IE的NodeList直接抛错
-            return !obj.window //IE6-8 window
-        }
-    }
-    return false
-	},
-	/*遍历数组与对象,回调的第一个参数为索引或键名,第二个或元素或键值*/
-    each: function (obj, fn) {
-    	var That = this;
-        if (obj) { //排除null, undefined
-            var i = 0
-            if (That.isArrayLike(obj)) {
-                for (var n = obj.length; i < n; i++) {
-                    if (fn(i, obj[i]) === false)
-                        break
-                }
-            } else {
-                for (i in obj) {
-                    if (obj.hasOwnProperty(i) && fn(i, obj[i]) === false) {
-                        break
-                    }
-                }
-            }
-        }
-    },
 	/**
 	  * 获取url传过来的参数
 	  * @param name 	获取的参数

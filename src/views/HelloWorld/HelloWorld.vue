@@ -4,13 +4,14 @@
     <img src="./img/logo.png">
     <h1>{{ msg }}</h1>
     <router-link to="/test">router跳转</router-link>
-    
+    <div id="test">jquery测试</div>
   </div>
 </template>
 
 <script>
 import Lib from '@/assets/js/Lib'
 import Dg from '@/components/testComponent'
+import $ from "jquery"
 
 export default {
   name: 'HelloWorld',
@@ -21,6 +22,9 @@ export default {
     return {
       msg: 'finbridge-h5'
     }
+  },
+  mounted(){
+    $('#test').css('color','red');
   }
 }
 </script>
