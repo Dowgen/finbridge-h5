@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/views/HelloWorld/HelloWorld'
-import PageTest from '@/views/PageTest/PageTest'
 import Login from '@/views/Login/Login'
 import Regist from '@/views/Login/Regist'
 import ResetPsd from '@/views/Login/ResetPsd'
@@ -49,17 +47,7 @@ export default new Router({
       path: '/ReleaseAssets3',
       name: 'ReleaseAssets3',
       component: ReleaseAssets3
-    },
-    {
-      path: '/test',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },
-    {
-      path: '/test',
-      name: 'PageTest',
-      component: PageTest
-    },
+    }
 
   ]
 })
