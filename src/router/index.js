@@ -1,53 +1,76 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/views/Login/Login'
-import Regist from '@/views/Login/Regist'
-import ResetPsd from '@/views/Login/ResetPsd'
-import ProjectDetail from '@/views/ProjectDetail/ProjectDetail'
-import ReleaseAssets from '@/views/ReleaseAssets/ReleaseAssets'
-import ReleaseAssets2 from '@/views/ReleaseAssets/ReleaseAssets2'
-import ReleaseAssets3 from '@/views/ReleaseAssets/ReleaseAssets3'
+const _import = file => () => import('@/views/' + file)
 
 Vue.use(Router)
 
+//登录模块
+const LoginRoutes = [
+  {
+    path: '/',
+    component: _import('Login/Login')
+  },
+  {
+    path: '/Regist',
+    component: _import('Login/Regist')
+  },
+  {
+    path: '/ResetPsd',
+    component: _import('Login/ResetPsd')
+  }
+]
+
+//主页
+const HomeRoutes = [
+  {
+    path: '/Home',
+    component: _import('Home/Home')
+  },
+]
+
+//广场模块
+const squareRoutes = [
+  {
+    path: '/Square',
+    component: _import('Square/Square')
+  },
+  {
+    path: '/ProjectDetail',
+    component: _import('Square/ProjectDetail')
+  },
+]
+//挂牌模块
+const ReleaseRoutes = [
+  {
+    path: '/MyAssets',
+    component: _import('ReleaseAssets/MyAssets')
+  },
+  {
+    path: '/ReleaseAssets',
+    component: _import('ReleaseAssets/ReleaseAssets')
+  },
+  {
+    path: '/ReleaseAssets2',
+    component: _import('ReleaseAssets/ReleaseAssets2')
+  },
+  {
+    path: '/ReleaseAssets3',
+    component: _import('ReleaseAssets/ReleaseAssets3')
+  }
+]
+//个人信息模块
+const MyInfoRoutes = [
+  {
+    path: '/MyInfo',
+    component: _import('MyInfo/MyInfo')
+  }
+]
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/Regist',
-      name: 'Regist',
-      component: Regist
-    },
-    {
-      path: '/ResetPsd',
-      name: 'ResetPsd',
-      component: ResetPsd
-    },
-    {
-      path: '/ProjectDetail',
-      name: 'ProjectDetail',
-      component: ProjectDetail
-    },
-    {
-      path: '/ReleaseAssets',
-      name: 'ReleaseAssets',
-      component: ReleaseAssets
-    },
-    {
-      path: '/ReleaseAssets2',
-      name: 'ReleaseAssets2',
-      component: ReleaseAssets2
-    },
-    {
-      path: '/ReleaseAssets3',
-      name: 'ReleaseAssets3',
-      component: ReleaseAssets3
-    }
-
-  ]
+  routes: 
+    LoginRoutes.concat(
+      HomeRoutes,
+      squareRoutes,
+      ReleaseRoutes,
+      MyInfoRoutes)
 })

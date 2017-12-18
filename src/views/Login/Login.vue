@@ -3,7 +3,7 @@
     <div class="hello-head">
       <img src="./img/close.png" alt="">
     </div>
-    <img src="./img/logo.png">
+    <img class="logo" src="./img/logo.png">
     <h1>{{msg}}</h1>
     <div class="input" style=" position: relative;">
       <input type="text" placeholder="手机号" class="phone" maxlength="11">
@@ -50,19 +50,22 @@ export default {
     width: 100%;
     height: 100%;
   }
-  .hello img{
+  .logo{
     width: 4.25rem;
     height: 4.25rem;
     margin-top: 5rem;
   }
   .hello .hello-head{
     text-align: right;
-    padding: 0 1rem;
+    position: absolute;
+    width: 100%;
   }
   .hello .hello-head img{
     width: 1.19rem;
     height: 1.19rem;
-    margin:1.45rem 0.45rem 0 0;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
   }
   .hello h1{
     font-size:1.095rem;
@@ -101,8 +104,7 @@ export default {
   .hello .footer{
     width: 100%;
     font-size:0.815rem;
-    position: absolute;
-    bottom: 2rem;
+    margin-top: 12rem;
     text-align: center;
   }
 </style>

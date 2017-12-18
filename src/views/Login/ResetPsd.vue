@@ -3,41 +3,39 @@
     <div class="hello-head">
       <img src="./img/close.png" alt="">
     </div>
-    <img src="./img/img_signup.png">
-    <h1 style="margin-top: 1.315rem;">{{msg}}</h1>
-    <h1>{{des}}</h1>
+    <img class="logo" src="./img/logo.png">
+    <h1>{{msg}}</h1>
     <div class="input" style=" position: relative;">
       <input type="text" placeholder="手机号码" class="phone" maxlength="11" v-model="phonenum">
-      <input type="password" placeholder="请重置密码" class="psd" maxlength="16">
+      <input type="password" placeholder="请输入密码" class="psd" maxlength="16">
       <input type="text">
       <span class="yzm">发送验证码</span>
     </div>
     <div class="footer">
       <Btn backgroundColor="#D7D7D7" msg="注册" v-show="phonenum == ''"></Btn>
       <Btn backgroundColor="#4083FF" msg="注册" v-show="phonenum !== ''"></Btn>
-      <router-link to="/test" style="color: #4083FF;">已有账户? 立即登录</router-link>
+      <router-link to="/ProjectDetail" style="color: #4083FF;">已有账户? 立即登录</router-link>
     </div>
   </div>
 </template>
 
 <script>
-  import Lib from '@/assets/js/Lib'
-  import Btn from '@/components/btn'
+import Lib from '@/assets/js/Lib'
+import Btn from '@/components/btn'
 
-  export default {
-    name: 'Regist',
-    components: {
-      Btn
-    },
-    data () {
-      return {
-        msg: '您好！',
-        des:'请注册开始使用',
-        phonenum:''
+export default {
+  name: 'Regist',
+  components: {
+    Btn
+  },
+  data () {
+    return {
+      msg: '欢迎再次回来',
+      phonenum:''
 
-      }
     }
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -47,25 +45,29 @@
     width: 100%;
     height: 100%;
   }
-  .hello img{
+  .logo{
     width: 4.25rem;
     height: 4.25rem;
     margin-top: 5rem;
   }
   .hello .hello-head{
     text-align: right;
-    padding: 0 1rem;
+    position: absolute;
+    width: 100%;
   }
   .hello .hello-head img{
     width: 1.19rem;
     height: 1.19rem;
-    margin:1.45rem 0.45rem 0 0;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
   }
   .hello h1{
-    font-size:1.065rem;
+    font-size:1.095rem;
     font-family:PingFangSC-Regular;
-    color:#4E4E4E;
-    line-height:1.595rem;
+    color:rgba(78,78,78,1);
+    line-height:1.815rem;
+    margin-top: 1.625rem;
   }
   .hello .input{
     width:19.53rem;
@@ -104,8 +106,7 @@
   .hello .footer{
     width: 100%;
     font-size:0.815rem;
-    position: absolute;
-    bottom: 2rem;
+    margin-top: 9rem;
     text-align: center;
   }
 </style>

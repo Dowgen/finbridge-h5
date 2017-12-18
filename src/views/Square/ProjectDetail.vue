@@ -77,7 +77,6 @@
 
 <script>
 import Lib from '@/assets/js/Lib'
-import Dg from '@/components/testComponent'
 import { Toast} from 'vux'
 
 export default {
