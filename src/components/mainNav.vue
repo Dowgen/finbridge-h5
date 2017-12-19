@@ -46,7 +46,7 @@ export default {
 .nav{
   box-sizing: border-box;
   padding-top: .5rem;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   height: 3.8rem;
   width: 100%;

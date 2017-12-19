@@ -26,6 +26,11 @@ const HomeRoutes = [
     path: '/Home',
     component: _import('Home/Home')
   },
+  {
+    path: '/NewsDetail',
+    component: _import('Home/NewsDetail')
+  },
+
 ]
 
 //广场模块
@@ -63,7 +68,20 @@ const MyInfoRoutes = [
   {
     path: '/MyInfo',
     component: _import('MyInfo/MyInfo')
-  }
+  },
+  {
+    path: '/AboutUs',
+    component: _import('MyInfo/AboutUs')
+  },
+  {
+    path: '/AboutMe',
+    component: _import('MyInfo/AboutMe')
+  },
+  {
+    path: '/AddNick',
+    component: _import('MyInfo/AddNick')
+  },
+
 ]
 
 export default new Router({
