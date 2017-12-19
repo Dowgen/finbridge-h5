@@ -3,7 +3,7 @@
     <div class="content">
       MyInfo
     </div>
-    <main-nav which="MyInfo"></main-nav>
+    <main-nav which="myInfo"></main-nav>
   </div>
 </template>
 

@@ -30,7 +30,7 @@ export default {
   props: {
     which: {
         type: String,
-        default: '导航'
+        default: 'home'
     }
   },
   mounted(){
@@ -46,7 +46,7 @@ export default {
 .nav{
   box-sizing: border-box;
   padding-top: .5rem;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   height: 3.8rem;
   width: 100%;
@@ -54,7 +54,7 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-top: solid .7rem #f2f2f2;
+  border-top: solid .3rem #f2f2f2;
   z-index: 999;
 }
 .nav img{

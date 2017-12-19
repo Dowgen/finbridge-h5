@@ -7,7 +7,7 @@
     <h1>{{msg}}</h1>
     <div class="input" style=" position: relative;">
       <input type="text" placeholder="手机号码" class="phone" maxlength="11" v-model="phonenum">
-      <input type="password" placeholder="请输入密码" class="psd" maxlength="16">
+      <input type="password" placeholder="请重置密码" class="psd" maxlength="16">
       <input type="text">
       <span class="yzm">发送验证码</span>
     </div>
