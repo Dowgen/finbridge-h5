@@ -15,7 +15,7 @@
       </div>
       <div class="aboutUs" @click="AboutUs">关于我们</div>
     </div>
-    <main-nav which="MyInfo"></main-nav>
+    <main-nav which="myInfo"></main-nav>
   </div>
 </template>
 

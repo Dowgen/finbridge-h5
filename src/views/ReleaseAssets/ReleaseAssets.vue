@@ -31,29 +31,35 @@
         <div class="des-item-l">产品名称</div>
         <div class="des-item-r"><input type="text" maxlength="5" placeholder="请填写5个字以内"></div>
       </div>
-      <div class="des-item">
+      <div class="des-item" style="position:relative">
         <div class="des-item-l">产品类型</div>
-        <div class="des-item-r pro-choose" @click="upDown">
+        <div class="des-item-r pro-choose">
           <input type="text" placeholder="请选择产品类型">
-         <!-- <span class="up"  @click="up"><img id='up' src="./img/choose_up.png" alt=""></span>
-          <span class="down"  @click="down"><img id="down" src="./img/choose_down.png" alt=""></span>-->
           <span class="downArrow" id="upDown"></span>
-
         </div>
+        <cell
+        class="myCell"
+        title="Animated"
+        is-link
+        :border-intent="false"
+        :arrow-direction="showContent004 ? 'up' : 'down'"
+        @click.native="showContent004 = !showContent004"></cell>
       </div>
-      <div class="pro-type">
+
+
+      <div class="pro-type slide" :class="showContent004?'animate':''">
        <!-- <input type="radio" id="nba" checked="checked" name="sport" value="nba">
         <label name="nba" class="checked" for="nba">NBA</label>
         <input type="radio" id="cba" name="sport" value="cba">
         <label name="cba" for="cba">CBA</label>-->
 
         <label><input name="CashLoan" type="radio" value="现金贷" />现金贷 </label>
-        <label><input name="MortgageLoan" type="radio" value="房抵贷" />房抵贷 </label>
-        <label><input name="CarLoan" type="radio" value="车抵贷" />车抵贷 </label>
-        <label><input name="3CLease" type="radio" value="3C租赁" />3C租赁 </label>
-        <label><input name="ConsumptionStage" type="radio" value="消费分期" />消费分期 </label>
-        <label><input name="CashStage" type="radio" value="现金分期" />现金分期 </label>
-        <label><input name="others" type="radio" value="其它" />其它 </label>
+        <label><input name="CashLoan" type="radio" value="房抵贷" />房抵贷 </label>
+        <label><input name="CashLoan" type="radio" value="车抵贷" />车抵贷 </label>
+        <label><input name="CashLoan" type="radio" value="3C租赁" />3C租赁 </label>
+        <label><input name="CashLoan" type="radio" value="消费分期" />消费分期 </label>
+        <label><input name="CashLoan" type="radio" value="现金分期" />现金分期 </label>
+        <label><input name="CashLoan" type="radio" value="其它" />其它 </label>
       </div>
       <div class="des-item">
         <div class="des-item-l">件均额度</div>
@@ -100,7 +106,7 @@
 <script>
 import Lib from '@/assets/js/Lib'
 import myHead from '@/components/Header'
-import { Step, StepItem, XButton, XHr } from 'vux'
+import { Step, StepItem, XButton, XHr, Cell } from 'vux'
 import $ from "jquery"
 
 export default {
@@ -110,46 +116,30 @@ export default {
     Step,
     StepItem,
     XButton,
-    XHr
+    XHr,
+    Cell
   },
   data () {
     return {
       step:1,
-      text:''
+      text:'',
+      showContent004: false
     }
   },
   mounted(){
-    this.chooseType();
+    
   },
   methods:{
-    nextStep () {
-      this.step ++
-    },
     nextWay(){
       this.$router.push('/ReleaseAssets2')
     },
-    upDown(){
-     /* $('#down').css('transform','rotate(180deg)')
-      $('.pro-type').css('display','block')*/
-
-      if($('#upDown').hasClass('.downArrow')){
-        $('#upDown').removeClass('.downArrow').addClass('.upArrow');//收起
-      }else{
-        $('#upDown').removeClass('.upArrow').addClass('.downArrow');//展开
-      }
-    },
-    /*up(){
-      alert(11111)
-      $('#up').css('transform','rotate(180deg)')
-      $('.pro-type').css('display','none')
-    },*/
-    chooseType(){
+/*    chooseType(){
       $('label').click(function(){
         var radioId = $('input[type="radio"]').attr('name');
         $('label').removeAttr('class') && $(this).attr('class', 'checked');
         $('input[type="radio"]').removeAttr('checked') && $('#' + radioId).attr('checked', 'checked');
       })
-    }
+    }*/
 
   }
 }
@@ -309,4 +299,26 @@ export default {
   padding: 0 1rem;
   margin-top: 2rem;
 }*/
+.myCell{
+  position: absolute;
+  left:0;
+  top:0;
+  right:0;
+  bottom: 0;
+  opacity: 0;
+}
+.sub-item {
+  color: #888;
+}
+.slide {
+  padding: 0 20px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .5s cubic-bezier(0, 1, 0, 1) -.1s;
+}
+.animate {
+  max-height: 9999px;
+  transition-timing-function: cubic-bezier(0.5, 0, 1, 0);
+  transition-delay: 0s;
+}
 </style>

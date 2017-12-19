@@ -61,6 +61,10 @@ const ReleaseRoutes = [
   {
     path: '/ReleaseAssets3',
     component: _import('ReleaseAssets/ReleaseAssets3')
+  },
+  {
+    path: '/ReleaseDetail',
+    component: _import('ReleaseAssets/ReleaseDetail')
   }
 ]
 //个人信息模块
