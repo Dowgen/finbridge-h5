@@ -134,13 +134,24 @@ html {
 
 /* vux自定义 */
 .weui-btn{
-    font-size: 1.125rem !important;
+  font-size: 1.125rem !important;
 }
 .vux-cell-box{
 	opacity: 0;
 }
 .vux-tap-active{
 	height:2rem;
+}
+.weui-dialog__bd:first-child{
+  font-size:1rem !important;
+  color: #a3a3a3 !important;
+}
+.weui-dialog__btn_default{
+  color: #a3a3a3 !important;
+}
+.weui-dialog__btn_primary{
+  color:white !important;
+  background-color: #4083ff !important;
 }
 
 /* placeholder颜色 */

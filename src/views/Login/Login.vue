@@ -23,7 +23,6 @@
 <script>
 import Lib from '@/assets/js/Lib'
 import Btn from '@/components/btn'
-/*import resetPsd from '@/views/Login/resetPsd'*/
 
 export default {
   name: 'Login',
@@ -35,9 +34,35 @@ export default {
       msg: '欢迎再次回来'
     }
   },
+  mounted(){
+    /* 进入页面先获取token */
+    this.getToken(); 
+  },
   methods:{
     resetPsd(){
       this.$router.push('/resetPsd');
+    },
+    getToken(){
+      var self = this;
+      Lib.M.ajax({
+        url : 'http://192.168.2.169:8060/uaa/oauth/token',
+        headers: {
+          Accept:'application/json',
+          Authorization:'Basic Y2xpZW50OnNlY3JldA=='
+        },
+        params:{
+          username:'anil',
+          password:'password',
+          grant_type:'password',
+          scope:'read write'
+        },
+        success:function(data){
+          localStorage.token = data.access_token;
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
     }
   }
 }

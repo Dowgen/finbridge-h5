@@ -3,8 +3,8 @@
     <myHead msg="发布资产" backgroundColor="#fff"></myHead>
     <div class="asset-process">
       <div class="step">
-        <img v-show="text == ''" src="./img/step2.png" alt="">
-        <img v-show="text !== ''" src="./img/step2_2.png" alt="">
+        <img v-show="coName == ''" src="./img/step2.png" alt="">
+        <img v-show="coName !== ''" src="./img/step2_2.png" alt="">
       </div>
       <div class="step-title">
         <div>资产信息</div>
@@ -12,11 +12,19 @@
         <div>联系方式</div>
       </div>
     </div>
-    <div class="assets-des1">
+    <div class="assets-des1" v-if="AorF=='fund'">
       <div class="des-item">
         <div class="des-item-l">公司名称</div>
         <div class="des-item-r">
-          <input type="text" v-model="text" placeholder="人众资金 第031号">
+          <input type="text" v-model="coName" placeholder="请输入公司名称">
+        </div>
+      </div>
+    </div>
+    <div class="assets-des1" v-if="AorF=='assets'">
+      <div class="des-item">
+        <div class="des-item-l">公司名称</div>
+        <div class="des-item-r">
+          <input type="text" v-model="coName" placeholder="请输入公司名称">
         </div>
       </div>
       <div class="des-item" style="border-bottom: 0.06rem solid #ECECEC;">
@@ -25,14 +33,21 @@
           <input type="text" placeholder="请详细填写*年*个月">
         </div>
       </div>
-      <div class="des-item">
+      <div class="des-item" style="position:relative">
         <div class="des-item-l">资金主要来源</div>
         <div class="des-item-r">
-          <input type="text" placeholder="请选择产品类型">
-          <span>^</span>
+          <input type="text" placeholder="请选择资金来源类型">
+          <span :class="showLikeType?'upArrow':'downArrow'"></span>
         </div>
+        <cell
+        class="myCell"
+        title="Animated"
+        is-link
+        :border-intent="false"
+        :arrow-direction="showLikeType ? 'up' : 'down'"
+        @click.native="showLikeType = !showLikeType"></cell>
       </div>
-      <div class="pro-type"  style="border-bottom: 0.06rem solid #ECECEC;">
+      <div class="pro-type slide" :class="showLikeType?'animate':''">
         <label><input name="Band" type="checkbox" value="银行" />银行 </label>
         <label><input name="PrivatePlacement" type="checkbox" value="私募" />私募 </label>
         <label><input name="NetworkLoan" type="checkbox" value="网络小贷" />网络小贷 </label>
@@ -43,9 +58,11 @@
       </div>
       <div class="des-item">
         <div class="des-item-l">公司地址</div>
-        <div class="des-item-r">
-          <input type="text" placeholder="省份，城市">
-          <span>^</span>
+        <div class="des-item-r" style="position:relative">
+          <input class="inputer" placeholder="省份，城市" v-model="cityVal" readonly="readonly"/>
+          <div class="sel">
+            <popup-picker :data="cityList" :columns="3" v-model="cityVal" ref="cityPicker" ></popup-picker>
+          </div>
         </div>
       </div>
       <div class="des-item">
@@ -71,22 +88,28 @@
 <script>
 import Lib from '@/assets/js/Lib'
 import myHead from '@/components/Header'
-
+import {XButton, XHr, Cell,PopupPicker } from 'vux'
 
 export default {
   name: 'ReleaseAssets',
   components: {
-    myHead,
-
+    myHead,Cell,PopupPicker
   },
   data () {
     return {
-      text:''
+      coName:'',
+      AorF:'',
+      showLikeType: false,
+      cityVal: [],
+      cityList: Lib.M.cityList,
     }
+  },
+  mounted(){
+    this.AorF = this.$route.query.AorF
   },
   methods:{
     nextWay(){
-      this.$router.push('/ReleaseAssets3')
+      this.$router.push({ path: 'Release3', query: { AorF: this.AorF }})
     }
   }
 }
@@ -96,7 +119,7 @@ export default {
 <style scoped>
 .assets{
   width: 100%;
-  height: 100%;
+  height: 41rem;
   background: #EFEFF4;
   margin: 0 auto;
 }
@@ -197,5 +220,59 @@ export default {
   line-height: 3rem;
   margin-right: 0.5rem;
 }
-
+.myCell{
+  position: absolute;
+  left:0;
+  top:0;
+  right:0;
+  bottom: 0;
+  opacity: 0;
+}
+.sub-item {
+  color: #888;
+}
+.slide {
+  padding: 0 20px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .5s cubic-bezier(0, 1, 0, 1) -.1s;
+}
+.animate {
+  max-height: 9999px;
+  transition-timing-function: cubic-bezier(0.5, 0, 1, 0);
+  transition-delay: 0s;
+}
+.downArrow{
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.44rem;
+  background: url("./img/choose_down.png") no-repeat center;
+  background-size: 100% 100%;
+}
+.upArrow{
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.44rem;
+  background: url("./img/choose_up.png") no-repeat center;
+  background-size: 100% 100%;
+}
+.inputer{
+  outline: none;
+  border: none;
+  font-size: 0.94rem;
+  height: 2.75rem;
+  text-align: right;
+  margin-right: 1rem;
+}
+.sel{
+  background: url('./img/choose_down.png') no-repeat;
+  background-size: 0.69rem 0.375rem;
+  background-position: 100% center; 
+  width: 100%;
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  overflow: hidden;
+}
 </style>

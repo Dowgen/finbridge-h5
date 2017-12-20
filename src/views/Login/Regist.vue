@@ -3,41 +3,81 @@
     <div class="hello-head">
       <img src="./img/close.png" alt="">
     </div>
-    <img class="logo" src="./img/img_signup.png">
-    <h1 style="margin-top: 1.315rem;">&nbsp {{msg}}</h1>
-    <h1>{{des}}</h1>
+    <img class="logo" src="./img/logo.png">
+    <h1 style="margin-top: 1.315rem;">&nbsp 您好！</h1>
+    <h1>请注册开始使用</h1>
     <div class="input" style=" position: relative;">
-      <input type="text" placeholder="手机号码" class="phone" maxlength="11" v-model="phonenum">
-      <input type="password" placeholder="请输入密码" class="psd" maxlength="16">
+      <input type="text" placeholder="手机号码" class="phone" maxlength="11" v-model="phoneNum">
+      <input type="password" placeholder="请输入密码" class="psd" maxlength="16" v-model="password">
       <input type="text">
-      <span class="yzm">发送验证码</span>
+      <span class="yzm">
+        <div v-show="start" >
+          <countdown v-model="time1" :start="start" @on-finish="finish1"></countdown><span style="padding-left:0.15rem">s</span>
+        </div>
+        <div v-show="!start" @click="begin1">{{countDownText}}</div>
+      </span>
     </div>
     <div class="footer">
-      <Btn backgroundColor="#D7D7D7" msg="注册" v-show="phonenum == ''"></Btn>
-      <Btn backgroundColor="#4083FF" msg="注册" v-show="phonenum !== ''"></Btn>
+      <Btn backgroundColor="#D7D7D7" msg="注册" v-show="phoneNum == ''"></Btn>
+      <Btn backgroundColor="#4083FF" msg="注册" v-show="phoneNum !== ''"></Btn>
       <router-link to="/" style="color: #4083FF;">已有账户? 立即登录</router-link>
     </div>
   </div>
 </template>
 
 <script>
-  import Lib from '@/assets/js/Lib'
-  import Btn from '@/components/btn'
+import Lib from '@/assets/js/Lib'
+import Btn from '@/components/btn'
+import { Countdown } from 'vux'
 
-  export default {
-    name: 'Regist',
-    components: {
-      Btn
-    },
-    data () {
-      return {
-        msg: '        您好！',
-        des:'请注册开始使用',
-        phonenum:''
-
-      }
+export default {
+  name: 'Regist',
+  components: {
+    Btn,Countdown
+  },
+  data () {
+    return {
+      phoneNum:'',
+      password:'',
+      /* countdown所需参数 */
+      time1: 5,
+      start: false,
+      countDownText:'发送验证码',
     }
+  },
+  methods: {
+    /* 开始倒计时 */
+    begin1(){
+      if(Lib.M.isPhoneWrong(this.phoneNum)){
+        this.$vux.toast.text('手机号码不合法！','middle');
+      }else{
+        this.start = true;
+        this.sendVerify();
+      }
+    },
+    /* 倒计时结束时触发 */
+    finish1 (index) {
+      this.start = false
+      this.time1 = 5
+      this.countDownText = '重新发送'
+    },
+    /* 发送验证码 */
+    sendVerify(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/msg/sendVerify/'+ self.phoneNum,
+        headers: {
+          Authorization:'Bearer '+ localStorage.token
+        },
+        success:function(data){
+          if(data=='success'){
+            self.$vux.toast.text('发送成功！', 'middle')
+          }
+        }
+      });
+    },
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

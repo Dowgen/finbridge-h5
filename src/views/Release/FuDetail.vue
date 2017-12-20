@@ -11,55 +11,39 @@
         <p class="p3">资金成本区间(%）</p>
         <div class="project-des">
           <div class="item">
-            <p>1800元</p>
-            <p>件均额度</p>
+            <p>资金类型: P2P</p>
           </div>
           <div class="item">
-            <p>3天</p>
-            <p>单笔期限</p>
-          </div>
-          <div class="item">
-            <p>3百万</p>
-            <p style="border: none;">日放款量</p>
+            <p>资金规模: 3千万</p>
           </div>
         </div>
       </div>
     </div>
     <div class="project-main">
       <div class="main-item">
-        <p>项目名称</p>
-        <p>项目类型</p>
-        <p>总放款量</p>
-        <p>坏账率</p>
-        <p>产品名称</p>
-        <p>产品特色</p>
+        <p>公司名称</p>
+        <p>青睐资产</p>
       </div>
       <div class="main-item">
-        <p>人众资金 第031号</p>
-        <p>车抵贷</p>
-        <p>20,000,000</p>
-        <p>3.0%</p>
-        <p v-show="key !== 2">爱信金融钱包</p>
-        <p v-show="key == 2">*****包</p>
-        <p style="line-height: 24px">主要专业给年轻人的贷款，提供消费分<br>
-          期平台便于生活</p>
+        <p>人众金服股份有限公司</p>
+        <p>现金贷、现金分期、消费分期、车
+抵贷、3C租赁</p>
       </div>
     </div>
     <div class="project-footer">
       <div class="footer-item">
-        <p>公司名称</p>
-        <p>运营时间</p>
+        <p>手机号码</p>
+        <p>微信号</p>
+        <p>QQ号</p>
       </div>
       <div class="footer-item">
-        <p v-show="key !== 2">人众金服股份有限公司</p>
-        <p v-show="key == 2">******有限公司</p>
-        <p>3个月</p>
+        <p>18276739008</p>
+        <p>shuixisuo001</p>
+        <p>739008112</p>
       </div>
     </div>
-    <div class="footer-btn" v-show="key == 1">立即合作</div>
-    <div class="footer-btn" v-show="key == 2">查看联系方式</div>
     <div class="footer-btn" v-show="key == 3" style="display: flex;flex-direction: row">
-      <div class="btn-left" style="flex-grow: 1">下架</div>
+      <div class="btn-left" style="flex-grow: 1" @click="offline">下架</div>
       <div class="btn-right" style="flex-grow: 1">
         <img src="./img/delete.png" alt="" class="delete">
         删除
@@ -87,7 +71,7 @@ export default {
   },
   data () {
     return {
-      key:4,
+      key:3,
     }
   },
   methods:{
@@ -99,6 +83,14 @@ export default {
         position: 'middle'
       })
     },
+    offline(){
+      this.$vux.confirm.show({
+        content: '下架之后，该项目将进入已失效，是否确认下架？',
+        onConfirm () {
+          console.log('hello')
+        }
+      })
+    }
   }
 }
 </script>
@@ -110,8 +102,8 @@ body{
 }
 .project{
   width: 100%;
-  height: 100%;
-  background: #D7D7D7 ;
+  height: 41rem;
+  background: rgba(239,239,224,1);
 }
 .project .project-head{
   width: 100%;
@@ -173,11 +165,11 @@ body{
   background: #fff;
 }
 .project .project-main .main-item:nth-of-type(1){
-  flex-grow: 1;
+  flex: 1;
   color: #BEBEBE;
 }
 .project .project-main .main-item:nth-of-type(2){
-  flex-grow: 3;
+  flex: 4;
   color: #666666;
 }
 .project .project-main .main-item{
@@ -199,11 +191,11 @@ body{
   margin-top: 0.625rem;
 }
 .project .project-footer .footer-item:nth-of-type(1){
-  flex-grow: 1;
+  flex: 1;
   color: #BEBEBE;
 }
 .project .project-footer .footer-item:nth-of-type(2){
-  flex-grow: 20;
+  flex: 4;
   color: #666666;
 }
 .project .footer-item{
@@ -223,6 +215,8 @@ body{
   text-align: center;
   line-height: 3.065rem;
   font-size: 1.065rem;
+  position:absolute;
+  bottom: 0;
 }
 .btn-left{
   font-size: 1.125rem;
