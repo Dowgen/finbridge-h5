@@ -11,10 +11,10 @@
       <div class="recommend">
         <p>
           <span>倾力推荐</span>
-          <span>查看更多<img src="./img/icon_more.png"/></span>
+          <span @click="lookMore">查看更多<img src="./img/icon_more.png"/></span>
         </p>
        <div class="recommend-con">
-         <div class="con-item">
+         <div @click="lookMore" class="con-item">
            <h4>爱信资产</h4>
            <p>倒计时3天</p>
            <p>
@@ -30,7 +30,7 @@
              <span>总房款量</span>
            </p>
          </div>
-         <div class="con-item">
+         <div @click="lookMore" class="con-item">
            <h4>爱信资产</h4>
            <p>倒计时3天</p>
            <p>
@@ -102,7 +102,9 @@ export default {
     
   },
   methods: {
-      
+    lookMore(){
+      this.$router.push('./Square')
+    }
   }
 }
 </script>

@@ -40,9 +40,15 @@ const squareRoutes = [
     component: _import('Square/Square')
   },
   {
-    path: '/ProjectDetail',
-    component: _import('Square/ProjectDetail')
+    path: '/ZcLoginProjectDetail',
+    component: _import('Square/ZcLoginProjectDetail')
   },
+  {
+    path: '/ZjLoginProjectDetail',
+    component: _import('Square/ZjLoginProjectDetail')
+  },
+
+
 ]
 //挂牌模块
 const ReleaseRoutes = [
