@@ -19,14 +19,11 @@ axios.interceptors.response.use(
             vm.$vux.loading.hide();
             switch (error.response.status) {
                 case 303:
-                    // 返回 303 清除localStorage并跳转到登录页面
+                    // 返回 303
                     vm.$vux.toast.text('session过期，请重新登录！','middle');
-                    /*localStorage.clear();*/
-                    setTimeout("window.location.href = '/views/cashloan/login.html'",1200);  
                     break;
                 case 401:
                     // 返回 401 重新获取token并刷新当前页面
-                    getToken();
                     break;
                 default: vm.$vux.toast.text('请求异常！请重试','middle')   
             }
@@ -60,8 +57,8 @@ function getToken(){
         method: 'post',
         url: 'https://finbridge.cn/uaa/oauth/token',
         params: {
-            username:'juhe',
-            password:'Juhe2017!@#',
+            username:'anil',
+            password:'password',
             grant_type:'password',
             scope:'read write'
         },
@@ -125,13 +122,13 @@ var Rxports = {
 			params: opts.params || {},
 			headers: opts.headers || {
                 'Authorization':'Bearer '+ localStorage.token,
-                'authKey':localStorage.authKey,
+                /*'authKey':localStorage.authKey,
                 'sessionId':localStorage.sessionId,
-                'phone':localStorage.phoneNum
+                'phone':localStorage.phoneNum*/
             },
 			// `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
   			// 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
-			baseURL:'https://api.moneyboom.cn',
+			baseURL:'http://192.168.2.169:8060/finbridge-base',
 			timeout: opts.timeout || 0,
 			responseType: opts.dataType || 'json'
 		}).then(function(res){
@@ -174,7 +171,7 @@ var Rxports = {
         var r = window.location.search.substr(1).match(reg);
         if(r!=null)return  unescape(r[2]); return null;
     },
-
+    /* 手机号码是否非法 */
     isPhoneWrong:function (num){
       if (!num || !num.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[6780]|18[0-9]|14[57])[0-9]{8}$/)) {
         return true;

@@ -9,7 +9,12 @@
       <input type="text" placeholder="手机号码" class="phone" maxlength="11" v-model="phonenum">
       <input type="password" placeholder="请重置密码" class="psd" maxlength="16">
       <input type="text">
-      <span class="yzm">发送验证码</span>
+      <span class="yzm">
+        <div v-show="start" >
+          <countdown v-model="time1" :start="start" @on-finish="finish1"></countdown><span style="padding-left:0.15rem">s</span>
+        </div>
+        <div v-show="!start" @click="begin1">{{countDownText}}</div>
+      </span>
     </div>
     <div class="footer">
       <Btn backgroundColor="#D7D7D7" msg="注册" v-show="phonenum == ''"></Btn>
@@ -22,18 +27,35 @@
 <script>
 import Lib from '@/assets/js/Lib'
 import Btn from '@/components/btn'
+import { Countdown } from 'vux'
 
 export default {
   name: 'Regist',
   components: {
-    Btn
+    Btn,Countdown
   },
   data () {
     return {
       msg: '欢迎再次回来',
-      phonenum:''
-
+      phonenum:'',
+      /* countdown所需参数 */
+      time1: 5,
+      start: false,
+      countDownText:'发送验证码',
     }
+  },
+  methods: {
+    /* 开始倒计时 */
+    begin1(){
+      this.start = true;
+      /*this.sendVerify();*/
+    },
+    /* 倒计时结束时触发 */
+    finish1 (index) {
+      this.start = false
+      this.time1 = 5
+      this.countDownText = '重新发送'
+    },
   }
 }
 </script>

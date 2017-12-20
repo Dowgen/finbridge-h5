@@ -2,16 +2,6 @@
   <div class="assets">
     <myHead msg="发布资产" backgroundColor="#fff"></myHead>
     <div class="asset-process">
-      <!--  <div>
-        <step v-model="step" background-color='#fbf9fe'>
-          <step-item :title="('1')" description="资产信息"></step-item>
-          <step-item :title="('2')" description="公司信息"></step-item>
-          <step-item :title="('3')" description="联系方式"></step-item>
-        </step>
-        <div class="btn_wrap">
-          <x-button type="primary" @click.native="nextStep">下一步</x-button>
-        </div>
-      </div>-->
       <div class="step">
         <img v-show="text == ''" src="./img/step1.png" alt="">
         <img v-show="text !== ''" src="./img/step1_1.png" alt="">
@@ -27,31 +17,23 @@
         <div class="des-item-l">项目名称</div>
         <div class="des-item-r"><input v-model="text" type="text" placeholder="填写格式“**** 第*号”"></div>
       </div>
-      <div class="des-item">
-        <div class="des-item-l">产品名称</div>
-        <div class="des-item-r"><input type="text" maxlength="5" placeholder="请填写5个字以内"></div>
-      </div>
       <div class="des-item" style="position:relative">
         <div class="des-item-l">产品类型</div>
         <div class="des-item-r pro-choose">
           <input type="text" placeholder="请选择产品类型">
-          <span class="downArrow" id="upDown"></span>
+          <span :class="showPdType?'upArrow':'downArrow'"></span>
         </div>
         <cell
         class="myCell"
         title="Animated"
         is-link
         :border-intent="false"
-        :arrow-direction="showContent004 ? 'up' : 'down'"
-        @click.native="showContent004 = !showContent004"></cell>
+        :arrow-direction="showPdType ? 'up' : 'down'"
+        @click.native="showPdType = !showPdType"></cell>
       </div>
 
 
-      <div class="pro-type slide" :class="showContent004?'animate':''">
-       <!-- <input type="radio" id="nba" checked="checked" name="sport" value="nba">
-        <label name="nba" class="checked" for="nba">NBA</label>
-        <input type="radio" id="cba" name="sport" value="cba">
-        <label name="cba" for="cba">CBA</label>-->
+      <div class="pro-type slide" :class="showPdType?'animate':''">
 
         <label><input name="CashLoan" type="radio" value="现金贷" />现金贷 </label>
         <label><input name="CashLoan" type="radio" value="房抵贷" />房抵贷 </label>
@@ -62,15 +44,9 @@
         <label><input name="CashLoan" type="radio" value="其它" />其它 </label>
       </div>
       <div class="des-item">
-        <div class="des-item-l">件均额度</div>
+        <div class="des-item-l">资金规模</div>
         <div class="des-item-r"><input type="text" placeholder="元"></div>
       </div>
-      <div class="des-item">
-        <div class="des-item-l">产品特色</div>
-        <div class="des-item-r"><input type="text" maxlength="20" placeholder="请填写10-20个字以内"></div>
-      </div>
-    </div>
-    <div class="assets-des2">
       <div class="des-item">
         <div class="des-item-l">资金成本区间</div>
         <div class="des-item-r range">
@@ -78,23 +54,28 @@
           %
         </div>
       </div>
-      <div class="des-item">
-        <div class="des-item-l">日放款规模</div>
-        <div class="des-item-r"><input type="text" maxlength="20" placeholder="百万"></div>
+      <div class="des-item" style="position:relative">
+        <div class="des-item-l">青睐资产类型</div>
+        <div class="des-item-r">
+          <input type="text" placeholder="请选择产品类型">
+          <span :class="showLikeType?'upArrow':'downArrow'"></span>
+        </div>
+        <cell
+        class="myCell"
+        title="Animated"
+        is-link
+        :border-intent="false"
+        :arrow-direction="showLikeType ? 'up' : 'down'"
+        @click.native="showLikeType = !showLikeType"></cell>
       </div>
-      <div class="des-item">
-        <div class="des-item-l">总放款规模</div>
-        <div class="des-item-r"><input type="text" maxlength="20" placeholder="千万"></div>
-      </div>
-      <div class="des-item">
-        <div class="des-item-l">坏账率</div>
-        <div class="des-item-r"><input type="text" maxlength="5" placeholder="%"></div>
-      </div>
-      <div class="des-item">
-        <div class="des-item-l">资产发布期限</div>
-        <div class="des-item-r"><input type="text" maxlength="10" placeholder="3天/笔"></div>
-      </div>
-      <div class="des-item">
+      <div class="pro-type2 slide"  :class="showLikeType?'animate':''">
+        <label><input name="Band" type="checkbox" value="银行" />银行 </label>
+        <label><input name="PrivatePlacement" type="checkbox" value="私募" />私募 </label>
+        <label><input name="NetworkLoan" type="checkbox" value="网络小贷" />网络小贷 </label>
+        <label><input name="Fund" type="checkbox" value="基金" />基金 </label>
+        <label><input name="p2p" type="checkbox" value="p2p" />p2p </label>
+        <label><input name="InforManage" type="checkbox" value="资管" />资管 </label>
+        <label><input name="others" type="checkbox" value="其它" />其它 </label>
       </div>
     </div>
     <div class="next" @click="nextWay">下一步</div>
@@ -106,15 +87,13 @@
 <script>
 import Lib from '@/assets/js/Lib'
 import myHead from '@/components/Header'
-import { Step, StepItem, XButton, XHr, Cell } from 'vux'
+import {XButton, XHr, Cell } from 'vux'
 import $ from "jquery"
 
 export default {
   name: 'ReleaseAssets',
   components: {
     myHead,
-    Step,
-    StepItem,
     XButton,
     XHr,
     Cell
@@ -123,7 +102,8 @@ export default {
     return {
       step:1,
       text:'',
-      showContent004: false
+      showPdType: false,
+      showLikeType: false
     }
   },
   mounted(){
@@ -131,15 +111,8 @@ export default {
   },
   methods:{
     nextWay(){
-      this.$router.push('/ReleaseAssets2')
-    },
-/*    chooseType(){
-      $('label').click(function(){
-        var radioId = $('input[type="radio"]').attr('name');
-        $('label').removeAttr('class') && $(this).attr('class', 'checked');
-        $('input[type="radio"]').removeAttr('checked') && $('#' + radioId).attr('checked', 'checked');
-      })
-    }*/
+      this.$router.push({ path: 'Release2', query: { AorF: 'fund' }})
+    }
 
   }
 }
@@ -217,13 +190,7 @@ export default {
   outline: none;
   text-align: right;
 }
-.assets-des2{
-  width: 100%;
-  height: 15.28rem;
-  background: #fff;
-  margin-top: 0.625rem;
-}
-.assets-des2 .range input{
+.range input{
   width:2.595rem;
   height:1.44rem;
   border: 0.06rem solid #333;
@@ -268,37 +235,6 @@ export default {
 .pro-choose span{
   margin-left: 0.5rem;
 }
-.downArrow{
-  display: inline-block;
-  width: 0.75rem;
-  height: 0.44rem;
-  background: url("./img/choose_down.png") no-repeat center;
-  background-size: 100% 100%;
-}
-.upArrow{
-  display: inline-block;
-  width: 0.75rem;
-  height: 0.44rem;
-  background: url("./img/choose_up.png") no-repeat center;
-  background-size: 100% 100%;
-}
-/*.pro-type input[type="radio"] {
-  margin: 3px 3px 0px 5px;
-  display: none;
-}
-.pro-type label {
-  padding-left: 20px;
-  cursor: pointer;
-  !*background: url(bg.gif) no-repeat left top;*!
-  background: pink;
-}
-.pro-type label.checked {
-  background-position: left bottom;
-}*/
-/*.btn_wrap {
-  padding: 0 1rem;
-  margin-top: 2rem;
-}*/
 .myCell{
   position: absolute;
   left:0;
@@ -320,5 +256,43 @@ export default {
   max-height: 9999px;
   transition-timing-function: cubic-bezier(0.5, 0, 1, 0);
   transition-delay: 0s;
+}
+
+.pro-type2{
+  display: block;
+}
+.pro-type2 input[type="checkbox"] {
+  display: inline-block;
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 0.06rem solid #E6E6E6;
+  border-radius: 0.19rem;
+  cursor: pointer;
+  margin-right: 0.2rem;
+  outline: none;
+}
+.pro-type2 input:checked{
+  background: url("./img/selected_more.png") no-repeat center;
+  background-size: 100% 100%;
+}
+.pro-type2 label {
+  display: inline-block;
+  height: 3rem;
+  line-height: 3rem;
+  margin-right: 0.5rem;
+}
+.downArrow{
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.44rem;
+  background: url("./img/choose_down.png") no-repeat center;
+  background-size: 100% 100%;
+}
+.upArrow{
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.44rem;
+  background: url("./img/choose_up.png") no-repeat center;
+  background-size: 100% 100%;
 }
 </style>

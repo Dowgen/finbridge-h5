@@ -9,12 +9,10 @@ const LoginRoutes = [
   {
     path: '/',
     component: _import('Login/Login')
-  },
-  {
+  },{
     path: '/Regist',
     component: _import('Login/Regist')
-  },
-  {
+  },{
     path: '/ResetPsd',
     component: _import('Login/ResetPsd')
   }
@@ -33,8 +31,7 @@ const squareRoutes = [
   {
     path: '/Square',
     component: _import('Square/Square')
-  },
-  {
+  },{
     path: '/ProjectDetail',
     component: _import('Square/ProjectDetail')
   },
@@ -43,23 +40,25 @@ const squareRoutes = [
 const ReleaseRoutes = [
   {
     path: '/MyAssets',
-    component: _import('ReleaseAssets/MyAssets')
-  },
-  {
+    component: _import('Release/MyAssets')
+  },{
     path: '/ReleaseAssets',
-    component: _import('ReleaseAssets/ReleaseAssets')
-  },
-  {
-    path: '/ReleaseAssets2',
-    component: _import('ReleaseAssets/ReleaseAssets2')
-  },
-  {
-    path: '/ReleaseAssets3',
-    component: _import('ReleaseAssets/ReleaseAssets3')
-  },
-  {
-    path: '/ReleaseDetail',
-    component: _import('ReleaseAssets/ReleaseDetail')
+    component: _import('Release/ReleaseAssets')
+  },{
+    path: '/ReleaseFund',
+    component: _import('Release/ReleaseFund')
+  },{
+    path: '/Release2',
+    component: _import('Release/Release2')
+  },{
+    path: '/Release3',
+    component: _import('Release/Release3')
+  },{
+    path: '/AsDetail',
+    component: _import('Release/AsDetail')
+  },{
+    path: '/FuDetail',
+    component: _import('Release/FuDetail')
   }
 ]
 //个人信息模块
