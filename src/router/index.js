@@ -24,6 +24,11 @@ const HomeRoutes = [
     path: '/Home',
     component: _import('Home/Home')
   },
+  {
+    path: '/NewsDetail',
+    component: _import('Home/NewsDetail')
+  },
+
 ]
 
 //广场模块
@@ -31,9 +36,14 @@ const squareRoutes = [
   {
     path: '/Square',
     component: _import('Square/Square')
-  },{
-    path: '/ProjectDetail',
-    component: _import('Square/ProjectDetail')
+  },
+  {
+    path: '/ZcLoginProjectDetail',
+    component: _import('Square/ZcLoginProjectDetail')
+  },
+  {
+    path: '/ZjLoginProjectDetail',
+    component: _import('Square/ZjLoginProjectDetail')
   },
 ]
 //挂牌模块
@@ -66,7 +76,20 @@ const MyInfoRoutes = [
   {
     path: '/MyInfo',
     component: _import('MyInfo/MyInfo')
-  }
+  },
+  {
+    path: '/AboutUs',
+    component: _import('MyInfo/AboutUs')
+  },
+  {
+    path: '/AboutMe',
+    component: _import('MyInfo/AboutMe')
+  },
+  {
+    path: '/AddNick',
+    component: _import('MyInfo/AddNick')
+  },
+
 ]
 
 export default new Router({
