@@ -6,11 +6,11 @@
     <img class="logo" src="./img/logo.png">
     <h1>{{msg}}</h1>
     <div class="input" style=" position: relative;">
-      <input type="text" placeholder="手机号" class="phone" maxlength="11">
-      <input type="password" placeholder="密码" class="psd" maxlength="16">
+      <input v-model="phoneNum" type="text" placeholder="手机号" class="phone" maxlength="11">
+      <input v-model="password" type="password" placeholder="密码" class="psd" maxlength="16">
       <span class="miss-psd" @click="resetPsd">忘记密码？</span>
     </div>
-    <Btn msg="登录" backgroundColor="#4083FF"></Btn>
+    <Btn msg="登录" backgroundColor="#4083FF" @click.native="clickBtn"></Btn>
     <div class="footer">
       <router-link to="/Regist" style="color: #4083FF;">亲，还没注册? 立即前往注册</router-link>
     </div>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import Sha1 from './sha1'
 import Lib from '@/assets/js/Lib'
 import Btn from '@/components/btn'
 
@@ -31,7 +32,9 @@ export default {
   },
   data () {
     return {
-      msg: '欢迎再次回来'
+      msg: '欢迎再次回来',
+      phoneNum:'',
+      password:''
     }
   },
   mounted(){
@@ -63,6 +66,52 @@ export default {
           console.error(err);
         }
       });
+    },
+    /* 用户点击登录按钮 */
+    clickBtn(){
+      if(this.phoneNum==='' || this.password === ''){
+        this.$vux.toast.text('参数请填写完整！', 'middle')
+      }else{
+        if(!this.checkPassword(this.password)){
+
+        }else{
+          /* 先验证短信，然后根据登录方式决定是注册还是更改密码 */
+          this.login();
+        }
+      }
+    },
+    /* 修改密码 */
+    login(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/user/login',
+        data:{
+          phone: self.phoneNum,
+          password: sha1(self.password).toUpperCase()
+        },
+        success:function(res){
+          if(res.code==200){
+            self.$vux.toast.text('登录成功！', 'middle');
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
+    /* 校验密码 */
+    checkPassword(num){
+      let reg = /^(?![^a-zA-Z]+$)(?!\D+$)/;
+      let pass1 = reg.test(num);
+      let pass2 = num.length>=6 && num.length<=16;
+      if(!pass2){
+        this.$vux.toast.text('密码长度必须大于6位且小于16位','middle')
+        return false
+      }else if(!pass1){
+        this.$vux.toast.text('密码必须同时包含字母和数字','middle')
+        return false
+      }else{
+        return true
+      }
     }
   }
 }
