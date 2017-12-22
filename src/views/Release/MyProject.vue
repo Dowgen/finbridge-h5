@@ -40,9 +40,11 @@
           <div class="right">
             <p>{{item.projectName}}</p>
             <div>
-              <span>3天</span>
-              <i>|</i>
-              <span>{{item.fundType}}</span>
+              <div>
+                <span>3天</span>
+                <i>|</i>
+                <span>{{getLabel(item.fundType,'fund')}}</span>
+              </div>
               <img src="./img/label_judge.png"/>
             </div>
           </div>
@@ -65,9 +67,11 @@
           <div class="right">
             <p>{{item.projectName}}</p>
             <div>
-              <span>3天</span>
-              <i>|</i>
-              <span>{{item.productType}}</span>
+              <div>
+                <span>3天</span>
+                <i>|</i>
+                <span>{{getLabel(item.productType,'asset')}}</span>
+              </div>
               <img src="./img/label_judge.png"/>
             </div>
           </div>
@@ -93,9 +97,11 @@
           <div class="right">
             <p>{{item.projectName}}</p>
             <div>
-              <span>3天</span>
-              <i>|</i>
-              <span>{{item.productType}}</span>
+              <div>
+                <span>3天</span>
+                <i>|</i>
+                <span>{{getLabel(item.fundType,'fund')}}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -117,9 +123,11 @@
           <div class="right">
             <p>{{item.projectName}}</p>
             <div>
-              <span>3天</span>
-              <i>|</i>
-              <span>{{item.productType}}</span>
+              <div>
+                <span>3天</span>
+                <i>|</i>
+                <span>{{getLabel(item.productType,'asset')}}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -170,10 +178,20 @@ export default {
   },
   mounted(){
     this.getMyProject();
+    this.getFundList();
   },
   methods: {
-    getLabel(){
-
+    getLabel(key,type){
+      var f;
+      if(type=='fund') 
+        f = this.fundTypeList;
+      else 
+        f = this.assetTypeList;
+      console.log(f)
+      for(let i in f){
+        console.log('');
+        if(f[i].key == key) return f[i].label
+      }
     },
     click (key) {
       if(key=='addFund') this.$router.push('/ReleaseFund')
@@ -204,9 +222,9 @@ export default {
 
               for(let i in f){
                 if(f[i].listStatus == 1 || f[i].listStatus == 2){
-                  self.fundList.push(a[i]);
+                  self.fundList.push(f[i]);
                 }else{
-                  self.fundListLose.push(a[i]);
+                  self.fundListLose.push(f[i]);
                 }
               }
             }
@@ -344,13 +362,13 @@ export default {
           font-size:0.875rem;
           display:flex;
           align-items:center;
+          justify-content:space-between;
           >span:first-child,i{
             margin-right:0.3rem;
           }
           img{
             width:2.845rem;
             height: 1.15rem;
-            margin-left:2.44rem;
           }
         }
       }
