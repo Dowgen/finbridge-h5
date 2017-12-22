@@ -31,7 +31,7 @@ import Lib from '@/assets/js/Lib'
 
 import { Loading, XButton, Confirm, Swiper, SwiperItem, } from 'vux'
 
-import myHead from '@/components/Header'
+import myHead from '@/components/myHead'
 
 import $ from 'jquery'
 

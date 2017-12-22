@@ -26,7 +26,7 @@ import hotsItem1 from '@/components/hotsItem1'
 import hotsItem2 from '@/components/hotsItem2'
 import hotsItem3 from '@/components/hotsItem3'
 
-import myHead from '@/components/Header'
+import myHead from '@/components/myHead'
 
 export default {
   name: 'Home',	

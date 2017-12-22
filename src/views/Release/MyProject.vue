@@ -145,7 +145,7 @@
 <script>
 
 import Lib from '@/assets/js/Lib'
-import myHead from '@/components/Header'
+import myHead from '@/components/myHead'
 import MainNav from '@/components/mainNav'
 import { Loading, ButtonTab, ButtonTabItem,Popover,Actionsheet } from 'vux'
 

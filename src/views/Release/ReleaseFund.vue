@@ -78,7 +78,7 @@
 
 <script>
 import Lib from '@/assets/js/Lib'
-import myHead from '@/components/Header'
+import myHead from '@/components/myHead'
 import {XButton, XHr, Cell } from 'vux'
 import $ from "jquery"
 
