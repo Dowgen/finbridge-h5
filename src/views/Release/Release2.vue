@@ -1,13 +1,13 @@
 <template>
   <div class="assets">
-    <myHead msg="发布资产" backgroundColor="#fff"></myHead>
+    <myHead :msg="'发布'+title" backgroundColor="#fff"></myHead>
     <div class="asset-process">
       <div class="step">
-        <img v-show="coName == ''" src="./img/step2.png" alt="">
-        <img v-show="coName !== ''" src="./img/step2_2.png" alt="">
+        <img v-show="companyName == ''" src="./img/step2.png" alt="">
+        <img v-show="companyName !== ''" src="./img/step2_2.png" alt="">
       </div>
       <div class="step-title">
-        <div>资产信息</div>
+        <div>{{title}}信息</div>
         <div class="active">公司信息</div>
         <div>联系方式</div>
       </div>
@@ -16,7 +16,7 @@
       <div class="des-item">
         <div class="des-item-l">公司名称</div>
         <div class="des-item-r">
-          <input type="text" v-model="coName" placeholder="请输入公司名称">
+          <input type="text" v-model="companyName" placeholder="请输入公司名称">
         </div>
       </div>
     </div>
@@ -24,37 +24,33 @@
       <div class="des-item">
         <div class="des-item-l">公司名称</div>
         <div class="des-item-r">
-          <input type="text" v-model="coName" placeholder="请输入公司名称">
+          <input type="text" v-model="companyName" placeholder="请输入公司名称">
         </div>
       </div>
       <div class="des-item" style="border-bottom: 0.06rem solid #ECECEC;">
         <div class="des-item-l">运营时间</div>
         <div class="des-item-r">
-          <input type="text" placeholder="请详细填写*年*个月">
+          <input v-model="operationTime" type="number" placeholder="请详细填写*年*个月">
         </div>
       </div>
       <div class="des-item" style="position:relative">
         <div class="des-item-l">资金主要来源</div>
         <div class="des-item-r">
           <input type="text" placeholder="请选择资金来源类型">
-          <span :class="showLikeType?'upArrow':'downArrow'"></span>
+          <span :class="fundType?'upArrow':'downArrow'"></span>
         </div>
         <cell
         class="myCell"
         title="Animated"
         is-link
         :border-intent="false"
-        :arrow-direction="showLikeType ? 'up' : 'down'"
-        @click.native="showLikeType = !showLikeType"></cell>
+        :arrow-direction="fundType ? 'up' : 'down'"
+        @click.native="fundType = !fundType"></cell>
       </div>
-      <div class="pro-type slide" :class="showLikeType?'animate':''">
-        <label><input name="Band" type="checkbox" value="银行" />银行 </label>
-        <label><input name="PrivatePlacement" type="checkbox" value="私募" />私募 </label>
-        <label><input name="NetworkLoan" type="checkbox" value="网络小贷" />网络小贷 </label>
-        <label><input name="Fund" type="checkbox" value="基金" />基金 </label>
-        <label><input name="p2p" type="checkbox" value="p2p" />p2p </label>
-        <label><input name="InforManage" type="checkbox" value="资管" />资管 </label>
-        <label><input name="others" type="checkbox" value="其它" />其它 </label>
+      <div class="pro-type slide" :class="fundType?'animate':''">
+        <label v-for="item in fundList">
+          <input v-model="fundOrigin" type="checkbox" :value="item.key" />{{item.label}} 
+        </label>
       </div>
       <div class="des-item">
         <div class="des-item-l">公司地址</div>
@@ -68,13 +64,13 @@
       <div class="des-item">
         <div class="des-item-l"></div>
         <div class="des-item-r">
-          <input type="text" placeholder="请填写具体街道门牌号">
+          <input v-model="AddressDetail" type="text" placeholder="请填写具体街道门牌号">
         </div>
       </div>
       <div class="des-item">
         <div class="des-item-l">公司背景</div>
         <div class="des-item-r">
-          <input type="text" maxlength="24" placeholder="请填写24个字以内描述">
+          <input v-model="companyBackground" type="text" maxlength="24" placeholder="请填写24个字以内描述">
         </div>
       </div>
     </div>
@@ -97,20 +93,68 @@ export default {
   },
   data () {
     return {
-      coName:'',
+      title:'',
       AorF:'',
-      showLikeType: false,
+      fundType: false,
       cityVal: [],
       cityList: Lib.M.cityList,
+      fundList:[],
+      companyName :'',  // 公司名
+      operationTime :'',  // 运营时间(月)
+      AddressDetail  :'',  // 公司地址
+      companyBackground :'',  // 公司（团队股东）背景（选填）：
+      fundOrigin  :[]   // 目前资金来源(多选)
     }
   },
   mounted(){
-    this.AorF = this.$route.query.AorF
+    this.getFundList();
+    this.AorF = this.$route.query.AorF;
+    if(this.AorF == 'fund') this.title='资金'
+    else this.title = '资产'
   },
   methods:{
     nextWay(){
-      this.$router.push({ path: 'Release3', query: { AorF: this.AorF }})
-    }
+      if(this.AorF=='fund'){
+        let a = JSON.parse(localStorage.addFundParams);
+        a.companyName = this.companyName;
+        localStorage.addFundParams = JSON.stringify(a);
+        this.$router.push({ path: 'Release3', query: { AorF: this.AorF }})
+      }else{
+        if( this.companyName =='' ||
+          this.operationTime =='' ||
+          this.cityVal.length == 0 ||
+          this.companyAddress  =='' ||
+          this.companyBackground =='' ||
+          this.fundOrigin.length == 0){
+          this.$vux.toast.text('参数请填写完整', 'middle');
+        }else{
+          let b = {
+            companyName: this.companyName,
+            operationTime: parseInt(this.operationTime),
+            companyAddress: this.cityVal.join(',')+ ' ' + this.AddressDetail,
+            companyBackground: this.companyBackground,
+            fundOrigin: this.fundOrigin.join(',')
+          };
+          localStorage.addAssetParams = 
+            JSON.stringify(Object.assign(JSON.parse(localStorage.addAssetParams), b));
+          this.$router.push({ path: 'Release3', query: { AorF: this.AorF }})
+        }
+      }
+    },
+    /* 获取资金资产类型列表 */
+    getFundList(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/info/findAssetAndFundConfig',
+        success:function(res){
+          if(res.code==200){
+            self.fundList=res.data.fund;
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
   }
 }
 </script>
@@ -179,7 +223,7 @@ export default {
   font-size: 0.815rem;
   color: #C2C2C2;
 }
-.des-item .des-item-r input[type='text']{
+.des-item .des-item-r input{
   border:none;
   outline: none;
   text-align: right;

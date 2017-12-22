@@ -3,8 +3,8 @@
     <myHead msg="发布资产" backgroundColor="#fff"></myHead>
     <div class="asset-process">
       <div class="step">
-        <img v-show="text == ''" src="./img/step1.png" alt="">
-        <img v-show="text !== ''" src="./img/step1_1.png" alt="">
+        <img v-show="projectName == ''" src="./img/step1.png" alt="">
+        <img v-show="projectName !== ''" src="./img/step1_1.png" alt="">
       </div>
      <div class="step-title">
        <div class="active">资产信息</div>
@@ -15,70 +15,65 @@
     <div class="assets-des1">
       <div class="des-item">
         <div class="des-item-l">项目名称</div>
-        <div class="des-item-r"><input v-model="text" type="text" placeholder="填写格式“**** 第*号”"></div>
+        <div class="des-item-r"><input v-model="projectName" type="text" placeholder="填写格式“**** 第*号”"></div>
       </div>
       <div class="des-item">
-        <div class="des-item-l">产品名称</div>
-        <div class="des-item-r"><input type="text" maxlength="5" placeholder="请填写5个字以内"></div>
+        <div class="des-item-l">产品名称(选填)</div>
+        <div class="des-item-r"><input v-model="productName" type="text" maxlength="5" placeholder="请填写5个字以内"></div>
       </div>
       <div class="des-item" style="position:relative">
         <div class="des-item-l">产品类型</div>
         <div class="des-item-r pro-choose">
           <input type="text" placeholder="请选择产品类型">
-          <span class="downArrow" id="upDown"></span>
+          <span :class="showPdType?'upArrow':'downArrow'"></span>
         </div>
         <cell
         class="myCell"
         title="Animated"
         is-link
         :border-intent="false"
-        :arrow-direction="showContent004 ? 'up' : 'down'"
-        @click.native="showContent004 = !showContent004"></cell>
+        :arrow-direction="showPdType ? 'up' : 'down'"
+        @click.native="showPdType = !showPdType"></cell>
       </div>
 
 
-      <div class="pro-type slide" :class="showContent004?'animate':''">
-
-        <label><input name="CashLoan" type="radio" value="现金贷" />现金贷 </label>
-        <label><input name="CashLoan" type="radio" value="房抵贷" />房抵贷 </label>
-        <label><input name="CashLoan" type="radio" value="车抵贷" />车抵贷 </label>
-        <label><input name="CashLoan" type="radio" value="3C租赁" />3C租赁 </label>
-        <label><input name="CashLoan" type="radio" value="消费分期" />消费分期 </label>
-        <label><input name="CashLoan" type="radio" value="现金分期" />现金分期 </label>
-        <label><input name="CashLoan" type="radio" value="其它" />其它 </label>
+      <div class="pro-type slide" :class="showPdType?'animate':''">
+        <label v-for="item in assetList">
+          <input v-model="productType" name="assetsType" type="radio" :value="item.key" />{{item.label}} 
+        </label>
       </div>
       <div class="des-item">
         <div class="des-item-l">件均额度</div>
-        <div class="des-item-r"><input type="text" placeholder="元"></div>
+        <div class="des-item-r"><input v-model="perAmount" type="number" placeholder="元"></div>
       </div>
       <div class="des-item">
         <div class="des-item-l">产品特色</div>
-        <div class="des-item-r"><input type="text" maxlength="20" placeholder="请填写10-20个字以内"></div>
+        <div class="des-item-r"><input v-model="productFeature" type="text" maxlength="20" placeholder="请填写10-20个字以内"></div>
+      </div>
+      <div class="des-item">
+        <div class="des-item-l">单笔期限(天)</div>
+        <div class="des-item-r"><input v-model="perPeriod" type="number" maxlength="10" placeholder="请填写贷款期限"></div>
       </div>
     </div>
     <div class="assets-des2">
       <div class="des-item">
         <div class="des-item-l">资金成本区间</div>
         <div class="des-item-r range">
-          <input type="number" maxlength="5"> &nbsp;-&nbsp; <input type="number" maxlength="5">
+          <input v-model="fundCostRegionFrom" type="number" maxlength="5"> &nbsp;-&nbsp; <input v-model="fundCostRegionTo" type="number" maxlength="5">
           %
         </div>
       </div>
       <div class="des-item">
         <div class="des-item-l">日放款规模</div>
-        <div class="des-item-r"><input type="text" maxlength="20" placeholder="百万"></div>
+        <div class="des-item-r"><input v-model="dailyPayAmount" type="number" maxlength="20" placeholder="百万"></div>
       </div>
       <div class="des-item">
         <div class="des-item-l">总放款规模</div>
-        <div class="des-item-r"><input type="text" maxlength="20" placeholder="千万"></div>
+        <div class="des-item-r"><input v-model="totalPayAmount" type="number" maxlength="20" placeholder="千万"></div>
       </div>
       <div class="des-item">
         <div class="des-item-l">坏账率</div>
-        <div class="des-item-r"><input type="text" maxlength="5" placeholder="%"></div>
-      </div>
-      <div class="des-item">
-        <div class="des-item-l">资产发布期限</div>
-        <div class="des-item-r"><input type="text" maxlength="10" placeholder="3天/笔"></div>
+        <div class="des-item-r"><input v-model="debtRate" type="number" maxlength="5" placeholder="%"></div>
       </div>
       <div class="des-item">
       </div>
@@ -92,34 +87,81 @@
 <script>
 import Lib from '@/assets/js/Lib'
 import myHead from '@/components/Header'
-import { Step, StepItem, XButton, XHr, Cell } from 'vux'
+import { XButton, XHr, Cell } from 'vux'
 import $ from "jquery"
 
 export default {
   name: 'ReleaseAssets',
   components: {
     myHead,
-    Step,
-    StepItem,
     XButton,
     XHr,
     Cell
   },
   data () {
     return {
-      step:1,
-      text:'',
-      showContent004: false
+      showPdType: false,
+      assetList:[], //从后台获取的资产类型列表
+      projectName:'',
+      productName:'',
+      productType:'',
+      perAmount:'',
+      productFeature:'',
+      perPeriod:'',
+      fundCostRegionFrom:'',
+      fundCostRegionTo:'',
+      dailyPayAmount:'',
+      totalPayAmount:'',
+      debtRate :''
     }
   },
   mounted(){
-    
+    this.getAssetList();
   },
   methods:{
     nextWay(){
-      this.$router.push({ path: 'Release2', query: { AorF: 'assets' }})
-    }
-
+      if( this.projectName == '' ||
+          this.productType == '' ||
+          this.perAmount == '' ||
+          this.productFeature == '' ||
+          this.perPeriod == '' || 
+          this.fundCostRegionFrom == '' || 
+          this.fundCostRegionTo == '' ||
+          this.dailyPayAmount == '' || 
+          this.totalPayAmount == '' || 
+          this.debtRate == '' ){
+        this.$vux.toast.text('参数请填写完整', 'middle');
+      }else{
+        let addAssetParams = {
+          projectName : this.projectName,
+          productType : parseInt(this.productType),
+          perAmount : parseInt(this.perAmount),
+          productFeature : this.productFeature,
+          perPeriod : parseInt(this.perPeriod),
+          fundCostRegionFrom : parseInt(this.fundCostRegionFrom),
+          fundCostRegionTo : parseInt(this.fundCostRegionTo),
+          dailyPayAmount : parseInt(this.dailyPayAmount),
+          totalPayAmount : parseInt(this.totalPayAmount),
+          debtRate : parseInt(this.debtRate)
+        }
+        localStorage.addAssetParams = JSON.stringify(addAssetParams);
+        this.$router.push({ path: 'Release2', query: { AorF: 'assets' }})
+      }
+    },
+    /* 获取资金资产类型列表 */
+    getAssetList(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/info/findAssetAndFundConfig',
+        success:function(res){
+          if(res.code==200){
+            self.assetList = res.data.asset
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
   }
 }
 </script>
@@ -129,7 +171,7 @@ export default {
 
 .assets{
   width: 100%;
-  height: 100%;
+  height: 41rem;
   background: #EFEFF4;
   margin: 0 auto;
 }
@@ -191,7 +233,7 @@ export default {
   font-size: 0.815rem;
   color: #C2C2C2;
 }
-.des-item .des-item-r input[type='text']{
+.des-item .des-item-r input{
   border:none;
   outline: none;
   text-align: right;
@@ -205,6 +247,7 @@ export default {
 .assets-des2 .range input{
   width:2.595rem;
   height:1.44rem;
+  padding-right: 0.3rem;
   border: 0.06rem solid #333;
   outline: none;
 }
@@ -261,23 +304,6 @@ export default {
   background: url("./img/choose_up.png") no-repeat center;
   background-size: 100% 100%;
 }
-/*.pro-type input[type="radio"] {
-  margin: 3px 3px 0px 5px;
-  display: none;
-}
-.pro-type label {
-  padding-left: 20px;
-  cursor: pointer;
-  !*background: url(bg.gif) no-repeat left top;*!
-  background: pink;
-}
-.pro-type label.checked {
-  background-position: left bottom;
-}*/
-/*.btn_wrap {
-  padding: 0 1rem;
-  margin-top: 2rem;
-}*/
 .myCell{
   position: absolute;
   left:0;

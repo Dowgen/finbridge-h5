@@ -4,11 +4,11 @@
       <img src="./img/close.png" alt="">
     </div>
     <img class="logo" src="./img/logo.png">
-    <h1>{{msg}}</h1>
+    <h1>欢迎再次回来</h1>
     <div class="input" style=" position: relative;">
-      <input type="text" placeholder="手机号码" class="phone" maxlength="11" v-model="phonenum">
-      <input type="password" placeholder="请重置密码" class="psd" maxlength="16">
-      <input type="text">
+      <input type="text" placeholder="手机号码" class="phone" maxlength="11" v-model="phoneNum">
+      <input type="password" placeholder="请重置密码" class="psd" maxlength="16" v-model="password">
+      <input type="number" v-model="verifyCode">
       <span class="yzm">
         <div v-show="start" >
           <countdown v-model="time1" :start="start" @on-finish="finish1"></countdown><span style="padding-left:0.15rem">s</span>
@@ -17,14 +17,16 @@
       </span>
     </div>
     <div class="footer">
-      <Btn backgroundColor="#D7D7D7" msg="注册" v-show="phonenum == ''"></Btn>
-      <Btn backgroundColor="#4083FF" msg="注册" v-show="phonenum !== ''"></Btn>
-      <router-link to="/ZcLoginProjectDetail" style="color: #4083FF;">已有账户? 立即登录</router-link>
+      <Btn backgroundColor="#D7D7D7" msg="登录" 
+       v-show="phoneNum==''" @click.native="clickBtn"></Btn >
+      <Btn backgroundColor="#4083FF" msg="登录" v-show="phoneNum!==''" @click.native="clickBtn"></Btn >
+      <router-link to="/" style="color: #4083FF;">已有账户? 立即登录</router-link>
     </div>
   </div>
 </template>
 
 <script>
+import Sha1 from './sha1'
 import Lib from '@/assets/js/Lib'
 import Btn from '@/components/btn'
 import { Countdown } from 'vux'
@@ -36,8 +38,9 @@ export default {
   },
   data () {
     return {
-      msg: '欢迎再次回来',
-      phonenum:'',
+      phoneNum:'',
+      password:'',
+      verifyCode:'',
       /* countdown所需参数 */
       time1: 5,
       start: false,
@@ -47,8 +50,12 @@ export default {
   methods: {
     /* 开始倒计时 */
     begin1(){
-      this.start = true;
-      /*this.sendVerify();*/
+      if(Lib.M.isPhoneWrong(this.phoneNum)){
+        this.$vux.toast.text('手机号码不合法！','middle');
+      }else{
+        this.start = true;
+        this.sendVerify();
+      }
     },
     /* 倒计时结束时触发 */
     finish1 (index) {
@@ -56,6 +63,76 @@ export default {
       this.time1 = 5
       this.countDownText = '重新发送'
     },
+    /* 用户点击注册按钮 */
+    clickBtn(){
+      if(this.phoneNum==='' 
+        || this.verifyCode==='' 
+        || this.password === ''){
+        this.$vux.toast.text('参数请填写完整！', 'middle')
+      }else{
+        if(!this.checkPassword(this.password)){
+
+        }else{
+          /* 先验证短信，然后根据登录方式决定是注册还是更改密码 */
+          this.changePswd();
+        }
+      }
+    },
+    /* 发送验证码 */
+    sendVerify(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/msg/sendVerify',
+        data:{
+          phone: self.phoneNum
+        },
+        success:function(res){
+          if(res.code==200){
+            self.$vux.toast.text('发送成功！', 'middle')
+          }else{
+            self.$vux.toast.text(res.msg, 'middle')
+          }
+        }
+      });
+    },
+     /* 修改密码 */
+    changePswd(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/user/login',
+        data:{
+          phone: self.phoneNum,
+          password: sha1(self.password).toUpperCase(),
+          cerifyCode: self.verifyCode,
+          openId: 'a'
+        },
+        success:function(res){
+          if(res.code==200){
+            localStorage.userId = res.data.userId;
+            localStorage.phoneNum = self.phoneNum;
+            self.$vux.toast.text('密码修改成功！', 'middle');
+            self.$router.replace('home');
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
+    /* 校验密码 */
+    checkPassword(num){
+      let reg = /^(?![^a-zA-Z]+$)(?!\D+$)/;
+      let pass1 = reg.test(num);
+      let pass2 = num.length>=6 && num.length<=16;
+      if(!pass2){
+        this.$vux.toast.text('密码长度必须大于6位且小于16位','middle')
+        return false
+      }else if(!pass1){
+        this.$vux.toast.text('密码必须同时包含字母和数字','middle')
+        return false
+      }else{
+        return true
+      }
+    }
   }
 }
 </script>

@@ -49,8 +49,8 @@ const squareRoutes = [
 //挂牌模块
 const ReleaseRoutes = [
   {
-    path: '/MyAssets',
-    component: _import('Release/MyAssets')
+    path: '/MyProject',
+    component: _import('Release/MyProject')
   },{
     path: '/ReleaseAssets',
     component: _import('Release/ReleaseAssets')
