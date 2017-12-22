@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="content">
+    <div class="content" v-cloak>
       <swiper loop auto height="12.44rem" dots-position="center">
-        <swiper-item><img src="./img/banner1.png"></swiper-item>
-        <swiper-item><img src="./img/banner2.png"></swiper-item>
-        <swiper-item><img src="./img/banner3.png"></swiper-item>
-        <swiper-item><img src="./img/banner4.png"></swiper-item>
-        <swiper-item><img src="./img/banner5.png"></swiper-item>
+        <swiper-item><img :src="img_src"></swiper-item>
+        <swiper-item><img :src="img_src"></swiper-item>
+        <swiper-item><img :src="img_src"></swiper-item>
+        <swiper-item><img :src="img_src"></swiper-item>
+        <swiper-item><img :src="img_src"></swiper-item>
       </swiper>
       <div class="recommend">
         <p>
@@ -14,36 +14,36 @@
           <span @click="lookMore">查看更多<img src="./img/icon_more.png"/></span>
         </p>
        <div class="recommend-con">
-         <div @click="lookMore" class="con-item">
-           <h4>爱信资产</h4>
-           <p>倒计时3天</p>
+         <div @click="lookMore" class="zc con-item">
+           <h4>{{ZcProjectName}}</h4>
+           <p>倒计时{{countDownDay}}天</p>
            <p>
              <span>现金分期</span>
              <span>网络小贷</span>
            </p>
            <p>
-             <span>15-18%</span>
-             <span>三千万</span>
+             <span>{{ZcFundCostRegionFrom}}-{{ZcFundCostRegionTo}}%</span>
+             <span>{{ZcTotalPayAmount}}</span>
            </p>
            <p>
              <span>资金成本区间</span>
-             <span>总房款量</span>
+             <span>总放款量</span>
            </p>
          </div>
-         <div @click="lookMore" class="con-item">
-           <h4>爱信资产</h4>
-           <p>倒计时3天</p>
+         <div @click="lookMore" class="zj con-item">
+           <h4>{{ZjProjectName}}</h4>
+           <p>倒计时{{countDownDay}}天</p>
            <p>
              <span>现金分期</span>
              <span>网络小贷</span>
            </p>
            <p>
-             <span>15-18%</span>
-             <span>三千万</span>
+             <span>{{ZjFundCostRegionFrom}}-{{ZjFundCostRegionTo}}%</span>
+             <span>{{ZjFundAnmount}}</span>
            </p>
            <p>
              <span>资金成本区间</span>
-             <span>总房款量</span>
+             <span>总放款量</span>
            </p>
          </div>
        </div>
@@ -68,7 +68,7 @@
         </div>
         <hotsItem2></hotsItem2>
         <hotsItem2></hotsItem2>
-        <hotsItem2></hotsItem2>
+        <div class="lookMore"  @click="newsDetail">查看更多(32)</div>
       </div>
     </div>
     <main-nav which="home"></main-nav>
@@ -92,19 +92,118 @@ export default {
   },
   data () {
     return {
-      
+      ZcProjectName:'',
+      ZcFundCostRegionFrom:'',
+      ZcFundCostRegionTo:'',
+      ZcTotalPayAmount:'',
+      ZjProjectName:'',
+      ZjFundCostRegionFrom:'',
+      ZjFundCostRegionTo:'',
+      ZjFundAnmount:'',
+      img_src:'',
+      countDownDay:'',
+      updateTime:''
     }
   },
   computed:{
     
   },
   mounted(){
-    
+    this.getConfigByParameter();
   },
   methods: {
+    newsDetail(){
+      this.$router.push('./NewsDetail')
+    },
     lookMore(){
       this.$router.push('./Square')
-    }
+    },
+    getConfigByParameter(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/config/getConfigByParameter',
+        data:{
+          'key':'unlistPeriod'
+        },
+        success:function (res) {
+          self.updateTime = res.data[0].value;
+          self.getRecommendZc();
+          self.getRecommendFund();
+          self.getCarouselFigure();
+          self.getArticle();
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    getRecommendZc(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/asset/getRecommendAsset',
+        success:function(res){
+          self.ZcProjectName = res.data[0].projectName;
+          self.ZcFundCostRegionFrom = res.data[0].fundCostRegionFrom;
+          self.ZcFundCostRegionTo = res.data[0].fundCostRegionTo;
+          self.ZcTotalPayAmount = res.data[0].totalPayAmount;
+        /*  console.log(res.data[0]);*/
+
+          var currentTime = Date.parse(new Date())/ 1000;
+
+          var listTime = res.data[0].listTime;
+          listTime = Date.parse(new Date(listTime))/ 1000;
+
+
+          self.countDownDay =Math.floor(self.updateTime -(currentTime - listTime)/(60*60*24)) ;
+
+
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    getRecommendFund(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/fund/getRecommendFund',
+        success:function (res) {
+          self.ZjProjectName = res.data[0].projectName;
+          self.ZjFundCostRegionFrom = res.data[0].fundCostRegionFrom;
+          self.ZjFundCostRegionTo = res.data[0].fundCostRegionTo;
+          self.ZjFundAnmount = res.data[0].fundAnmount;
+          console.log(res);
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    getCarouselFigure(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/info/getCarouselFigure',
+        success:function (res) {
+          self.img_src=res.data[0].picUrl;
+          /*console.log(self.img_src);*/
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    getArticle(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/info/getArticle',
+        success:function (res) {
+          /*console.log(res);*/
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
   }
 }
 </script>
@@ -205,7 +304,7 @@ export default {
     .hots{
       margin-top:0.5rem;
       background: #ffffff;
-      padding: 0 1rem;
+      padding: 0 1rem 1rem;
       .hots-head{
         font-size: 0.875rem;
         color: #1C3A53 ;
@@ -256,6 +355,17 @@ export default {
             margin-right: 0.6rem;
           }
         }
+      }
+      .lookMore{
+        width:21.565rem;
+        height:2.065rem;
+        background:rgba(239,239,244,1);
+        border-radius: 0.25rem ;
+        margin:1rem auto 0;
+        font-size: 0.815rem;
+        color: #4083FF;
+        line-height: 2.065rem;
+        text-align: center;
       }
     }
   }

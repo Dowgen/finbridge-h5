@@ -45,7 +45,7 @@ export default {
   position: relative;
   line-height: 4rem;
   font-weight: 600;
-  border-bottom: solid 1px #b4b4b4;
+ /* border-bottom: solid 1px #b4b4b4;*/
 }
 .header span{
   position: absolute;

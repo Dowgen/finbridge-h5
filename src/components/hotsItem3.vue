@@ -31,9 +31,7 @@ export default {
   },
   //相关操作事件
   methods: {
-   /* newsDetail(){
-      this.$router.push('./NewsDetail')
-    }*/
+
   }
 }
 </script>

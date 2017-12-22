@@ -1,23 +1,23 @@
 <template>
   <div class="content">
-    <myHead msg="关于我们"></myHead>
+    <myHead msg="关于我们" backgroundColor="#fff" style="border: none;"></myHead>
     <div class="aboutUS">
-      <img src="./img/img_placeholder.png" alt="">
-      <h4>51资金资产对接</h4>
-      <p>V 1.0.1</p>
+      <img src="./img/logo.png" alt="">
+      <h4>{{product}}</h4>
+      <p>{{version}}</p>
     </div>
     <div class="contactWay">
       <div class="ways">
         <span>微信号</span>
-        <span>51zzuixing_881</span>
+        <span>{{wechat}}</span>
       </div>
       <div class="ways">
         <span>QQ号</span>
-        <span>2931009881</span>
+        <span>{{qq}}</span>
       </div>
       <div class="ways">
         <span>客服热线</span>
-        <span>0571-26220819</span>
+        <span>{{phone}}</span>
       </div>
     </div>
     <div class="quit">安全退出</div>
@@ -31,8 +31,9 @@ import Lib from '@/assets/js/Lib'
 
 import { Loading, XButton, Confirm, Swiper, SwiperItem, } from 'vux'
 
-
 import myHead from '@/components/Header'
+
+import $ from 'jquery'
 
 export default {
   name: 'Home', 
@@ -41,17 +42,55 @@ export default {
   },
   data () {
     return {
-      
+      myData:[],
+      product:'',
+      version:'',
+      wechat:'',
+      qq:'',
+      phone:''
     }
   },
   computed:{
     
   },
   mounted(){
-    
+    this.getMyInfo();
   },
   methods: {
-      
+    getMyInfo(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/info/getAboutUs',
+        success:function(res){
+          self.myData = res.data;
+          $(self.myData).each(function(index){
+            if(self.myData[index].key == 'aboutUs_product'){
+              self.product = self.myData[index].value;
+              console.log(self.product);
+            }
+            if(self.myData[index].key == 'aboutUs_version'){
+              self.version = self.myData[index].value;
+              console.log(self.version);
+            }
+            if(self.myData[index].key == 'aboutUs_wechat'){
+              self.wechat = self.myData[index].value;
+              console.log(self.wechat);
+            }
+            if(self.myData[index].key == 'aboutUs_qq'){
+              self.qq = self.myData[index].value;
+              console.log(self.qq);
+            }
+            if(self.myData[index].key == 'aboutUs_phone'){
+              self.phone = self.myData[index].value;
+              console.log(self.phone);
+            }
+          });
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
   }
 }
 </script>
@@ -68,9 +107,8 @@ export default {
       height: 13.25rem;
       img{
         display: block;
-        width:3.875rem;
-        height:2.815rem;
-        border: 1px solid red;
+        width:4.25rem;
+        height:4.25rem;
         margin:3.75rem auto 0.9rem;
       }
       h4{

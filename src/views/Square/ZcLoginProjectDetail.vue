@@ -6,20 +6,20 @@
         <p>项目详情</p>
       </div>
       <div class="con">
-        <p class="p1">人众资金 第031号</p>
-        <p class="p2">15-18</p>
+        <p class="p1">{{$route.query.oItem.productName}}</p>
+        <p class="p2">{{$route.query.oItem.fundCostRegionFrom}}-{{$route.query.oItem.fundCostRegionTo}}</p>
         <p class="p3">资金成本区间(%）</p>
         <div class="project-des">
           <div class="item">
-            <p>1800元</p>
+            <p>{{$route.query.oItem.perAmount}}元</p>
             <p>件均额度</p>
           </div>
           <div class="item">
-            <p>3天</p>
+            <p>{{$route.query.oItem.perPeriod}}天</p>
             <p>单笔期限</p>
           </div>
           <div class="item">
-            <p>3百万</p>
+            <p>{{$route.query.oItem.dailyPayAmount}}</p>
             <p style="border: none;">日放款量</p>
           </div>
         </div>
@@ -35,12 +35,12 @@
         <p>产品特色</p>
       </div>
       <div class="main-item">
-        <p>人众资金 第031号</p>
-        <p>车抵贷</p>
-        <p>20,000,000</p>
-        <p>3.0%</p>
-        <p>爱信金融钱包</p>
-        <p>主要专业给年轻人的贷款，提供消费分期平台便于生活</p>
+        <p>{{$route.query.oItem.projectName}}</p>
+        <p>{{$route.query.oItem.productType}}</p>
+        <p>{{$route.query.oItem.totalPayAmount}}</p>
+        <p>{{$route.query.oItem.debtRate}}</p>
+        <p>{{$route.query.oItem.projectName}}</p>
+        <p>{{$route.query.oItem.productFeature}}</p>
       </div>
     </div>
     <div class="project-footer">
@@ -52,11 +52,11 @@
         <p>公司背景</p>
       </div>
       <div class="footer-item">
-        <p>人众金服股份有限公司</p>
-        <p>3个月</p>
-        <p>银行/P2P/私募/基金/网络小贷/资管/其他</p>
-        <p>XXXXXXXXXXXX</p>
-        <p>XXXXXXXXXXXX</p>
+        <p>{{$route.query.oItem.companyName}}</p>
+        <p>{{$route.query.oItem.operationTime}}</p>
+        <p>{{$route.query.oItem.fundOrigin}}</p>
+        <p>{{$route.query.oItem.companyAddress}}</p>
+        <p>{{$route.query.oItem.companyBackground}}</p>
       </div>
     </div>
     <div class="footer-btn" v-show="key == 1" @click="contactCard">立即合作</div>
@@ -66,28 +66,28 @@
      <div class="contactCard">
        <div class="name">
           <img src="./img/ic_card_person.png" alt="">
-          章睿敬先生
+          {{$route.query.oItem.contactPerson}}先生
         </div>
        <div class="contactWays">
          <p>
            <img src="./img/ic_wechat.png" alt="">
            微信号
          </p>
-         <p>51zzuixing_881</p>
+         <p>{{$route.query.oItem.contactWechat}}</p>
        </div>
        <div class="contactWays">
          <p>
            <img src="./img/ic_card_QQ.png" alt="">
            QQ号
          </p>
-         <p>51zzuixing_881</p>
+         <p>{{$route.query.oItem.contactQQ}}</p>
        </div>
        <div class="contactWays">
          <p>
            <img src="./img/ic_phone.png" alt="">
            手机号码
          </p>
-         <p>51zzuixing_881</p>
+         <p>{{$route.query.oItem.contactPhone}}</p>
        </div>
        <div class="foot-close" @click="closeContactCard">
          <img src="./img/ic_card_dropout.png" alt="">

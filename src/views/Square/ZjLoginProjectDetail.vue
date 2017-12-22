@@ -6,15 +6,15 @@
         <p>项目详情</p>
       </div>
       <div class="con">
-        <p class="p1">人众资金 第031号</p>
-        <p class="p2">15-18</p>
+        <p class="p1">{{$route.query.item.projectName}}</p>
+        <p class="p2">{{$route.query.item.fundCostRegionFrom}}-{{$route.query.item.fundCostRegionTo}}</p>
         <p class="p3">资金成本区间(%）</p>
         <div class="project-des">
           <div class="item">
-            <p>资金类型: P2P</p>
+            <p>资金类型: {{$route.query.item.fundType}}</p>
           </div>
           <div class="item">
-            <p>资金规模: 3千万</p>
+            <p>资金规模: {{$route.query.item.fundAnmount}}</p>
           </div>
         </div>
       </div>
@@ -25,19 +25,52 @@
         <p>青睐资产</p>
       </div>
       <div class="main-item">
-        <p>人众金服股份有限公司</p>
-        <p>现金贷、现金分期、消费分期、车
-          抵贷、3C租赁</p>
+        <p>{{$route.query.item.companyName}}</p>
+        <p>{{$route.query.item.findAssetType}}</p>
       </div>
     </div>
-    <div class="footer-btn" v-show="key == 1">立即合作</div>
+    <div class="footer-btn" v-show="key == 1" @click="contactCard">立即合作</div>
     <div class="footer-btn" v-show="key == 2">查看联系方式</div>
+
+    <div class="alert">
+      <div class="contactCard">
+        <div class="name">
+          <img src="./img/ic_card_person.png" alt="">
+          {{$route.query.item.contactPerson}}先生
+        </div>
+        <div class="contactWays">
+          <p>
+            <img src="./img/ic_wechat.png" alt="">
+            微信号
+          </p>
+          <p>{{$route.query.item.contactWechat}}</p>
+        </div>
+        <div class="contactWays">
+          <p>
+            <img src="./img/ic_card_QQ.png" alt="">
+            QQ号
+          </p>
+          <p>{{$route.query.item.contactQQ}}</p>
+        </div>
+        <div class="contactWays">
+          <p>
+            <img src="./img/ic_phone.png" alt="">
+            手机号码
+          </p>
+          <p>{{$route.query.item.contactPhone}}</p>
+        </div>
+        <div class="foot-close" @click="closeContactCard">
+          <img src="./img/ic_card_dropout.png" alt="">
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Lib from '@/assets/js/Lib'
 import { Toast} from 'vux'
+import $ from 'jquery'
 
 export default {
   name: 'ProjectDetail',
@@ -50,6 +83,9 @@ export default {
       key:1,
     }
   },
+  mounted(){
+
+  },
   methods:{
     share(){
       this.$vux.toast.show({
@@ -59,6 +95,13 @@ export default {
         position: 'middle'
       })
     },
+    contactCard(){
+      $('.alert').css('display','block')
+    },
+    closeContactCard(){
+      $('.alert').css('display','none')
+    }
+
   }
 }
 </script>
@@ -184,17 +227,81 @@ body{
   line-height: 3.065rem;
   font-size: 1.065rem;
 }
-.btn-left{
-  font-size: 1.125rem;
+.alert{
+  width: 100%;
+  height: 100%;
+  max-width: 640px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;
+}
+.alert .contactCard{
+  width: 14.815rem;
+  height: 21.5rem;
+  background: url("./img/contact_card_bg.png") no-repeat center;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -9.4075rem;
+  margin-top: -10.75rem;
+  text-align: left;
+  padding:0 2rem;
+}
+.alert .contactCard .name{
+  margin-top: 1.5rem;
+  margin-bottom: 4.5rem;
+  font-size: 1rem;
   color: #fff;
+  position: relative;
+  text-indent: 2rem;
 }
-.btn-right{
-  background: #fff;
-  font-size: 1.125rem;
-  color: #B5B5B5;
+.alert .contactCard .name img{
+  display: inline-block;
+  width: 1.345rem;
+  height: 1.345rem;
+  position: absolute;
+  top: 0.05rem;
+  left: 0.2rem;
 }
-.delete{
-  width: 0.94rem;
-  height: 0.94rem;
+.contactWays{
+  font-size: 0.875rem;
+  color: #333333;
+  position: relative;
+  text-indent: 2.5rem;
+  line-height: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.contactWays p:nth-of-type(2){
+  color: #666;
+}
+.contactWays img{
+  display: inline-block;
+  width: 1.125rem;
+  height: 1rem;
+  position: absolute;
+  top: 0.05rem;
+  left: 0.2rem;
+}
+.contactWays img:nth-of-type(2){
+  width: 1.125rem;
+  height: 1.25rem;
+}
+.contactWays img:nth-of-type(3){
+  width: 1.25rem;
+  height: 1.03rem;
+}
+.foot-close{
+  width: 2.19rem;
+  height: 3.5rem;
+  position: absolute;
+  right: 1.5rem;
+  bottom: 0;
+}
+.foot-close img{
+  width: 100%;
+  height: 100%;
 }
 </style>

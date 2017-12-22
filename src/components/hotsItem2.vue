@@ -1,6 +1,6 @@
 <template>
   <div class="news">
-    <div class="hots-item" @click="newsDetail">
+    <div class="hots-item">
       <div class="left">
         <h4>千真万确！银行不接待资金！</h4>
         <p class="about-read">
@@ -32,9 +32,7 @@ export default {
   },
   //相关操作事件
   methods: {
-    newsDetail(){
-      this.$router.push('./NewsDetail')
-    }
+
   }
 }
 </script>

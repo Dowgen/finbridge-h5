@@ -52,7 +52,7 @@ export default {
 
 <style lang="less" scoped>
   .content{
-    background: #EFEFF4;
+   /* background: #EFEFF4;*/
     padding-bottom:3.8rem;
     background: #fff;
     position: absolute;

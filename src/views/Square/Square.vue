@@ -8,12 +8,12 @@
         </button-tab>
       </div>
       <div class="zj" v-show="zj">
-       <div class="zj-head">
-         <div>综合排序</div>
-         <div>总放款规模
+        <div class="zj-head">
+         <div @click="getZjComprehensiveSortFund">综合排序</div>
+         <div @click="getZjTotalSortFundAsc">总放款规模
            <img v-show="key == 0" src="./img/ic_arrow_nor.png" alt="">
-           <img v-show="key == 1" src="./img/ic_arrow_down.png" alt="">
-           <img v-show="key == 2" src="./img/arrow_up.png" alt="">
+           <img @click="getZjTotalSortFundDesc" v-show="key == 1" src="./img/ic_arrow_down.png" alt="">
+           <img @click="getZjTotalSortFundAsc" v-show="key == 2" src="./img/arrow_up.png" alt="">
          </div>
          <div @click="chooseType">选择类型
            <img v-show="key == 0" src="./img/arrow_type_nor.png" alt="">
@@ -38,99 +38,28 @@
           </div>
         </div>
         <div class="con">
-          <div @click="ZjProjectDetail" class="con-item">
+          <div @click="ZjProjectDetail(item)" class="con-item" v-for="(item,index) in items">
             <div class="item-title">
               <span></span>
-              <span>中腾堡SJT-BL-171131</span>
+              <span>{{item.projectName}}</span>
             </div>
             <div class="item-main">
               <div class="left">
-                <p>7<span>%</span> - 10<span>%</span></p>
+                <p>{{item.fundCostRegionFrom}}<span>%</span> - {{item.fundCostRegionTo}}<span>%</span></p>
                 <p>资金成本区间</p>
               </div>
               <div class="right">
-                <p>
-                  <span></span>
-                  <span>项目类型</span>
-                  <span>车抵贷</span>
-                </p>
-                <p>
-                  <span style="margin-left: 4.2rem;"></span>
-                  <span>项目倒计时</span>
-                  <span>3天</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="con-item">
-            <div class="item-title">
-              <span></span>
-              <span>中腾堡SJT-BL-171131</span>
-            </div>
-            <div class="item-main">
-              <div class="left">
-                <p>7<span>%</span> - 10<span>%</span></p>
-                <p>资金成本区间</p>
-              </div>
-              <div class="right">
-                <p>
-                  <span></span>
-                  <span>项目类型</span>
-                  <span>车抵贷</span>
-                </p>
-                <p>
-                  <span style="margin-left: 4.2rem;"></span>
-                  <span>项目倒计时</span>
-                  <span>3天</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="con-item">
-            <div class="item-title">
-              <span></span>
-              <span>中腾堡SJT-BL-171131</span>
-            </div>
-            <div class="item-main">
-              <div class="left">
-                <p>7<span>%</span> - 10<span>%</span></p>
-                <p>资金成本区间</p>
-              </div>
-              <div class="right">
-                <p>
-                  <span></span>
-                  <span>项目类型</span>
-                  <span>车抵贷</span>
-                </p>
-                <p>
-                  <span style="margin-left: 4.2rem;"></span>
-                  <span>项目倒计时</span>
-                  <span>3天</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="con-item">
-            <div class="item-title">
-              <span></span>
-              <span>中腾堡SJT-BL-171131</span>
-            </div>
-            <div class="item-main">
-              <div class="left">
-                <p>7<span>%</span> - 10<span>%</span></p>
-                <p>资金成本区间</p>
-              </div>
-              <div class="right">
-                <p>
-                  <span></span>
-                  <span>项目类型</span>
-                  <span>车抵贷</span>
-                </p>
-                <p>
-                  <span style="margin-left: 4.2rem;"></span>
-                  <span>项目倒计时</span>
-                  <span>3天</span>
-                </p>
+                <div>
+                  <p></p>
+                  <p>项目类型</p>
+                  <p>{{item.fundType}}</p>
+                </div>
+                <div>
+                  <p></p>
+                  <p>项目倒计时</p>
+                  <p>{{Math.floor(validDay -((currentTime - (Date.parse(new Date(item.listTime)) / 1000))/(60*60*24)))}}天</p>
+
+                </div>
               </div>
             </div>
           </div>
@@ -139,111 +68,56 @@
       <div class="zj" v-show="!zj">
         资产资产资产
         <div class="zj-head">
-          <div>综合排序</div>
-          <div>总放款规模
+          <div @click="getZcComprehensiveSortFund">综合排序</div>
+          <div @click="getZcTotalSortFundAsc">总放款规模
             <img v-show="key == 0" src="./img/ic_arrow_nor.png" alt="">
-            <img v-show="key == 1" src="./img/ic_arrow_down.png" alt="">
-            <img v-show="key == 2" src="./img/arrow_up.png" alt="">
+            <img @click="getZcTotalSortFundDesc" v-show="key == 1" src="./img/ic_arrow_down.png" alt="">
+            <img @click="getZcTotalSortFundAsc" v-show="key == 2" src="./img/arrow_up.png" alt="">
           </div>
-          <div>选择类型
+          <div @click="chooseType">选择类型
             <img v-show="key == 0" src="./img/arrow_type_nor.png" alt="">
             <img v-show="key == 1" src="./img/arrow_type_sel.png" alt="">
           </div>
         </div>
+        <div class="type">
+          <span class="angle"><img src="./img/tri-angle.png" alt=""></span>
+          <div class="type-head">产品类型</div>
+          <div class="types">
+            <label><input name="CashLoan" type="radio" value="现金贷" />现金贷 </label>
+            <label><input name="CashLoan" type="radio" value="房抵贷" />房抵贷 </label>
+            <label><input name="CashLoan" type="radio" value="车抵贷" />车抵贷 </label>
+            <label><input name="CashLoan" type="radio" value="3C租赁" />3C租赁 </label>
+            <label><input name="CashLoan" type="radio" value="消费分期" />消费分期 </label>
+            <label><input name="CashLoan" type="radio" value="现金分期" />现金分期 </label>
+            <label><input name="CashLoan" type="radio" value="其它" />其它 </label>
+          </div>
+          <div class="btn">
+            <span class="confirm" @click="confirm">确定</span>
+            <span class="cancel" @click="cancel">取消</span>
+          </div>
+        </div>
         <div class="con">
-          <div @click="ZcProjectDetail" class="con-item">
+          <div @click="ZcProjectDetail(oItem)" class="con-item" v-for="oItem in oItems">
             <div class="item-title">
               <span></span>
-              <span>中腾堡SJT-BL-171131</span>
+              <span>{{oItem.projectName}}</span>
             </div>
             <div class="item-main">
               <div class="left">
-                <p>7<span>%</span> - 10<span>%</span></p>
+                <p>{{oItem.fundCostRegionFrom}}<span>%</span> - {{oItem.fundCostRegionTo}}<span>%</span></p>
                 <p>资金成本区间</p>
               </div>
               <div class="right">
-                <p>
-                  <span></span>
-                  <span>项目类型</span>
-                  <span>车抵贷</span>
-                </p>
-                <p>
-                  <span style="margin-left: 4.2rem;"></span>
-                  <span>项目倒计时</span>
-                  <span>3天</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="con-item">
-            <div class="item-title">
-              <span></span>
-              <span>中腾堡SJT-BL-171131</span>
-            </div>
-            <div class="item-main">
-              <div class="left">
-                <p>7<span>%</span> - 10<span>%</span></p>
-                <p>资金成本区间</p>
-              </div>
-              <div class="right">
-                <p>
-                  <span></span>
-                  <span>项目类型</span>
-                  <span>车抵贷</span>
-                </p>
-                <p>
-                  <span style="margin-left: 4.2rem;"></span>
-                  <span>项目倒计时</span>
-                  <span>3天</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="con-item">
-            <div class="item-title">
-              <span></span>
-              <span>中腾堡SJT-BL-171131</span>
-            </div>
-            <div class="item-main">
-              <div class="left">
-                <p>7<span>%</span> - 10<span>%</span></p>
-                <p>资金成本区间</p>
-              </div>
-              <div class="right">
-                <p>
-                  <span></span>
-                  <span>项目类型</span>
-                  <span>车抵贷</span>
-                </p>
-                <p>
-                  <span style="margin-left: 4.2rem;"></span>
-                  <span>项目倒计时</span>
-                  <span>3天</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="con-item">
-            <div class="item-title">
-              <span></span>
-              <span>中腾堡SJT-BL-171131</span>
-            </div>
-            <div class="item-main">
-              <div class="left">
-                <p>7<span>%</span> - 10<span>%</span></p>
-                <p>资金成本区间</p>
-              </div>
-              <div class="right">
-                <p>
-                  <span></span>
-                  <span>项目类型</span>
-                  <span>车抵贷</span>
-                </p>
-                <p>
-                  <span style="margin-left: 4.2rem;"></span>
-                  <span>项目倒计时</span>
-                  <span>3天</span>
-                </p>
+                <div>
+                  <p></p>
+                  <p>项目类型</p>
+                  <p>{{oItem.productType}}</p>
+                </div>
+                <div>
+                  <p></p>
+                  <p>项目倒计时</p>
+                  <p>{{Math.floor(validDay -((currentTime - (Date.parse(new Date(oItem.listTime)) / 1000))/(60*60*24)))}}天</p>
+                </div>
               </div>
             </div>
           </div>
@@ -272,14 +146,23 @@ export default {
   data () {
     return {
       zj:true,
-      key:0
+      key:0,
+      items:[],
+      oItems:[],
+      validDay:'',
+      img_src:'',
+      countDownDay:'',
+      currentTime:''
     }
   },
   computed:{
     
   },
   mounted(){
-    
+    this.getConfigByParameter();
+    this.getCurrent();
+    this.getZjComprehensiveSortFund();
+    this.getZcComprehensiveSortFund();
   },
   methods: {
     chooseType(){
@@ -291,12 +174,154 @@ export default {
     cancel(){
       $('.type').css('display','none');
     },
-    ZjProjectDetail(){
-      this.$router.push('./ZjLoginProjectDetail')
+    ZjProjectDetail(item){
+      this.$router.push({'path':'/ZjLoginProjectDetail',query:{
+          item:item,
+        }
+      })
     },
-    ZcProjectDetail(){
-      this.$router.push('./ZcLoginProjectDetail')
-    }
+    ZcProjectDetail(oItem){
+      this.$router.push({'path':'/ZcLoginProjectDetail',query:{
+        oItem:oItem,
+      }
+      })
+    },
+    getConfigByParameter(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/config/getConfigByParameter',
+        data:{
+          'key':'unlistPeriod'
+        },
+        success:function (res) {
+          console.log(111111);
+          console.log(res);
+          self.validDay = res.data[0].value;
+
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    getZjComprehensiveSortFund(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/fund/sortFund',
+        data:{
+          'chooseType':'comprehensive',
+          'sortType':'asc',
+         /* 'type':'',*/
+        },
+        success:function (res) {
+          console.log(res.data);
+          self.items = res.data
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    getZjTotalSortFundAsc(){
+      var self = this;
+      self.key = 2;/*升序*/
+      Lib.M.ajax({
+        url:'/fund/sortFund',
+        data:{
+          'chooseType':'total',
+          'sortType':'asc',
+          /* 'type':'',*/
+        },
+        success:function (res) {
+          console.log(res.data);
+          self.items = res.data
+
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    getZjTotalSortFundDesc(){
+      var self = this;
+      self.key = 1;/*降序*/
+      Lib.M.ajax({
+        url:'/fund/sortFund',
+        data:{
+          'chooseType':'total',
+          'sortType':'desc',
+        },
+        success:function (res) {
+          console.log(res.data);
+          self.items = res.data
+
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    getCurrent(){
+      self.currentTime = Date.parse(new Date())/ 1000
+    },
+    getZcComprehensiveSortFund(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/asset/sortAsset',
+        data:{
+          'chooseType':'comprehensive',
+          'sortType':'asc',
+          /* 'type':'',*/
+        },
+        success:function (res) {
+         /* console.log(111111);
+          console.log(res.data);*/
+          self.oItems = res.data
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    getZcTotalSortFundAsc(){
+      var self = this;
+      self.key = 2;/*升序*/
+      Lib.M.ajax({
+        url:'/asset/sortAsset',
+        data:{
+          'chooseType':'total',
+          'sortType':'asc',
+          /* 'type':'',*/
+        },
+        success:function (res) {
+         /* console.log(res.data);*/
+          self.oItems = res.data
+
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    getZcTotalSortFundDesc(){
+      var self = this;
+      self.key = 1;/*降序*/
+      Lib.M.ajax({
+        url:'/asset/sortAsset',
+        data:{
+          'chooseType':'total',
+          'sortType':'desc',
+        },
+        success:function (res) {
+          /*console.log(res.data);*/
+          self.oItems = res.data
+
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
   }
 }
 </script>
@@ -421,25 +446,33 @@ export default {
               border-left: 0.06rem solid #EAEAEA;
               margin-top: 1rem;
               margin-left: 1.5rem;
-              p{
-                width: 13.5rem;
+              div{
+                /*width: 13.5rem;*/
                 font-size: 0.75rem;
                 line-height: 1.6rem;
-                span:nth-of-type(1){
+                overflow: hidden;
+                position: relative;
+                p:nth-of-type(1){
                   display: inline-block;
                   width: 0.32rem;
                   height: 0.32rem;
                   border-radius: 50%;
                   background: #F3AE43;
-                  margin-left: 4.5rem;
+                  float: left;
+                  position: absolute;
+                  left: 0.8rem;
+                  top: 0.5rem;
                 }
-                span:nth-of-type(2){
+                p:nth-of-type(2){
+                  display: inline-block;
                   color: #A3A3A3;
-                  margin-left: 0.5rem;
+                  float: left;
+                  margin-left: 1.6rem;
                 }
-                span:nth-of-type(3){
+                p:nth-of-type(3){
+                  display: inline-block;
                   color: #4083FF;
-                  margin-left: 2.5rem;
+                  float: right;
                 }
               }
 
