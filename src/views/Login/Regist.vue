@@ -110,7 +110,10 @@ export default {
         },
         success:function(res){
           if(res.code==200){
-            console.log(res);
+            localStorage.userId = res.data.userId;
+            localStorage.phoneNum = self.phoneNum;
+            self.$vux.toast.text('注册成功！', 'middle');
+            self.$router.replace('home');
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }

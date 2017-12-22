@@ -8,9 +8,9 @@
       <img v-show="which!=='square'" src="./img/square.png">
       <img v-show="which=='square'" src="./img/square_color.png">
     </router-link>
-    <router-link to="/MyAssets">
-      <img v-show="which!=='MyAssets'" src="./img/release.png">
-      <img v-show="which=='MyAssets'" src="./img/release_color.png">
+    <router-link to="/MyProject">
+      <img v-show="which!=='MyProject'" src="./img/release.png">
+      <img v-show="which=='MyProject'" src="./img/release_color.png">
     </router-link>
     <router-link to="/MyInfo">
       <img v-show="which!=='myInfo'" src="./img/myInfo.png">

@@ -91,7 +91,10 @@ export default {
         },
         success:function(res){
           if(res.code==200){
+            localStorage.phoneNum = self.phoneNum;
+            localStorage.userId = res.data.userId;
             self.$vux.toast.text('登录成功！', 'middle');
+            self.$router.replace('home');
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }

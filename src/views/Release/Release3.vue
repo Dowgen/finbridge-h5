@@ -1,13 +1,13 @@
 <template>
   <div class="assets">
-    <myHead msg="发布资产" backgroundColor="#fff"></myHead>
+    <myHead :msg="'发布'+title" backgroundColor="#fff"></myHead>
     <div class="asset-process">
       <div class="step">
-        <img v-show="text == ''" src="./img/step3.png" alt="">
-        <img v-show="text !== ''" src="./img/step3-3.png" alt="">
+        <img v-show="contactPerson == ''" src="./img/step3.png" alt="">
+        <img v-show="contactPerson !== ''" src="./img/step3-3.png" alt="">
       </div>
       <div class="step-title">
-        <div>资产信息</div>
+        <div>{{title}}信息</div>
         <div>公司信息</div>
         <div class="active">联系方式</div>
       </div>
@@ -16,43 +16,43 @@
       <div class="des-item">
         <div class="des-item-l">联系人</div>
         <div class="des-item-r">
-          <input v-model="text" type="text" placeholder="请填写真实名字">
+          <input v-model="contactPerson" type="text" placeholder="请填写真实名字">
         </div>
       </div>
       <div class="des-item"  style="border-bottom: 0.06rem solid #ECECEC;">
         <div class="des-item-l"></div>
         <div class="des-item-r gender-choose">
-          <input type="text" placeholder="先生">
-          <input type="text" placeholder="女士">
+          <p :class="gender=='male'?'gender-choose-one':''" @click="gender='male'">先生</p>
+          <p :class="gender=='female'?'gender-choose-one':''" @click="gender='female'">女士</p>
         </div>
       </div>
       <div class="des-item">
-        <div class="des-item-l">联系方式(勾选则必填)</div>
+        <div class="des-item-l">联系方式</div>
         <div class="des-item-r"></div>
       </div>
 
-      <div class="des-item contactWay"  style="border-bottom: 0.06rem solid #ECECEC;">
+      <div class="des-item contactWay">
         <div class="des-item-l">
-          <input type="checkbox">手机号码
+          <!-- <input type="checkbox"> -->手机号码
         </div>
         <div class="des-item-r">
-          <input type="number" maxlength="11" placeholder="请填写您的手机号码">
+          <input v-model="contactPhone" type="number" maxlength="11" placeholder="请填写您的手机号码">
         </div>
       </div>
       <div class="des-item contactWay">
         <div class="des-item-l">
-          <input type="checkbox">微信号
+          <!-- <input type="checkbox"> -->微信号
         </div>
         <div class="des-item-r">
-          <input type="number" maxlength="11" placeholder="请填写您的微信号">
+          <input v-model="contactWechat" type="text" maxlength="11" placeholder="请填写您的微信号">
         </div>
       </div>
       <div class="des-item contactWay"  style="border-bottom: 0.06rem solid #ECECEC;">
         <div class="des-item-l">
-          <input type="checkbox">QQ号
+          <!-- <input type="checkbox"> -->QQ号
         </div>
         <div class="des-item-r">
-          <input type="number" maxlength="11" placeholder="请填写您的QQ号">
+          <input v-model="contactQQ" type="number" maxlength="11" placeholder="请填写您的QQ号">
         </div>
       </div>
 
@@ -77,12 +77,63 @@ export default {
   },
   data () {
     return {
-      text:''
+      title:'',
+      gender:'male',
+      contactPerson:'',
+      contactPhone:'',
+      contactQQ:'',
+      contactWechat:''
     }
+  },
+  mounted(){
+    this.AorF = this.$route.query.AorF;
+    if(this.AorF == 'fund') this.title='资金'
+    else this.title = '资产'
   },
   methods:{
     nextWay(){
-      this.$router.push('/')
+      if( this.contactPerson == '' ||
+          this.contactPhone == '' ||
+          /*this.contactQQ == '' ||*/
+          this.contactWechat == ''){
+        this.$vux.toast.text('参数请填写完整', 'middle');
+      }else{
+        this.addFund();
+        /*this.$router.push('/')*/
+      }
+    },
+    /* 发布资金 */
+    addFund(){
+      let info,params,url;
+      info = {
+        contactPerson: this.contactPerson,
+        contactPhone: this.contactPhone,
+        contactQQ: this.contactQQ,
+        contactWechat: this.contactWechat,
+        belongTo: localStorage.userId
+      };
+      if(this.AorF == 'fund'){
+        params = 
+          Object.assign(info, JSON.parse(localStorage.addFundParams));
+        url = '/fund/submitFund';
+      }else{
+        params = 
+          Object.assign(info, JSON.parse(localStorage.addAssetParams));
+        url = '/asset/submitAsset';
+      }
+      var self = this;
+      Lib.M.ajax({
+        url : url,
+        data: params,
+        success:function(res){
+          if(res.code==200){
+            self.$vux.toast.text(self.title+'提交成功！', 'middle')
+            self.$router.push('/MyProject')
+          }else{
+            self.$vux.toast.text(res.msg, 'middle')
+          }
+        }
+      });
     }
   }
 }
@@ -92,7 +143,7 @@ export default {
 <style scoped>
 .assets{
   width: 100%;
-  height: 100%;
+  height: 41rem;
   background: #EFEFF4;
   margin: 0 auto;
 }
@@ -169,20 +220,30 @@ export default {
   left: 0;
   bottom: 0;
 }
-.gender-choose input[type="text"]{
+.gender-choose p{
   display: inline-block;
   width: 3.75rem;
   height: 1.565rem;
+  line-height: 1.565rem;
   border: 0.06rem solid #C3CFD9;
   border-radius: 0.19rem;
   cursor: pointer;
   margin-left: 0.5rem;
   text-align: center;
-  outline: #448ccb;
+  color: #666;
+  font-size: 0.875rem;
 }
+.gender-choose-one{
+  background-color: #f5f9fc !important;
+  border-color: #abc8ff !important;
+  color: #4083ff !important;
 
+}
 .pro-type{
   height: 4rem;
+}
+.contactWay:not(:last-child){
+  border-bottom: 0.06rem solid #ECECEC;
 }
 .contactWay input[type="checkbox"] {
   display: inline-block;
@@ -198,7 +259,6 @@ export default {
   background: url("./img/selected_more.png") no-repeat center;
   background-size: 100% 100%;
 }
-
 
 
 </style>

@@ -1,20 +1,20 @@
 <template>
-  <div>
+  <div v-cloak>
     <myHead v-show="false" msg="发布项目" backgroundColor="#fff" hasBack="0"></myHead>
     <actionsheet v-model="show1" :menus="menus1" @on-click-menu="click"></actionsheet>
-    <div v-if="false" class="content1">
+    <div v-if="!hasProject" class="content1">
       <button-tab class="button-tab">
         <button-tab-item selected @on-item-click="loseEfficacy=false">未失效</button-tab-item>
         <button-tab-item @on-item-click="loseEfficacy=true">已失效</button-tab-item>
       </button-tab>
-      <div class="btn addAs">
+      <div class="btn addAs" @click="click('addFund')">
         <span>+</span> 添加资产
       </div>
-      <div class="btn addFu">
+      <div class="btn addFu" @click="click('addAssets')">
         <span>+</span> 添加资金
       </div>
     </div>
-    <div v-if="true" class="content2">
+    <div v-if="hasProject" class="content2">
       <button-tab class="button-tab">
         <button-tab-item selected @on-item-click="loseEfficacy=false">未失效</button-tab-item>
         <button-tab-item @on-item-click="loseEfficacy=true">已失效</button-tab-item>
@@ -31,48 +31,50 @@
         <h3>资金</h3>
         <p>合规对接 量大稳定</p>
         <div>
-        <div class="item" v-for="item in [1,2]">
+        <div class="item" v-for="item in fundList">
           <div class="left">
-            <p>7<span>%</span> - 10<span>%</span></p>
+            <p>{{item.fundCostRegionFrom}}<span>%</span> 
+            - {{item.fundCostRegionTo}}<span>%</span></p>
             <span>资金成本区间</span>
           </div>
           <div class="right">
-            <p>中腾堡SJT-BL-171131</p>
+            <p>{{item.projectName}}</p>
             <div>
               <span>3天</span>
               <i>|</i>
-              <span>车抵贷</span>
+              <span>{{item.fundType}}</span>
               <img src="./img/label_judge.png"/>
             </div>
           </div>
         </div>
         </div>
         <div class="seeAll">
-          查看全部(32)
+          查看全部({{fundList.length}})
         </div>
       </div>
       <div class="assets-item-con">
         <h3>资产</h3>
         <p>风控审核 多元供给</p>
         <div>
-        <div class="item" v-for="item in [1,2]">
+        <div class="item" v-for="item in assetList">
           <div class="left">
-            <p>7<span>%</span> - 10<span>%</span></p>
+            <p>{{item.fundCostRegionFrom}}<span>%</span> 
+            - {{item.fundCostRegionTo}}<span>%</span></p>
             <span>资金成本区间</span>
           </div>
           <div class="right">
-            <p>中腾堡SJT-BL-171131</p>
+            <p>{{item.projectName}}</p>
             <div>
               <span>3天</span>
               <i>|</i>
-              <span>车抵贷</span>
+              <span>{{item.productType}}</span>
               <img src="./img/label_judge.png"/>
             </div>
           </div>
         </div>
         </div>
         <div class="seeAll">
-          查看全部(32)
+          查看全部({{assetList.length}})
         </div>
       </div>
       </div>
@@ -82,51 +84,53 @@
         <h3>资金</h3>
         <p>合规对接 量大稳定</p>
         <div>
-        <div class="item" v-for="item in [1,2]">
+        <div class="item" v-for="item in fundListLose">
           <div class="left">
-            <p>7<span>%</span> - 10<span>%</span></p>
+            <p>{{item.fundCostRegionFrom}}<span>%</span> 
+            - {{item.fundCostRegionTo}}<span>%</span></p>
             <span>资金成本区间</span>
           </div>
           <div class="right">
-            <p>中腾堡SJT-BL-171131</p>
+            <p>{{item.projectName}}</p>
             <div>
               <span>3天</span>
               <i>|</i>
-              <span>车抵贷</span>
+              <span>{{item.productType}}</span>
             </div>
           </div>
         </div>
         </div>
         <div class="seeAll">
-          查看全部(32)
+          查看全部({{fundListLose.length}})
         </div>
       </div>
       <div class="assets-item-con">
         <h3>资产</h3>
         <p>风控审核 多元供给</p>
         <div>
-        <div class="item" v-for="item in [1,2]">
+        <div class="item" v-for="item in assetListLose">
           <div class="left">
-            <p>7<span>%</span> - 10<span>%</span></p>
+            <p>{{item.fundCostRegionFrom}}<span>%</span> 
+            - {{item.fundCostRegionTo}}<span>%</span></p>
             <span>资金成本区间</span>
           </div>
           <div class="right">
-            <p>中腾堡SJT-BL-171131</p>
+            <p>{{item.projectName}}</p>
             <div>
               <span>3天</span>
               <i>|</i>
-              <span>车抵贷</span>
+              <span>{{item.productType}}</span>
             </div>
           </div>
         </div>
         </div>
         <div class="seeAll">
-          查看全部(32)
+          查看全部({{assetListLose.length}})
         </div>
       </div>
       </div>
     </div>
-    <main-nav which="MyAssets"></main-nav>
+    <main-nav which="MyProject"></main-nav>
   </div>
 </template>
 
@@ -145,13 +149,19 @@ export default {
   },
   data () {
     return {
+      hasProject:null,
       loseEfficacy:false,
-      items:[1,2,3],
+      fundTypeList:[],
+      assetTypeList:[],
+      assetList:[],
+      fundList:[],
+      assetListLose:[],
+      fundListLose:[],
       /* actionsheet */
       show1: false,
       menus1: {
-        menu1: '添加资金',
-        menu2: '添加资产'
+        addFund: '添加资金',
+        addAssets: '添加资产'
       },
     }
   },
@@ -159,12 +169,67 @@ export default {
     
   },
   mounted(){
-    
+    this.getMyProject();
   },
   methods: {
+    getLabel(){
+
+    },
     click (key) {
-      if(key=='menu1') this.$router.push('/ReleaseAssets')
-      else this.$router.push('/ReleaseAssets2')
+      if(key=='addFund') this.$router.push('/ReleaseFund')
+      else this.$router.push('/ReleaseAssets')
+    },
+    /* 查询个人项目 */
+    getMyProject(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/public/userOnListProject',
+        data: { userId: localStorage.userId },
+        success:function(res){
+          let a = res.data.asset;
+          let f = res.data.fund;
+          if(res.code==200){
+            if(a.length == 0 && f.length == 0){
+              self.hasProject = false;
+            }else{
+              self.hasProject = true;
+              //区分未失效列表与已失效列表
+              for(let i in a){
+                if(a[i].listStatus == 1 || a[i].listStatus == 2){
+                  self.assetList.push(a[i]);
+                }else{
+                  self.assetListLose.push(a[i]);
+                }
+              }
+
+              for(let i in f){
+                if(f[i].listStatus == 1 || f[i].listStatus == 2){
+                  self.fundList.push(a[i]);
+                }else{
+                  self.fundListLose.push(a[i]);
+                }
+              }
+            }
+          }else{
+            self.$vux.toast.text(res.msg, 'middle')
+          }
+        }
+      });
+    },
+    /* 获取资金资产类型列表 */
+    getFundList(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/info/findAssetAndFundConfig',
+        success:function(res){
+          if(res.code==200){
+            self.fundTypeList=res.data.fund;
+            self.assetTypeList = res.data.asset
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
     },
   }
 }

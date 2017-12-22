@@ -1,13 +1,13 @@
 <template>
   <div class="assets">
-    <myHead msg="发布资产" backgroundColor="#fff"></myHead>
+    <myHead msg="发布资金" backgroundColor="#fff"></myHead>
     <div class="asset-process">
       <div class="step">
-        <img v-show="text == ''" src="./img/step1.png" alt="">
-        <img v-show="text !== ''" src="./img/step1_1.png" alt="">
+        <img v-show="projectName == ''" src="./img/step1.png" alt="">
+        <img v-show="projectName !== ''" src="./img/step1_1.png" alt="">
       </div>
      <div class="step-title">
-       <div class="active">资产信息</div>
+       <div class="active">资金信息</div>
        <div>公司信息</div>
        <div>联系方式</div>
      </div>
@@ -15,10 +15,10 @@
     <div class="assets-des1">
       <div class="des-item">
         <div class="des-item-l">项目名称</div>
-        <div class="des-item-r"><input v-model="text" type="text" placeholder="填写格式“**** 第*号”"></div>
+        <div class="des-item-r"><input v-model="projectName" type="text" placeholder="填写格式“**** 第*号”"></div>
       </div>
       <div class="des-item" style="position:relative">
-        <div class="des-item-l">产品类型</div>
+        <div class="des-item-l">资金类型</div>
         <div class="des-item-r pro-choose">
           <input type="text" placeholder="请选择产品类型">
           <span :class="showPdType?'upArrow':'downArrow'"></span>
@@ -34,23 +34,19 @@
 
 
       <div class="pro-type slide" :class="showPdType?'animate':''">
-
-        <label><input name="CashLoan" type="radio" value="现金贷" />现金贷 </label>
-        <label><input name="CashLoan" type="radio" value="房抵贷" />房抵贷 </label>
-        <label><input name="CashLoan" type="radio" value="车抵贷" />车抵贷 </label>
-        <label><input name="CashLoan" type="radio" value="3C租赁" />3C租赁 </label>
-        <label><input name="CashLoan" type="radio" value="消费分期" />消费分期 </label>
-        <label><input name="CashLoan" type="radio" value="现金分期" />现金分期 </label>
-        <label><input name="CashLoan" type="radio" value="其它" />其它 </label>
+        <label v-for="item in fundList">
+          <input v-model="fundType" name="fundType" type="radio" :value="item.key" />{{item.label}} 
+        </label>
       </div>
       <div class="des-item">
         <div class="des-item-l">资金规模</div>
-        <div class="des-item-r"><input type="text" placeholder="元"></div>
+        <div class="des-item-r"><input v-model="fundAnmount" type="number" placeholder="元"></div>
       </div>
       <div class="des-item">
         <div class="des-item-l">资金成本区间</div>
         <div class="des-item-r range">
-          <input type="number" maxlength="5"> &nbsp;-&nbsp; <input type="number" maxlength="5">
+          <input v-model="fundCostRegionFrom" type="number" maxlength="5"> &nbsp;-&nbsp; 
+          <input v-model="fundCostRegionTo" type="number" maxlength="5">
           %
         </div>
       </div>
@@ -69,13 +65,9 @@
         @click.native="showLikeType = !showLikeType"></cell>
       </div>
       <div class="pro-type2 slide"  :class="showLikeType?'animate':''">
-        <label><input name="Band" type="checkbox" value="银行" />银行 </label>
-        <label><input name="PrivatePlacement" type="checkbox" value="私募" />私募 </label>
-        <label><input name="NetworkLoan" type="checkbox" value="网络小贷" />网络小贷 </label>
-        <label><input name="Fund" type="checkbox" value="基金" />基金 </label>
-        <label><input name="p2p" type="checkbox" value="p2p" />p2p </label>
-        <label><input name="InforManage" type="checkbox" value="资管" />资管 </label>
-        <label><input name="others" type="checkbox" value="其它" />其它 </label>
+        <label v-for="item in assetList">
+          <input v-model="findAssetType" type="checkbox" :value="item.key" />{{item.label}} 
+        </label>
       </div>
     </div>
     <div class="next" @click="nextWay">下一步</div>
@@ -100,20 +92,64 @@ export default {
   },
   data () {
     return {
-      step:1,
-      text:'',
+      fundList:[], //从后台获取的资金类型列表
+      assetList:[], //从后台获取的资产类型列表
+      projectName:'',  //项目名称
+      fundType:'',    //资金类型
+      fundAnmount:'', //资金规模
+      fundCostRegionFrom:'',
+      fundCostRegionTo:'',
+      findAssetType:[],
       showPdType: false,
       showLikeType: false
     }
   },
+  watch: {
+    // 如果 `fundType` 发生改变，这个函数就会运行
+    fundType: function (newQuestion) {
+      console.log(this.fundType)
+    }
+  },
   mounted(){
-    
+    this.getFundList();
   },
   methods:{
     nextWay(){
-      this.$router.push({ path: 'Release2', query: { AorF: 'fund' }})
-    }
-
+      if( this.projectName == '' ||
+          this.fundType == '' ||
+          this.fundAnmount == '' ||
+          this.fundCostRegionFrom == '' ||
+          this.fundCostRegionTo == '' ||
+          this.findAssetType.length == 0 ){
+        this.$vux.toast.text('参数请填写完整', 'middle');
+      }else{
+        let addFundParams = {
+          projectName: this.projectName,
+          fundType:  parseInt(this.fundType),
+          fundAnmount: parseInt(this.fundAnmount),
+          fundCostRegionFrom: parseInt(this.fundCostRegionFrom),
+          fundCostRegionTo: parseInt(this.fundCostRegionTo),
+          findAssetType:this.findAssetType.join(','),
+        }
+        localStorage.addFundParams = JSON.stringify(addFundParams);
+        this.$router.push({ path: 'Release2', query: { AorF: 'fund' }})
+      }
+    },
+    /* 获取资金资产类型列表 */
+    getFundList(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/info/findAssetAndFundConfig',
+        success:function(res){
+          if(res.code==200){
+            self.fundList=res.data.fund;
+            self.assetList = res.data.asset
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
   }
 }
 </script>
@@ -123,7 +159,7 @@ export default {
 
 .assets{
   width: 100%;
-  height: 100%;
+  height: 41rem;
   background: #EFEFF4;
   margin: 0 auto;
 }
@@ -185,7 +221,7 @@ export default {
   font-size: 0.815rem;
   color: #C2C2C2;
 }
-.des-item .des-item-r input[type='text']{
+.des-item .des-item-r input{
   border:none;
   outline: none;
   text-align: right;
@@ -193,7 +229,8 @@ export default {
 .range input{
   width:2.595rem;
   height:1.44rem;
-  border: 0.06rem solid #333;
+  padding-right: 0.3rem;
+  border: 0.06rem solid #333 !important;
   outline: none;
 }
 .next{
