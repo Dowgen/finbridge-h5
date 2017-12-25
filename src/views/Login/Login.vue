@@ -48,14 +48,14 @@ export default {
     getToken(){
       var self = this;
       Lib.M.ajax({
-        url : 'http://192.168.2.169:8060/uaa/oauth/token',
+        url : 'https://finbridge.cn/uaa/oauth/token',
         headers: {
           Accept:'application/json',
-          Authorization:'Basic Y2xpZW50OnNlY3JldA=='
+          Authorization:'Basic anVoZV9jYXNobG9hbjpKdWhlMTIzNjc4IUAj'
         },
         params:{
-          username:'anil',
-          password:'password',
+          username:'juhe',
+          password:'Juhe2017!@#',
           grant_type:'password',
           scope:'read write'
         },
