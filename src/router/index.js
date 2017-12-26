@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-const _import = file => () => import('@/views/' + file)
+/*const _import = file => () => import('@/views/' + file)*/
+const _import = file => resolve => require(['@/views/' + file], resolve);
+
 
 Vue.use(Router)
 

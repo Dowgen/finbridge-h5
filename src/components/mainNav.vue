@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <router-link to="/Home">
+    <router-link to="/">
       <img v-show="which!=='home'" src="./img/home.png">
       <img v-show="which=='home'" src="./img/home_color.png">
     </router-link>
