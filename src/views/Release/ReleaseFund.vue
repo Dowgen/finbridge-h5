@@ -79,15 +79,13 @@
 <script>
 import Lib from '@/assets/js/Lib'
 import myHead from '@/components/myHead'
-import {XButton, XHr, Cell } from 'vux'
+import { Cell } from 'vux'
 import $ from "jquery"
 
 export default {
   name: 'ReleaseAssets',
   components: {
     myHead,
-    XButton,
-    XHr,
     Cell
   },
   data () {

@@ -84,7 +84,7 @@
 <script>
 import Lib from '@/assets/js/Lib'
 import myHead from '@/components/myHead'
-import {XButton, XHr, Cell,PopupPicker } from 'vux'
+import { Cell,PopupPicker } from 'vux'
 
 export default {
   name: 'ReleaseAssets',

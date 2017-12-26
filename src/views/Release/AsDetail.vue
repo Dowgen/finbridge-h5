@@ -84,12 +84,10 @@
 
 <script>
 import Lib from '@/assets/js/Lib'
-import { Toast} from 'vux'
 
 export default {
   name: 'ProjectDetail',
   components: {
-    Toast,
 
   },
   data () {

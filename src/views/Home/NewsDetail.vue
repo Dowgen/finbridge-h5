@@ -20,7 +20,7 @@
 
 import Lib from '@/assets/js/Lib'
 
-import { Loading, XButton, Confirm, Swiper, SwiperItem, } from 'vux'
+import { Swiper, SwiperItem, } from 'vux'
 
 import MainNav from '@/components/mainNav'
 
@@ -33,7 +33,7 @@ import myHead from '@/components/myHead'
 export default {
   name: 'Home',	
   components: {
-    MainNav, Loading, XButton, Confirm, Swiper, SwiperItem,hotsItem1,hotsItem2,hotsItem3,myHead
+    MainNav, Swiper, SwiperItem,hotsItem1,hotsItem2,hotsItem3,myHead
   },
   data () {
     return {

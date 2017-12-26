@@ -2,7 +2,9 @@
   <div>
     <div class="content" v-cloak>
       <swiper loop auto height="12.44rem" dots-position="center">
-        <swiper-item v-for="img in img_src"><img :src="img.picUrl"></swiper-item>
+        <swiper-item :key="pic.picUrl" v-for="pic in img_src">
+          <img :src="pic.picUrl">
+        </swiper-item>
       </swiper>
       <div class="recommend">
         <p>
@@ -74,7 +76,7 @@
 
 import Lib from '@/assets/js/Lib'
 
-import { Loading, XButton, Confirm, Swiper, SwiperItem, } from 'vux'
+import { Swiper, SwiperItem, } from 'vux'
 
 import MainNav from '@/components/mainNav'
 
@@ -83,7 +85,7 @@ import hotsItem2 from '@/components/hotsItem2'
 export default {
   name: 'Home',	
   components: {
-    MainNav, Loading, XButton, Confirm, Swiper, SwiperItem,hotsItem2
+    MainNav, Swiper, SwiperItem,hotsItem2
   },
   data () {
     return {
@@ -101,7 +103,11 @@ export default {
     
   },
   mounted(){
+    /* 进入页面先获取token */
+    this.getToken();
+    /* 获取微信openId */
     this.getOpenId();
+    
     this.getFundList();
     this.getConfigByParameter();
     this.getArticle();
@@ -133,6 +139,39 @@ export default {
       for(let i in f){
         if(f[i].key == key) return f[i].label
       }
+    },
+    getToken(){
+      var self = this;
+      Lib.M.ajax({
+        /*url : 'http://192.168.2.169:8060/uaa/oauth/token',
+        headers: {
+          Accept:'application/json',
+          Authorization:'Basic Y2xpZW50OnNlY3JldA=='
+        },
+        params:{
+          username:'anil',
+          password:'password',
+          grant_type:'password',
+          scope:'read write'
+        },*/
+        url : 'http://118.31.189.23:8060/uaa/oauth/token',
+        headers: {
+          Accept:'application/json',
+          Authorization:'Basic anVoZV9jYXNobG9hbjpKdWhlMTIzNjc4IUAj'
+        },
+        params:{
+          username:'juhe',
+          password:'Juhe2017!@#',
+          grant_type:'password',
+          scope:'read write'
+        },
+        success:function(data){
+          localStorage.token = data.access_token;
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
     },
     newsDetail(){
       this.$router.push('./NewsDetail')

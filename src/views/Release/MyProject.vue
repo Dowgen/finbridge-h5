@@ -149,13 +149,13 @@
 import Lib from '@/assets/js/Lib'
 import myHead from '@/components/myHead'
 import MainNav from '@/components/mainNav'
-import { Loading, ButtonTab, ButtonTabItem,Popover,Actionsheet } from 'vux'
+import { ButtonTab, ButtonTabItem,Actionsheet } from 'vux'
 
 
 export default {
   name: 'Home', 
   components: {
-    myHead, MainNav, Loading, ButtonTab, ButtonTabItem, Popover,Actionsheet
+    myHead, MainNav, ButtonTab, ButtonTabItem, Actionsheet
   },
   data () {
     return {
