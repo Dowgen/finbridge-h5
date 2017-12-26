@@ -101,11 +101,28 @@ export default {
     
   },
   mounted(){
+    this.getOpenId();
     this.getFundList();
     this.getConfigByParameter();
     this.getArticle();
   },
   methods: {
+    //拿到code传给后台获取openId
+    getOpenId(){
+      let code = Lib.M.GetQueryString('code');
+      Lib.M.ajax({
+        url:'/wechat/getOpenId',
+        data:{
+          'code':code
+        },
+        success:function (res) {
+          localStorage.openId = res.data.openId;
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
     //资金资产类型数字转化为文字
     getLabel(key,type){
       var f;

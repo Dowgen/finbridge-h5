@@ -106,7 +106,7 @@ export default {
           phone: self.phoneNum,
           password: sha1(self.password).toUpperCase(),
           cerifyCode: self.verifyCode,
-          openId: 'a'
+          openId: localStorage.openId
         },
         success:function(res){
           if(res.code==200){
