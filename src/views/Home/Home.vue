@@ -15,14 +15,14 @@
         </p>
        <div class="recommend-con">
          <div @click="lookMore" class="zc con-item">
-           <h4>{{ZcProjectName}}</h4>
+           <h4>{{RcmZc.projectName}}</h4>
            <p>倒计时{{countDownDay}}天</p>
            <p>
-             <span>现金分期</span>
+             <span>{{getLabel(RcmZc.productType,'asset')}}</span>
            </p>
            <p>
-             <span>{{ZcFundCostRegionFrom}}-{{ZcFundCostRegionTo}}%</span>
-             <span>{{ZcTotalPayAmount}}</span>
+             <span>{{RcmZc.fundCostRegionFrom}}-{{RcmZc.fundCostRegionTo}}%</span>
+             <span>{{RcmZc.totalPayAmount}}</span>
            </p>
            <p>
              <span>资金成本区间</span>
@@ -30,14 +30,14 @@
            </p>
          </div>
          <div @click="lookMore" class="zj con-item">
-           <h4>{{ZjProjectName}}</h4>
+           <h4>{{rcmZj.projectName}}</h4>
            <p>倒计时{{countDownDay}}天</p>
            <p>
-             <span>现金分期</span>
+             <span>{{getLabel(rcmZj.fundType,'fund')}}</span>
            </p>
            <p>
-             <span>{{ZjFundCostRegionFrom}}-{{ZjFundCostRegionTo}}%</span>
-             <span>{{ZjFundAnmount}}</span>
+             <span>{{rcmZj.fundCostRegionFrom}}-{{rcmZj.fundCostRegionTo}}%</span>
+             <span>{{rcmZj.fundAnmount}}</span>
            </p>
            <p>
              <span>资金成本区间</span>
@@ -89,14 +89,8 @@ export default {
   },
   data () {
     return {
-      ZcProjectName:'',
-      ZcFundCostRegionFrom:'',
-      ZcFundCostRegionTo:'',
-      ZcTotalPayAmount:'',
-      ZjProjectName:'',
-      ZjFundCostRegionFrom:'',
-      ZjFundCostRegionTo:'',
-      ZjFundAnmount:'',
+      RcmZc:{},
+      rcmZj:{},
       img_src:'',
       countDownDay:'',
       updateTime:''
@@ -106,9 +100,21 @@ export default {
     
   },
   mounted(){
+    this.getFundList();
     this.getConfigByParameter();
   },
   methods: {
+    //资金资产类型数字转化为文字
+    getLabel(key,type){
+      var f;
+      if(type=='fund')
+        f = JSON.parse(localStorage.fundTypeList);
+      else
+        f = JSON.parse(localStorage.assetTypeList);
+      for(let i in f){
+        if(f[i].key == key) return f[i].label
+      }
+    },
     newsDetail(){
       this.$router.push('./NewsDetail')
     },
@@ -139,10 +145,7 @@ export default {
       Lib.M.ajax({
         url : '/asset/getRecommendAsset',
         success:function(res){
-          self.ZcProjectName = res.data[0].projectName;
-          self.ZcFundCostRegionFrom = res.data[0].fundCostRegionFrom;
-          self.ZcFundCostRegionTo = res.data[0].fundCostRegionTo;
-          self.ZcTotalPayAmount = res.data[0].totalPayAmount;
+          self.RcmZc = res.data[0];
         /*  console.log(res.data[0]);*/
 
           var currentTime = Date.parse(new Date())/ 1000;
@@ -165,10 +168,7 @@ export default {
       Lib.M.ajax({
         url:'/fund/getRecommendFund',
         success:function (res) {
-          self.ZjProjectName = res.data[0].projectName;
-          self.ZjFundCostRegionFrom = res.data[0].fundCostRegionFrom;
-          self.ZjFundCostRegionTo = res.data[0].fundCostRegionTo;
-          self.ZjFundAnmount = res.data[0].fundAnmount;
+          self.rcmZj = res.data[0];
           console.log(res);
         },
         error:function(err){
@@ -189,7 +189,21 @@ export default {
         }
       });
     },
-
+    /* 获取资金资产类型列表 */
+    getFundList(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/info/findAssetAndFundConfig',
+        success:function(res){
+          if(res.code==200){
+            localStorage.fundTypeList=JSON.stringify(res.data.fund);
+            localStorage.assetTypeList = JSON.stringify(res.data.asset);
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
   }
 }
 </script>
