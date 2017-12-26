@@ -6,7 +6,9 @@
         <p>新闻资讯</p>
       </div>
       <div class="news-con">
-        <hotsItem2 v-for="item in items"></hotsItem2>
+        <div v-for="(news,index) in newsList" v-if="index >= 3">
+          <hotsItem2 :news="news" @click.native="lookNews(news.link)"></hotsItem2>
+        </div>
 
       </div>
     </div>
@@ -35,7 +37,8 @@ export default {
   },
   data () {
     return {
-      items:[]
+      newsList:[],
+      link:''
     }
   },
   computed:{
@@ -50,15 +53,16 @@ export default {
       Lib.M.ajax({
         url:'/info/getArticle',
         success:function (res) {
-          self.items = res.data;
-          console.log(self.items);
-
+          self.newsList = res.data;
         },
         error:function(err){
           console.error(err);
         }
       });
     },
+    lookNews(link){
+      window.location.href = 'http://'+link;
+    }
   }
 }
 </script>

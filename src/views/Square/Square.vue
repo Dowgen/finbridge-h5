@@ -10,9 +10,9 @@
       <div class="zj" v-show="zj">
         <div class="zj-head">
          <div @click="sort(1,1,2),isActive='comprehension'" :class="isActive=='comprehension'?'active':''">综合排序</div>
-         <div @click="sort(2,1,2),isActive='total'" :class="isActive=='total'?'active':''">总放款规模
-           <img @click="sort(2,2,2)" v-show="key == 1" src="./img/ic_arrow_down.png" alt="">
-           <img @click="sort(2,1,2)" v-show="key == 2" src="./img/arrow_up.png" alt="">
+         <div @click="isActive='total',isAsc?sort(2,1,2):sort(2,2,2)" :class="isActive=='total'?'active':''">总放款规模
+           <img v-show="!isAsc" src="./img/ic_arrow_down.png" alt="">
+           <img v-show="isAsc" src="./img/arrow_up.png" alt="">
          </div>
          <div @click="chooseType">选择类型
            <img src="./img/arrow_type_nor.png" alt="">
@@ -63,9 +63,9 @@
       <div class="zj" v-show="!zj">
         <div class="zj-head">
           <div @click="sort(1,1,1),isActive='comprehension'" :class="isActive=='comprehension'?'active':''">综合排序</div>
-          <div @click="sort(2,1,1),isActive='total'" :class="isActive=='total'?'active':''">总放款规模
-            <img @click="sort(2,2,1)" v-show="key == 1" src="./img/ic_arrow_down.png" alt="">
-            <img @click="sort(2,1,1)" v-show="key == 2" src="./img/arrow_up.png" alt="">
+          <div @click="isActive='total',isAsc?sort(2,1,1):sort(2,2,1)" :class="isActive=='total'?'active':''">总放款规模
+            <img v-show="!isAsc" src="./img/ic_arrow_down.png" alt="">
+            <img v-show="isAsc" src="./img/arrow_up.png" alt="">
           </div>
           <div @click="chooseType">选择类型
             <img  src="./img/arrow_type_nor.png" alt="">
@@ -135,6 +135,7 @@ export default {
   data () {
     return {
       isActive: 'comprehension',
+      isAsc:true,
       zj:true,
       key:2,
       items:[],
@@ -206,7 +207,11 @@ export default {
     sort(chooseType,sortType,AorF){
       var self = this;
       var url = AorF == 1?'/asset/sortAsset':'/fund/sortFund';
-     /* self.addClass('.active');*/
+      if(self.isAsc){
+        self.isAsc = false
+      }else {
+        self.isAsc = true
+      }
       Lib.M.ajax({
         url:url,
         data:{
@@ -215,16 +220,11 @@ export default {
           'type':AorF == 1?self.assetType.toString():self.fundType.toString(),
         },
         success:function (res) {
-         /* console.log(111111);
-          console.log(res.data);*/
          if(AorF==1){
            self.oItems = res.data;
          }else{
            self.items = res.data;
          }
-          console.log(res);
-          console.log(88888);
-          console.log(99999);
         },
         error:function(err){
           console.error(err);

@@ -64,8 +64,10 @@
             <span class="read-num">782阅读量</span>
           </p>
         </div>-->
-        <hotsItem2></hotsItem2>
-        <div class="lookMore"  @click="newsDetail">查看更多</div>
+        <div v-for="(news,index) in newsList" v-if="index < 3">
+          <hotsItem2 :news="news" @click.native="lookNews(news.link)"></hotsItem2>
+        </div>
+        <div class="lookMore"  @click="newsDetail">查看更多({{lookCount}})</div>
       </div>
     </div>
     <main-nav which="home"></main-nav>
@@ -93,7 +95,10 @@ export default {
       rcmZj:{},
       img_src:'',
       countDownDay:'',
-      updateTime:''
+      updateTime:'',
+      newsList:[],
+      link:'',
+      lookCount:''
     }
   },
   computed:{
@@ -102,6 +107,7 @@ export default {
   mounted(){
     this.getFundList();
     this.getConfigByParameter();
+    this.getArticle();
   },
   methods: {
     //资金资产类型数字转化为文字
@@ -152,9 +158,7 @@ export default {
 
           var listTime = res.data[0].listTime;
           listTime = Date.parse(new Date(listTime))/ 1000;
-          console.log(3333333);
-          console.log(currentTime);
-          console.log(listTime);
+
           self.countDownDay =Math.round(self.updateTime -(currentTime - listTime)/(60*60*24)) ;
           console.log(Math.round((currentTime - listTime)/(60*60*24)));
         },
@@ -169,6 +173,14 @@ export default {
         url:'/fund/getRecommendFund',
         success:function (res) {
           self.rcmZj = res.data[0];
+
+          var currentTime = Date.parse(new Date())/ 1000;
+
+          var listTime = res.data[0].listTime;
+          listTime = Date.parse(new Date(listTime))/ 1000;
+
+          self.countDownDay =Math.round(self.updateTime -(currentTime - listTime)/(60*60*24)) ;
+
           console.log(res);
         },
         error:function(err){
@@ -204,6 +216,22 @@ export default {
         }
       });
     },
+    getArticle(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/info/getArticle',
+        success:function (res) {
+          self.newsList = res.data;
+          self.lookCount = res.data.length - 2;
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    lookNews(link){
+       window.location.href = 'http://'+link;
+    }
   }
 }
 </script>

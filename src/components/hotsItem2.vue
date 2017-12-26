@@ -1,15 +1,15 @@
 <template>
   <div class="news">
-    <div class="hots-item" @click="lookNews">
+    <div class="hots-item">
       <div class="left">
-        <h4>{{articleData.title}}</h4>
+        <h4>{{news.title}}</h4>
         <p class="about-read">
           <!--<span class="read-date"></span>
           <span class="read-num"></span>-->
         </p>
       </div>
       <div class="right">
-        <img :src=articleData.image alt="">
+        <img :src=news.image alt="">
       </div>
     </div>
   </div>
@@ -23,35 +23,23 @@ export default {
   name: 'hotsItem2',
   data() {
     return {
-      articleData:{},
-      link:''
+
     }
   },
   props: {
+    news:{
+      type:Object,
+      required:true
+    },
 
   },
   mounted(){
-    this.getArticle();
+
   },
   //相关操作事件
   methods: {
-    getArticle(){
-      var self = this;
-      Lib.M.ajax({
-        url:'/info/getArticle',
-        success:function (res) {
-          self.articleData = res.data[0];
-          console.log(res.data[0]);
-          self.link = res.data[0].link;
-        },
-        error:function(err){
-          console.error(err);
-        }
-      });
-    },
-    lookNews(){
-      window.location.href = 'http://'+this.link;
-    }
+
+
   }
 }
 </script>
