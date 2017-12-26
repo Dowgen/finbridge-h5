@@ -59,6 +59,17 @@ export default {
           grant_type:'password',
           scope:'read write'
         },
+        /*url : 'https://finbridge.cn/uaa/oauth/token',
+        headers: {
+          Accept:'application/json',
+          Authorization:'Basic anVoZV9jYXNobG9hbjpKdWhlMTIzNjc4IUAj'
+        },
+        params:{
+          username:'juhe',
+          password:'Juhe2017!@#',
+          grant_type:'password',
+          scope:'read write'
+        },*/
         success:function(data){
           localStorage.token = data.access_token;
         },

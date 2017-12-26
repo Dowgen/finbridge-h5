@@ -34,7 +34,7 @@
 
 
       <div class="pro-type slide" :class="showPdType?'animate':''">
-        <label v-for="item in fundList">
+        <label v-for="item in fundTypeList">
           <input v-model="fundType" name="fundType" type="radio" :value="item.key" />{{item.label}} 
         </label>
       </div>
@@ -65,7 +65,7 @@
         @click.native="showLikeType = !showLikeType"></cell>
       </div>
       <div class="pro-type2 slide"  :class="showLikeType?'animate':''">
-        <label v-for="item in assetList">
+        <label v-for="item in assetTypeList">
           <input v-model="findAssetType" type="checkbox" :value="item.key" />{{item.label}} 
         </label>
       </div>
@@ -92,8 +92,8 @@ export default {
   },
   data () {
     return {
-      fundList:[], //从后台获取的资金类型列表
-      assetList:[], //从后台获取的资产类型列表
+      fundTypeList:[], //从后台获取的资金类型列表
+      assetTypeList:[], //从后台获取的资产类型列表
       projectName:'',  //项目名称
       fundType:'',    //资金类型
       fundAnmount:'', //资金规模
@@ -111,7 +111,8 @@ export default {
     }
   },
   mounted(){
-    this.getFundList();
+    this.assetTypeList = JSON.parse(localStorage.assetTypeList);
+    this.fundTypeList = JSON.parse(localStorage.fundTypeList);
   },
   methods:{
     nextWay(){
@@ -134,22 +135,7 @@ export default {
         localStorage.addFundParams = JSON.stringify(addFundParams);
         this.$router.push({ path: 'Release2', query: { AorF: 'fund' }})
       }
-    },
-    /* 获取资金资产类型列表 */
-    getFundList(){
-      var self = this;
-      Lib.M.ajax({
-        url : '/info/findAssetAndFundConfig',
-        success:function(res){
-          if(res.code==200){
-            self.fundList=res.data.fund;
-            self.assetList = res.data.asset
-          }else{
-            self.$vux.toast.text(res.error, 'middle');
-          }
-        }
-      });
-    },
+    }
   }
 }
 </script>

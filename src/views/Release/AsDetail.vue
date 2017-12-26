@@ -6,20 +6,20 @@
         <p>项目详情</p>
       </div>
       <div class="con">
-        <p class="p1">人众资金 第031号</p>
-        <p class="p2">15-18</p>
+        <p class="p1">{{info.projectName}}</p>
+        <p class="p2">{{info.fundCostRegionFrom}}-{{info.fundCostRegionTo}}</p>
         <p class="p3">资金成本区间(%）</p>
         <div class="project-des">
           <div class="item">
-            <p>1800元</p>
+            <p>{{info.perAmount}}元</p>
             <p>件均额度</p>
           </div>
           <div class="item">
-            <p>3天</p>
+            <p>{{info.perPeriod}}天</p>
             <p>单笔期限</p>
           </div>
           <div class="item">
-            <p>3百万</p>
+            <p>{{info.dailyPayAmount}}百万</p>
             <p style="border: none;">日放款量</p>
           </div>
         </div>
@@ -35,13 +35,12 @@
         <p>产品特色</p>
       </div>
       <div class="main-item">
-        <p>人众资金 第031号</p>
-        <p>车抵贷</p>
-        <p>20,000,000</p>
-        <p>3.0%</p>
-        <p>爱信金融钱包</p>
-        <p style="line-height: 24px">主要专业给年轻人的贷款，提供消费分<br>
-          期平台便于生活</p>
+        <p>{{info.projectName}}</p>
+        <p>{{info.productType}}</p>
+        <p>{{info.totalPayAmount}}</p>
+        <p>{{info.debtRate}}%</p>
+        <p>{{info.productName || '无'}}</p>
+        <p style="line-height: 24px">{{info.productFeature}}</p>
       </div>
     </div>
     <div class="project-footer">
@@ -53,12 +52,11 @@
         <p>公司背景</p>
       </div>
       <div class="footer-item">
-        <p>人众金服股份有限公司</p>
-        <p>3个月</p>
-        <p>银行、P2P、私募</p>
-        <p>杭州市滨江区江虹路410号</p>
-        <p>注于移动通信系统和应用领域的
-开发,软件开发经验</p>
+        <p>{{info.companyName || '无'}}</p>
+        <p>{{info.operationTime}}个月</p>
+        <p>{{info.fundOrigin}}</p>
+        <p>{{info.companyAddress}}</p>
+        <p>{{info.companyBackground}}</p>
       </div>
     </div>
     <div class="project-footer">
@@ -68,21 +66,15 @@
         <p>QQ号</p>
       </div>
       <div class="footer-item">
-        <p>18276739008</p>
-        <p>shuixisuo001</p>
-        <p>739008112</p>
+        <p>{{info.contactPhone}}</p>
+        <p>{{info.contactWechat}}</p>
+        <p>{{info.contactQQ}}</p>
       </div>
     </div>
-    <div class="footer-btn" v-show="key == 3" style="display: flex;flex-direction: row">
-      <div class="btn-left" style="flex-grow: 1">下架</div>
-      <div class="btn-right" style="flex-grow: 1">
-        <img src="./img/delete.png" alt="" class="delete">
-        删除
-      </div>
-    </div>
-    <div class="footer-btn" v-show="key == 4" style="display: flex;flex-direction: row">
-      <div class="btn-left" style="flex-grow: 1" @click="share">分享</div>
-      <div class="btn-right" style="flex-grow: 1">
+    <div class="footer-btn" style="display: flex;flex-direction: row">
+      <div v-show="isLose == '0'" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
+      <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="click">分享</div>
+      <div v-show="isLose == '1'" class="btn-right" style="flex-grow: 1" @click="click('delete')">
         <img src="./img/delete.png" alt="" class="delete">
         删除
       </div>
@@ -102,8 +94,13 @@ export default {
   },
   data () {
     return {
-      key:4,
+      isLose:null,
+      info:{}
     }
+  },
+  mounted(){
+    this.info = this.$route.query.info;
+    this.isLose = this.$route.query.isLose;
   },
   methods:{
     share(){
@@ -114,6 +111,52 @@ export default {
         position: 'middle'
       })
     },
+    click(fun){
+      var self = this, content = null, func=null;
+      if(fun=='offline'){
+        content = '下架之后，该项目将进入已失效，是否确认下架？';
+        func = self.offline;
+      }else if(fun=='delete'){
+        content = '是否确认删除此项目？';
+        func = self.delete;
+      }
+      this.$vux.confirm.show({
+        content: content,
+        onConfirm () {
+          func();
+        }
+      })
+    },
+    //下架
+    offline(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/public/unListProject',
+        data:{unListId:self.info.assetId},
+        success:function(res){
+          if(res.code==200){
+            self.$vux.toast.text('下架成功!', 'middle');
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
+    //删除
+    delete(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/public/deleteOnListProject',
+        data:{deleteId:self.info.assetId},
+        success:function(res){
+          if(res.code==200){
+            self.$vux.toast.text('下架成功!', 'middle');
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    }
   }
 }
 </script>
@@ -181,10 +224,9 @@ body{
   font-size: 0.815rem;
 }
 .project .project-main{
-  display: flex;
-  flex-direction: row;
   width: 100%;
   margin: 0 auto;
+  display: flex;
   background: #fff;
 }
 .project .project-main .main-item:nth-of-type(1){
@@ -203,6 +245,8 @@ body{
 }
 .project .project-main .main-item p{
   margin:1.5rem 0;
+  font-size: 0.875rem;
+  height: 0.8rem;
 }
 .project .project-footer{
   width: 100%;
@@ -229,6 +273,7 @@ body{
 }
 .project .project-footer .footer-item p{
   margin:1.5rem 0;
+  height: 0.8rem;
 }
 .footer-btn{
   width: 100%;

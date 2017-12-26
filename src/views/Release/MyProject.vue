@@ -31,7 +31,7 @@
         <h3>资金</h3>
         <p>合规对接 量大稳定</p>
         <div>
-        <div class="item" v-for="item in fundList">
+        <div class="item" v-for="item in fundList" @click="jumpTo(item,'f','0')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -45,7 +45,8 @@
                 <i>|</i>
                 <span>{{getLabel(item.fundType,'fund')}}</span>
               </div>
-              <img src="./img/label_judge.png"/>
+              <img v-show="item.listStatus==1" src="./img/label_judge.png"/>
+              <img v-show="item.listStatus==2" src="./img/label_online.png"/>
             </div>
           </div>
         </div>
@@ -58,7 +59,7 @@
         <h3>资产</h3>
         <p>风控审核 多元供给</p>
         <div>
-        <div class="item" v-for="item in assetList">
+        <div class="item" v-for="item in assetList" @click="jumpTo(item,'a','0')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -72,7 +73,8 @@
                 <i>|</i>
                 <span>{{getLabel(item.productType,'asset')}}</span>
               </div>
-              <img src="./img/label_judge.png"/>
+              <img v-show="item.listStatus==1" src="./img/label_judge.png"/>
+              <img v-show="item.listStatus==2" src="./img/label_online.png"/>
             </div>
           </div>
         </div>
@@ -88,7 +90,7 @@
         <h3>资金</h3>
         <p>合规对接 量大稳定</p>
         <div>
-        <div class="item" v-for="item in fundListLose">
+        <div class="item" v-for="item in fundListLose" @click="jumpTo(item,'f','1')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -114,7 +116,7 @@
         <h3>资产</h3>
         <p>风控审核 多元供给</p>
         <div>
-        <div class="item" v-for="item in assetListLose">
+        <div class="item" v-for="item in assetListLose" @click="jumpTo(item,'a','1')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -159,8 +161,6 @@ export default {
     return {
       hasProject:null,
       loseEfficacy:false,
-      fundTypeList:[],
-      assetTypeList:[],
       assetList:[],
       fundList:[],
       assetListLose:[],
@@ -181,15 +181,14 @@ export default {
     this.getFundList();
   },
   methods: {
+    //资金资产类型数字转化为文字
     getLabel(key,type){
       var f;
       if(type=='fund') 
-        f = this.fundTypeList;
+        f = JSON.parse(localStorage.fundTypeList);
       else 
-        f = this.assetTypeList;
-      console.log(f)
+        f = JSON.parse(localStorage.assetTypeList);
       for(let i in f){
-        console.log('');
         if(f[i].key == key) return f[i].label
       }
     },
@@ -241,14 +240,24 @@ export default {
         url : '/info/findAssetAndFundConfig',
         success:function(res){
           if(res.code==200){
-            self.fundTypeList=res.data.fund;
-            self.assetTypeList = res.data.asset
+            localStorage.fundTypeList=JSON.stringify(res.data.fund);
+            localStorage.assetTypeList = JSON.stringify(res.data.asset);
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
         }
       });
     },
+    //跳转至详情页
+    jumpTo(item,AorF,isLose){
+      if(AorF=='f'){
+        this.$router.push({path:'/FuDetail',
+          query:{info:item,isLose:isLose}})
+      }else{
+        this.$router.push({path:'/AsDetail',
+          query:{info:item,isLose:isLose}})
+      }
+    }
   }
 }
 </script>
@@ -333,6 +342,7 @@ export default {
       >div{
         display:flex;
         flex-direction:column;
+        justify-content:space-between;
       }
       >.left{
         >p{
@@ -363,10 +373,14 @@ export default {
           display:flex;
           align-items:center;
           justify-content:space-between;
-          >span:first-child,i{
-            margin-right:0.3rem;
+          >div{
+            flex:4;
+            >i{
+              margin:0 0.3rem;
+            }
           }
           img{
+            flex:1;
             width:2.845rem;
             height: 1.15rem;
           }
