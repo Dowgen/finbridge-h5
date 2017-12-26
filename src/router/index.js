@@ -7,7 +7,7 @@ Vue.use(Router)
 //登录模块
 const LoginRoutes = [
   {
-    path: '/',
+    path: '/Login',
     component: _import('Login/Login')
   },{
     path: '/Regist',
@@ -21,7 +21,7 @@ const LoginRoutes = [
 //主页
 const HomeRoutes = [
   {
-    path: '/Home',
+    path: '/',
     component: _import('Home/Home')
   },
   {

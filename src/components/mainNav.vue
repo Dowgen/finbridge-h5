@@ -8,14 +8,14 @@
       <img v-show="which!=='square'" src="./img/square.png">
       <img v-show="which=='square'" src="./img/square_color.png">
     </router-link>
-    <router-link to="/MyProject">
+    <div @click="to('Project')">
       <img v-show="which!=='MyProject'" src="./img/release.png">
       <img v-show="which=='MyProject'" src="./img/release_color.png">
-    </router-link>
-    <router-link to="/MyInfo">
+    </div>
+    <div @click="to('Info')">
       <img v-show="which!=='myInfo'" src="./img/myInfo.png">
       <img v-show="which=='myInfo'" src="./img/myInfo_color.png">
-    </router-link>
+    </div>
   </div>
 </template>
 
@@ -29,8 +29,8 @@ export default {
   },
   props: {
     which: {
-        type: String,
-        default: 'home'
+      type: String,
+      default: 'home'
     }
   },
   mounted(){
@@ -38,6 +38,23 @@ export default {
   },
   //相关操作事件
   methods: {
+    to(where){
+      let self = this;
+      if(localStorage.userId != undefined){
+        if(where=='Project'){
+          this.$router.push('MyProject')
+        }else{
+          this.$router.push('MyInfo')
+        }
+      }else{
+        this.$vux.confirm.show({
+        content: '挂牌或查看个人信息需要登录,是否确认登录?',
+          onConfirm () {
+            self.$router.push('Login')
+          }
+        })
+      }
+    }
   }
 }
 </script>
