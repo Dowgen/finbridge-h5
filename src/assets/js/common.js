@@ -128,7 +128,7 @@ var Rxports = {
             },
 			// `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
   			// 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
-			baseURL:'http://192.168.2.169:8060/finbridge-base',
+			baseURL:'http://118.31.189.23:8060/finbridge-base',
 			timeout: opts.timeout || 0,
 			responseType: opts.dataType || 'json'
 		}).then(function(res){

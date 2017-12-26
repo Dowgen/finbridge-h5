@@ -48,7 +48,7 @@ export default {
     getToken(){
       var self = this;
       Lib.M.ajax({
-        url : 'http://192.168.2.169:8060/uaa/oauth/token',
+        /*url : 'http://192.168.2.169:8060/uaa/oauth/token',
         headers: {
           Accept:'application/json',
           Authorization:'Basic Y2xpZW50OnNlY3JldA=='
@@ -58,8 +58,8 @@ export default {
           password:'password',
           grant_type:'password',
           scope:'read write'
-        },
-        /*url : 'https://finbridge.cn/uaa/oauth/token',
+        },*/
+        url : 'http://118.31.189.23:8060/uaa/oauth/token',
         headers: {
           Accept:'application/json',
           Authorization:'Basic anVoZV9jYXNobG9hbjpKdWhlMTIzNjc4IUAj'
@@ -69,7 +69,7 @@ export default {
           password:'Juhe2017!@#',
           grant_type:'password',
           scope:'read write'
-        },*/
+        },
         success:function(data){
           localStorage.token = data.access_token;
         },
