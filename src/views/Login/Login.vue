@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
-    <div class="hello-head">
+   <!-- <div class="hello-head">
       <img src="./img/close.png" alt="">
-    </div>
+    </div>-->
     <img class="logo" src="./img/logo.png">
     <h1>{{msg}}</h1>
     <div class="input" style=" position: relative;">
@@ -141,7 +141,7 @@ export default {
   .logo{
     width: 4.25rem;
     height: 4.25rem;
-    margin-top: 5rem;
+    margin-top:4.97rem;
   }
   .hello .hello-head{
     text-align: right;
@@ -160,7 +160,8 @@ export default {
     font-family:PingFangSC-Regular;
     color:rgba(78,78,78,1);
     line-height:1.815rem;
-    margin-top: 1.625rem;
+    margin-top: 0.69rem;
+    font-weight: normal;
   }
   .hello .input{
     width:19.53rem;
@@ -181,6 +182,11 @@ export default {
   }
   .hello .input .phone{
     border-bottom: 0.06rem solid #9C9C9C;
+    letter-spacing: 2px;
+  }
+  .hello .input .psd{
+    font-size: 0.7rem;
+    letter-spacing: 10px;
   }
   .hello .input .miss-psd{
     font-size:0.815rem;
@@ -192,7 +198,9 @@ export default {
   .hello .footer{
     width: 100%;
     font-size:0.815rem;
-    margin-top: 12rem;
+    position: absolute;
+    left: 0;
+    bottom: 2rem;
     text-align: center;
   }
 </style>

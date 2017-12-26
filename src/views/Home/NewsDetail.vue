@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="content">
-      <myHead msg="新闻资讯" style="background:linear-gradient(to right, #4083FF, #38BCFD);color: #fff;"></myHead>
+      <div class="header">
+        <span @click="$router.go(-1)" class="back"><img style=" width:0.66rem;height: 1.175rem;display: inline-block;" src="./img/back.png" alt=""></span>
+        <p>新闻资讯</p>
+      </div>
       <div class="news-con">
-        <hotsItem2></hotsItem2>
-        <hotsItem2></hotsItem2>
-        <hotsItem1></hotsItem1>
-        <hotsItem3></hotsItem3>
-        <hotsItem2></hotsItem2>
+        <hotsItem2 v-for="item in items"></hotsItem2>
+
       </div>
     </div>
     <main-nav which="home"></main-nav>
@@ -35,29 +35,63 @@ export default {
   },
   data () {
     return {
-      
+      items:[]
     }
   },
   computed:{
     
   },
   mounted(){
-    
+    this.getArticle();
   },
   methods: {
-      
+    getArticle(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/info/getArticle',
+        success:function (res) {
+          self.items = res.data;
+          console.log(self.items);
+
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
   }
 }
 </script>
 
 <style lang="less" scoped>
   .content{
+    width: 100%;
    /* background: #EFEFF4;*/
     padding-bottom:3.8rem;
     background: #fff;
     position: absolute;
     left: 0;
     top: 0;
+    .header{
+      width:100%;
+      height:4rem;
+      background:linear-gradient(to right, #4083FF, #38BCFD);
+      margin: 0 auto;
+      font-size: 1.065rem;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      line-height: 4rem;
+      font-weight: 600;
+      span{
+        position: absolute;
+        height: 100%;
+        left: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
     .news-con{
       padding: 0 1rem 1rem;
     }

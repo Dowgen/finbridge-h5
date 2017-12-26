@@ -4,37 +4,32 @@
       <div class="square-head">
         <button-tab class="button-tab">
           <button-tab-item selected @on-item-click="zj=true">资金</button-tab-item>
-          <button-tab-item @on-item-click="zj=false">资产</button-tab-item>
+          <button-tab-item @on-item-click="zj=false" @click="sort(1,1,1)">资产</button-tab-item>
         </button-tab>
       </div>
       <div class="zj" v-show="zj">
         <div class="zj-head">
-         <div @click="getZjComprehensiveSortFund">综合排序</div>
-         <div @click="getZjTotalSortFundAsc">总放款规模
-           <img v-show="key == 0" src="./img/ic_arrow_nor.png" alt="">
-           <img @click="getZjTotalSortFundDesc" v-show="key == 1" src="./img/ic_arrow_down.png" alt="">
-           <img @click="getZjTotalSortFundAsc" v-show="key == 2" src="./img/arrow_up.png" alt="">
+         <div @click="sort(1,1,2),isActive='comprehension'" :class="isActive=='comprehension'?'active':''">综合排序</div>
+         <div @click="sort(2,1,2),isActive='total'" :class="isActive=='total'?'active':''">总放款规模
+           <img @click="sort(2,2,2)" v-show="key == 1" src="./img/ic_arrow_down.png" alt="">
+           <img @click="sort(2,1,2)" v-show="key == 2" src="./img/arrow_up.png" alt="">
          </div>
          <div @click="chooseType">选择类型
-           <img v-show="key == 0" src="./img/arrow_type_nor.png" alt="">
-           <img v-show="key == 1" src="./img/arrow_type_sel.png" alt="">
+           <img src="./img/arrow_type_nor.png" alt="">
+           <!--<img v-show="key == 1" src="./img/arrow_type_sel.png" alt="">-->
          </div>
        </div>
         <div class="type">
           <span class="angle"><img src="./img/tri-angle.png" alt=""></span>
           <div class="type-head">产品类型</div>
           <div class="types">
-            <label><input name="CashLoan" type="radio" value="现金贷" />现金贷 </label>
-            <label><input name="CashLoan" type="radio" value="房抵贷" />房抵贷 </label>
-            <label><input name="CashLoan" type="radio" value="车抵贷" />车抵贷 </label>
-            <label><input name="CashLoan" type="radio" value="3C租赁" />3C租赁 </label>
-            <label><input name="CashLoan" type="radio" value="消费分期" />消费分期 </label>
-            <label><input name="CashLoan" type="radio" value="现金分期" />现金分期 </label>
-            <label><input name="CashLoan" type="radio" value="其它" />其它 </label>
+            <label v-for="item in fundTypeList">
+              <input v-model="fundType" type="checkbox" :value="item.key" />{{item.label}}
+            </label>
           </div>
           <div class="btn">
-            <span class="confirm" @click="confirm">确定</span>
-            <span class="cancel" @click="cancel">取消</span>
+            <span class="confirm" @click="confirm()">确定</span>
+            <span class="cancel" @click="cancel()">取消</span>
           </div>
         </div>
         <div class="con">
@@ -57,7 +52,7 @@
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
-                  <p>{{Math.floor(validDay -((currentTime - (Date.parse(new Date(item.listTime)) / 1000))/(60*60*24)))}}天</p>
+                  <p>{{Math.round(validDay -((currentTime - (Date.parse(new Date(item.listTime)) / 1000))/(60*60*24)))}}天</p>
 
                 </div>
               </div>
@@ -66,30 +61,24 @@
         </div>
       </div>
       <div class="zj" v-show="!zj">
-        资产资产资产
         <div class="zj-head">
-          <div @click="getZcComprehensiveSortFund">综合排序</div>
-          <div @click="getZcTotalSortFundAsc">总放款规模
-            <img v-show="key == 0" src="./img/ic_arrow_nor.png" alt="">
-            <img @click="getZcTotalSortFundDesc" v-show="key == 1" src="./img/ic_arrow_down.png" alt="">
-            <img @click="getZcTotalSortFundAsc" v-show="key == 2" src="./img/arrow_up.png" alt="">
+          <div @click="sort(1,1,1),isActive='comprehension'" :class="isActive=='comprehension'?'active':''">综合排序</div>
+          <div @click="sort(2,1,1),isActive='total'" :class="isActive=='total'?'active':''">总放款规模
+            <img @click="sort(2,2,1)" v-show="key == 1" src="./img/ic_arrow_down.png" alt="">
+            <img @click="sort(2,1,1)" v-show="key == 2" src="./img/arrow_up.png" alt="">
           </div>
           <div @click="chooseType">选择类型
-            <img v-show="key == 0" src="./img/arrow_type_nor.png" alt="">
-            <img v-show="key == 1" src="./img/arrow_type_sel.png" alt="">
+            <img  src="./img/arrow_type_nor.png" alt="">
+           <!-- <img v-show="key == 1" src="./img/arrow_type_sel.png" alt="">-->
           </div>
         </div>
         <div class="type">
           <span class="angle"><img src="./img/tri-angle.png" alt=""></span>
           <div class="type-head">产品类型</div>
           <div class="types">
-            <label><input name="CashLoan" type="radio" value="现金贷" />现金贷 </label>
-            <label><input name="CashLoan" type="radio" value="房抵贷" />房抵贷 </label>
-            <label><input name="CashLoan" type="radio" value="车抵贷" />车抵贷 </label>
-            <label><input name="CashLoan" type="radio" value="3C租赁" />3C租赁 </label>
-            <label><input name="CashLoan" type="radio" value="消费分期" />消费分期 </label>
-            <label><input name="CashLoan" type="radio" value="现金分期" />现金分期 </label>
-            <label><input name="CashLoan" type="radio" value="其它" />其它 </label>
+            <label v-for="item in assetTypeList">
+              <input v-model="assetType" type="checkbox" :value="item.key" />{{item.label}}
+            </label>
           </div>
           <div class="btn">
             <span class="confirm" @click="confirm">确定</span>
@@ -116,7 +105,7 @@
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
-                  <p>{{Math.floor(validDay -((currentTime - (Date.parse(new Date(oItem.listTime)) / 1000))/(60*60*24)))}}天</p>
+                  <p>{{Math.round(validDay -((currentTime - (Date.parse(new Date(oItem.listTime)) / 1000))/(60*60*24)))}}天</p>
                 </div>
               </div>
             </div>
@@ -145,14 +134,20 @@ export default {
   },
   data () {
     return {
+      isActive: 'comprehension',
       zj:true,
-      key:0,
+      key:2,
       items:[],
       oItems:[],
       validDay:'',
       img_src:'',
       countDownDay:'',
-      currentTime:''
+      currentTime:'',
+      fundTypeList:[],
+      assetTypeList:[],
+      fundType:[],
+      assetType:[]
+
     }
   },
   computed:{
@@ -161,8 +156,8 @@ export default {
   mounted(){
     this.getConfigByParameter();
     this.getCurrent();
-    this.getZjComprehensiveSortFund();
-    this.getZcComprehensiveSortFund();
+    this.sort(1,1,2);
+    this.getFundList();
   },
   methods: {
     chooseType(){
@@ -170,9 +165,11 @@ export default {
     },
     confirm(){
       $('.type').css('display','none');
+      this.sort(1,1,2);
     },
     cancel(){
       $('.type').css('display','none');
+      this.sort(1,1,2);
     },
     ZjProjectDetail(item){
       this.$router.push({'path':'/ZjLoginProjectDetail',query:{
@@ -197,64 +194,6 @@ export default {
           console.log(111111);
           console.log(res);
           self.validDay = res.data[0].value;
-
-        },
-        error:function(err){
-          console.error(err);
-        }
-      });
-    },
-    getZjComprehensiveSortFund(){
-      var self = this;
-      Lib.M.ajax({
-        url:'/fund/sortFund',
-        data:{
-          'chooseType':'comprehensive',
-          'sortType':'asc',
-         /* 'type':'',*/
-        },
-        success:function (res) {
-          console.log(res.data);
-          self.items = res.data
-        },
-        error:function(err){
-          console.error(err);
-        }
-      });
-    },
-    getZjTotalSortFundAsc(){
-      var self = this;
-      self.key = 2;/*升序*/
-      Lib.M.ajax({
-        url:'/fund/sortFund',
-        data:{
-          'chooseType':'total',
-          'sortType':'asc',
-          /* 'type':'',*/
-        },
-        success:function (res) {
-          console.log(res.data);
-          self.items = res.data
-
-        },
-        error:function(err){
-          console.error(err);
-        }
-      });
-    },
-    getZjTotalSortFundDesc(){
-      var self = this;
-      self.key = 1;/*降序*/
-      Lib.M.ajax({
-        url:'/fund/sortFund',
-        data:{
-          'chooseType':'total',
-          'sortType':'desc',
-        },
-        success:function (res) {
-          console.log(res.data);
-          self.items = res.data
-
         },
         error:function(err){
           console.error(err);
@@ -264,61 +203,46 @@ export default {
     getCurrent(){
       self.currentTime = Date.parse(new Date())/ 1000
     },
-    getZcComprehensiveSortFund(){
+    sort(chooseType,sortType,AorF){
       var self = this;
+      var url = AorF == 1?'/asset/sortAsset':'/fund/sortFund';
+     /* self.addClass('.active');*/
       Lib.M.ajax({
-        url:'/asset/sortAsset',
+        url:url,
         data:{
-          'chooseType':'comprehensive',
-          'sortType':'asc',
-          /* 'type':'',*/
+          'chooseType':chooseType == 1?'comprehensive':'total',
+          'sortType':sortType == 1?'asc':'desc',
+          'type':AorF == 1?self.assetType.toString():self.fundType.toString(),
         },
         success:function (res) {
          /* console.log(111111);
           console.log(res.data);*/
-          self.oItems = res.data
+         if(AorF==1){
+           self.oItems = res.data;
+         }else{
+           self.items = res.data;
+         }
+          console.log(res);
+          console.log(88888);
+          console.log(99999);
         },
         error:function(err){
           console.error(err);
         }
       });
     },
-    getZcTotalSortFundAsc(){
+    /* 获取资金资产类型列表 */
+    getFundList(){
       var self = this;
-      self.key = 2;/*升序*/
       Lib.M.ajax({
-        url:'/asset/sortAsset',
-        data:{
-          'chooseType':'total',
-          'sortType':'asc',
-          /* 'type':'',*/
-        },
-        success:function (res) {
-         /* console.log(res.data);*/
-          self.oItems = res.data
-
-        },
-        error:function(err){
-          console.error(err);
-        }
-      });
-    },
-    getZcTotalSortFundDesc(){
-      var self = this;
-      self.key = 1;/*降序*/
-      Lib.M.ajax({
-        url:'/asset/sortAsset',
-        data:{
-          'chooseType':'total',
-          'sortType':'desc',
-        },
-        success:function (res) {
-          /*console.log(res.data);*/
-          self.oItems = res.data
-
-        },
-        error:function(err){
-          console.error(err);
+        url : '/info/findAssetAndFundConfig',
+        success:function(res){
+          if(res.code==200){
+            self.fundTypeList=res.data.fund;
+            self.assetTypeList = res.data.asset
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
         }
       });
     },
@@ -372,7 +296,7 @@ export default {
         flex-direction: row;
         margin-top: 0.8rem;
         div{
-          flex-grow: 1;
+          flex: 1;
         }
         div:nth-of-type(2){
           position: relative;
@@ -391,7 +315,7 @@ export default {
             height: 0.25rem;
             position: absolute;
             top: 0.6rem;
-            right: 1rem;
+            right: 1.4rem;
           }
         }
       }
@@ -425,7 +349,7 @@ export default {
             display: flex;
             flex-direction: row;
             .left{
-              flex-grow: 1;
+              flex: 1;
               text-align: left;
               p:nth-of-type(1){
                 font-size: 1.5rem;
@@ -441,7 +365,7 @@ export default {
               }
             }
             .right{
-              flex-grow: 2;
+              flex: 2;
               height: 3rem;
               border-left: 0.06rem solid #EAEAEA;
               margin-top: 1rem;
@@ -511,18 +435,18 @@ export default {
         .types{
           padding: 0 1rem;
           text-align: center;
-          input[type="radio"] {
+          input[type="checkbox"] {
             display: inline-block;
             width: 1.19rem;
             height: 1.19rem;
             border: 0.06rem solid #E6E6E6;
-            border-radius: 50%;
+            border-radius: 0.19rem;
             cursor: pointer;
             margin-right: 0.2rem;
             outline: none;
           }
           input:checked{
-            background: url("./img/selected_one.png") no-repeat center;
+            background: url("./img/ic_selected_more.png") no-repeat center;
             background-size: 100% 100%;
           }
           label {

@@ -1,10 +1,10 @@
 <template>
   <div class="hello">
-    <div class="hello-head">
+    <!--<div class="hello-head">
       <img src="./img/close.png" alt="">
-    </div>
-    <img class="logo" src="./img/logo.png">
-    <h1 style="margin-top: 1.315rem;">&nbsp 您好！</h1>
+    </div>-->
+    <img class="logo" src="./img/img_signup.png">
+    <h1 style="margin-top: 0.65rem;">&nbsp 您好！</h1>
     <h1>请注册开始使用</h1>
     <div class="input" style=" position: relative;">
       <input type="text" placeholder="手机号码" class="phone" maxlength="11" v-model="phoneNum">
@@ -167,10 +167,10 @@ export default {
   .hello h1{
     font-size:1.065rem;
     font-family:PingFangSC-Regular;
-    font-weight: 500;
     color:#4E4E4E;
     line-height:1.595rem;
     text-align: center;
+    font-weight: normal;
   }
   .hello .input{
     width:19.53rem;
@@ -191,9 +191,12 @@ export default {
   }
   .hello .input .phone{
     border-bottom: 0.06rem solid #9C9C9C;
+    letter-spacing: 2px;
   }
   .hello .input .psd{
     border-bottom: 0.06rem solid #9C9C9C;
+    font-size: 0.7rem;
+    letter-spacing: 10px;
   }
   .hello .input .yzm{
     width:9.69rem;
@@ -210,6 +213,7 @@ export default {
     width: 100%;
     font-size:0.815rem;
     text-align: center;
-    margin-top: 9rem;
+    position: absolute;
+    bottom: 2rem;
   }
 </style>

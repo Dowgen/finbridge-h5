@@ -1,38 +1,57 @@
 <template>
   <div class="news">
-    <div class="hots-item">
+    <div class="hots-item" @click="lookNews">
       <div class="left">
-        <h4>千真万确！银行不接待资金！</h4>
+        <h4>{{articleData.title}}</h4>
         <p class="about-read">
-          <span class="read-date">2017-12-09</span>
-          <span class="read-num">782阅读量</span>
+          <!--<span class="read-date"></span>
+          <span class="read-num"></span>-->
         </p>
       </div>
       <div class="right">
-        <img src="./img/img_news.png" alt="">
+        <img :src=articleData.image alt="">
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import Lib from '@/assets/js/Lib'
+  import $ from 'jquery'
 
 export default {
   name: 'hotsItem2',
   data() {
     return {
-
+      articleData:{},
+      link:''
     }
   },
   props: {
 
   },
   mounted(){
-
+    this.getArticle();
   },
   //相关操作事件
   methods: {
-
+    getArticle(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/info/getArticle',
+        success:function (res) {
+          self.articleData = res.data[0];
+          console.log(res.data[0]);
+          self.link = res.data[0].link;
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    lookNews(){
+      window.location.href = 'http://'+this.link;
+    }
   }
 }
 </script>
