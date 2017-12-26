@@ -47,13 +47,12 @@
                 <div>
                   <p></p>
                   <p>项目类型</p>
-                  <p>{{item.fundType}}</p>
+                  <p>{{getLabel(item.fundType,'fund')}}</p>
                 </div>
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
                   <p>{{Math.round(validDay -((currentTime - (Date.parse(new Date(item.listTime)) / 1000))/(60*60*24)))}}天</p>
-
                 </div>
               </div>
             </div>
@@ -100,7 +99,7 @@
                 <div>
                   <p></p>
                   <p>项目类型</p>
-                  <p>{{oItem.productType}}</p>
+                  <p>{{getLabel(oItem.productType,'asset')}}</p>
                 </div>
                 <div>
                   <p></p>
@@ -159,6 +158,7 @@ export default {
     this.getCurrent();
     this.sort(1,1,2);
     this.getFundList();
+
   },
   methods: {
     chooseType(){
@@ -245,6 +245,17 @@ export default {
           }
         }
       });
+    },
+    //资金资产类型数字转化为文字
+    getLabel(key,type){
+      var f;
+      if(type=='fund')
+        f = JSON.parse(localStorage.fundTypeList);
+      else
+        f = JSON.parse(localStorage.assetTypeList);
+      for(let i in f){
+        if(f[i].key == key) return f[i].label
+      }
     },
   }
 }

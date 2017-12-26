@@ -11,7 +11,7 @@
         <p class="p3">资金成本区间(%）</p>
         <div class="project-des">
           <div class="item">
-            <p>资金类型: {{$route.query.item.fundType}}</p>
+            <p>资金类型: {{getLabel($route.query.item.fundType,'fund')}}</p>
           </div>
           <div class="item">
             <p>资金规模: {{$route.query.item.fundAnmount}}</p>
@@ -26,7 +26,7 @@
       </div>
       <div class="main-item">
         <p>{{$route.query.item.companyName}}</p>
-        <p>{{$route.query.item.findAssetType}}</p>
+        <p>{{getLabel($route.query.item.findAssetType,'asset')}}</p>
       </div>
     </div>
     <div class="footer-btn" v-show="key == 1" @click="contactCard">立即合作</div>
@@ -84,7 +84,8 @@ export default {
     }
   },
   mounted(){
-
+    this.assetTypeList = JSON.parse(localStorage.assetTypeList);
+    this.fundTypeList = JSON.parse(localStorage.fundTypeList);
   },
   methods:{
     share(){
@@ -100,7 +101,31 @@ export default {
     },
     closeContactCard(){
       $('.alert').css('display','none')
-    }
+    },
+    //资金资产类型数字转化为文字
+    getLabel(key,type){
+      var f;
+      if(type=='fund')
+        f = JSON.parse(localStorage.fundTypeList);
+      else
+        f = JSON.parse(localStorage.assetTypeList);
+      console.log(typeof key)
+      if(typeof key == 'string'){
+        let array = [];
+        let keyArray = key.split(',');
+        for(let a in keyArray){
+          for(let i in f){
+            if(f[i].key == keyArray[a]) array.push(f[i].label)
+          }
+        }
+        return array.toString();
+      }else{
+        for(let i in f){
+          if(f[i].key == key) return f[i].label
+        }
+      }
+
+    },
 
   }
 }

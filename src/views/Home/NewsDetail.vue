@@ -61,7 +61,7 @@ export default {
       });
     },
     lookNews(link){
-      window.location.href = 'http://'+link;
+      window.location.href = link;
     }
   }
 }

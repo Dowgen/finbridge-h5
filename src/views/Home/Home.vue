@@ -2,11 +2,7 @@
   <div>
     <div class="content" v-cloak>
       <swiper loop auto height="12.44rem" dots-position="center">
-        <swiper-item><img :src="img_src"></swiper-item>
-        <swiper-item><img :src="img_src"></swiper-item>
-        <swiper-item><img :src="img_src"></swiper-item>
-        <swiper-item><img :src="img_src"></swiper-item>
-        <swiper-item><img :src="img_src"></swiper-item>
+        <swiper-item v-for="img in img_src"><img :src="img.picUrl"></swiper-item>
       </swiper>
       <div class="recommend">
         <p>
@@ -93,7 +89,7 @@ export default {
     return {
       RcmZc:{},
       rcmZj:{},
-      img_src:'',
+      img_src:[],
       countDownDay:'',
       updateTime:'',
       newsList:[],
@@ -193,7 +189,7 @@ export default {
       Lib.M.ajax({
         url:'/info/getCarouselFigure',
         success:function (res) {
-          self.img_src=res.data[0].picUrl;
+          self.img_src=res.data;
           /*console.log(self.img_src);*/
         },
         error:function(err){
@@ -230,7 +226,7 @@ export default {
       });
     },
     lookNews(link){
-       window.location.href = 'http://'+link;
+       window.location.href = link;
     }
   }
 }

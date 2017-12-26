@@ -36,7 +36,7 @@
       </div>
       <div class="main-item">
         <p>{{$route.query.oItem.projectName}}</p>
-        <p>{{$route.query.oItem.productType}}</p>
+        <p>{{getLabel($route.query.oItem.productType,'asset')}}</p><!---->
         <p>{{$route.query.oItem.totalPayAmount}}</p>
         <p>{{$route.query.oItem.debtRate}}</p>
         <p>{{$route.query.oItem.projectName}}</p>
@@ -127,7 +127,18 @@ export default {
     },
     closeContactCard(){
       $('.alert').css('display','none')
-    }
+    },
+    //资金资产类型数字转化为文字
+    getLabel(key,type){
+      var f;
+      if(type=='fund')
+        f = JSON.parse(localStorage.fundTypeList);
+      else
+        f = JSON.parse(localStorage.assetTypeList);
+      for(let i in f){
+        if(f[i].key == key) return f[i].label
+      }
+    },
   }
 }
 </script>
