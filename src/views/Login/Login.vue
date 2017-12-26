@@ -105,7 +105,7 @@ export default {
             localStorage.phoneNum = self.phoneNum;
             localStorage.userId = res.data.userId;
             self.$vux.toast.text('登录成功！', 'middle');
-            self.$router.replace('home');
+            self.$router.replace('/');
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
