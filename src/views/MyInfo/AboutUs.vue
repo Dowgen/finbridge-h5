@@ -20,7 +20,7 @@
         <span>{{phone}}</span>
       </div>
     </div>
-    <div class="quit">安全退出</div>
+    <div class="quit" @click="quitToLogin">安全退出</div>
     <div class="footer">Copyright © 杭州炬合网络科技有限公司</div>
   </div>
 </template>
@@ -57,6 +57,9 @@ export default {
     this.getMyInfo();
   },
   methods: {
+    quitToLogin(){
+      this.$router.push('./');
+    },
     getMyInfo(){
       var self = this;
       Lib.M.ajax({

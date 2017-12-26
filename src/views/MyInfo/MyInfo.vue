@@ -10,7 +10,7 @@
       </div>
       <div class="myInfo">
         <h4>您好,</h4>
-        <p>182****4396</p>
+        <p>{{myPhone.substr(0, 3)}}****{{myPhone.substr(7)}}</p>
         <div class="intro">
           <p>{{intro}}</p>
         </div>
@@ -42,13 +42,15 @@ export default {
       img_id: '',
       noAvatar:true,
       intro:'',
+      myPhone:''
 
     }
   },
   computed:{
-    
+
   },
   mounted(){
+    this.myPhone = localStorage.phoneNum;
     this.getMyInfo();
     this.getImg();
   },

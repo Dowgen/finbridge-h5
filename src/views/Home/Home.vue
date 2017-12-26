@@ -19,7 +19,6 @@
            <p>倒计时{{countDownDay}}天</p>
            <p>
              <span>现金分期</span>
-             <span>网络小贷</span>
            </p>
            <p>
              <span>{{ZcFundCostRegionFrom}}-{{ZcFundCostRegionTo}}%</span>
@@ -35,7 +34,6 @@
            <p>倒计时{{countDownDay}}天</p>
            <p>
              <span>现金分期</span>
-             <span>网络小贷</span>
            </p>
            <p>
              <span>{{ZjFundCostRegionFrom}}-{{ZjFundCostRegionTo}}%</span>
@@ -53,7 +51,7 @@
           热门资讯
           <span class="label"><img src="./img/label_maintital.png" alt=""></span>
         </div>
-        <div class="hots-con">
+        <!--<div class="hots-con">
           <h4 class="hots-con-title">机器人大会来临，强势一触即发！</h4>
           <p class="hots-con-instr">
             <span>未来金融</span>
@@ -65,10 +63,9 @@
             <span class="read-date">2017-12-09</span>
             <span class="read-num">782阅读量</span>
           </p>
-        </div>
+        </div>-->
         <hotsItem2></hotsItem2>
-        <hotsItem2></hotsItem2>
-        <div class="lookMore"  @click="newsDetail">查看更多(32)</div>
+        <div class="lookMore"  @click="newsDetail">查看更多</div>
       </div>
     </div>
     <main-nav which="home"></main-nav>
@@ -130,7 +127,7 @@ export default {
           self.getRecommendZc();
           self.getRecommendFund();
           self.getCarouselFigure();
-          self.getArticle();
+
         },
         error:function(err){
           console.error(err);
@@ -152,11 +149,11 @@ export default {
 
           var listTime = res.data[0].listTime;
           listTime = Date.parse(new Date(listTime))/ 1000;
-
-
-          self.countDownDay =Math.floor(self.updateTime -(currentTime - listTime)/(60*60*24)) ;
-
-
+          console.log(3333333);
+          console.log(currentTime);
+          console.log(listTime);
+          self.countDownDay =Math.round(self.updateTime -(currentTime - listTime)/(60*60*24)) ;
+          console.log(Math.round((currentTime - listTime)/(60*60*24)));
         },
         error:function(err){
           console.error(err);
@@ -192,18 +189,7 @@ export default {
         }
       });
     },
-    getArticle(){
-      var self = this;
-      Lib.M.ajax({
-        url:'/info/getArticle',
-        success:function (res) {
-          /*console.log(res);*/
-        },
-        error:function(err){
-          console.error(err);
-        }
-      });
-    },
+
   }
 }
 </script>
