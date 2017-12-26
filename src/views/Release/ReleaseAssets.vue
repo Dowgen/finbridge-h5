@@ -38,7 +38,7 @@
 
 
       <div class="pro-type slide" :class="showPdType?'animate':''">
-        <label v-for="item in assetList">
+        <label v-for="item in assetTypeList">
           <input v-model="productType" name="assetsType" type="radio" :value="item.key" />{{item.label}} 
         </label>
       </div>
@@ -100,8 +100,8 @@ export default {
   },
   data () {
     return {
+      assetTypeList:[], //资产类型列表
       showPdType: false,
-      assetList:[], //从后台获取的资产类型列表
       projectName:'',
       productName:'',
       productType:'',
@@ -116,7 +116,8 @@ export default {
     }
   },
   mounted(){
-    this.getAssetList();
+    this.assetTypeList = JSON.parse(localStorage.assetTypeList);
+    this.fundTypeList = JSON.parse(localStorage.fundTypeList);
   },
   methods:{
     nextWay(){
@@ -147,21 +148,7 @@ export default {
         localStorage.addAssetParams = JSON.stringify(addAssetParams);
         this.$router.push({ path: 'Release2', query: { AorF: 'assets' }})
       }
-    },
-    /* 获取资金资产类型列表 */
-    getAssetList(){
-      var self = this;
-      Lib.M.ajax({
-        url : '/info/findAssetAndFundConfig',
-        success:function(res){
-          if(res.code==200){
-            self.assetList = res.data.asset
-          }else{
-            self.$vux.toast.text(res.error, 'middle');
-          }
-        }
-      });
-    },
+    }
   }
 }
 </script>

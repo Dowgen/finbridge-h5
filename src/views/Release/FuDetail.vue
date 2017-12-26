@@ -6,15 +6,15 @@
         <p>项目详情</p>
       </div>
       <div class="con">
-        <p class="p1">人众资金 第031号</p>
-        <p class="p2">15-18</p>
+        <p class="p1">{{info.projectName}}</p>
+        <p class="p2">{{info.fundCostRegionFrom}}-{{info.fundCostRegionTo}}</p>
         <p class="p3">资金成本区间(%）</p>
         <div class="project-des">
           <div class="item">
-            <p>资金类型: P2P</p>
+            <p>资金类型: {{info.fundType}}</p>
           </div>
           <div class="item">
-            <p>资金规模: 3千万</p>
+            <p>资金规模: {{info.fundAnmount}}千万</p>
           </div>
         </div>
       </div>
@@ -25,9 +25,8 @@
         <p>青睐资产</p>
       </div>
       <div class="main-item">
-        <p>人众金服股份有限公司</p>
-        <p>现金贷、现金分期、消费分期、车
-抵贷、3C租赁</p>
+        <p>{{info.companyName}}</p>
+        <p>{{info.findAssetType}}</p>
       </div>
     </div>
     <div class="project-footer">
@@ -37,21 +36,15 @@
         <p>QQ号</p>
       </div>
       <div class="footer-item">
-        <p>18276739008</p>
-        <p>shuixisuo001</p>
-        <p>739008112</p>
+        <p>{{info.contactPhone}}</p>
+        <p>{{info.contactWechat}}</p>
+        <p>{{info.contactQQ}}</p>
       </div>
     </div>
-    <div class="footer-btn" v-show="key == 3" style="display: flex;flex-direction: row">
-      <div class="btn-left" style="flex-grow: 1" @click="offline">下架</div>
-      <div class="btn-right" style="flex-grow: 1">
-        <img src="./img/delete.png" alt="" class="delete">
-        删除
-      </div>
-    </div>
-    <div class="footer-btn" v-show="key == 4" style="display: flex;flex-direction: row">
-      <div class="btn-left" style="flex-grow: 1" @click="share">分享</div>
-      <div class="btn-right" style="flex-grow: 1">
+    <div class="footer-btn" style="display: flex;flex-direction: row">
+      <div v-show="isLose == '0'" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
+      <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="click">分享</div>
+      <div v-show="isLose == '1'" class="btn-right" style="flex-grow: 1" @click="click('delete')">
         <img src="./img/delete.png" alt="" class="delete">
         删除
       </div>
@@ -71,8 +64,13 @@ export default {
   },
   data () {
     return {
-      key:3,
+      isLose:null,
+      info:{}
     }
+  },
+  mounted(){
+    this.info = this.$route.query.info;
+    this.isLose = this.$route.query.isLose;
   },
   methods:{
     share(){
@@ -83,13 +81,51 @@ export default {
         position: 'middle'
       })
     },
-    offline(){
+    click(fun){
+      var self = this, content = null, func=null;
+      if(fun=='offline'){
+        content = '下架之后，该项目将进入已失效，是否确认下架？';
+        func = self.offline;
+      }else if(fun=='delete'){
+        content = '是否确认删除此项目？';
+        func = self.delete;
+      }
       this.$vux.confirm.show({
-        content: '下架之后，该项目将进入已失效，是否确认下架？',
+        content: content,
         onConfirm () {
-          console.log('hello')
+          func();
         }
       })
+    },
+    //下架
+    offline(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/public/unListProject',
+        data:{unListId:self.info.fundId},
+        success:function(res){
+          if(res.code==200){
+            self.$vux.toast.text('下架成功!', 'middle');
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
+    //删除
+    delete(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/public/deleteOnListProject',
+        data:{deleteId:self.info.fundId},
+        success:function(res){
+          if(res.code==200){
+            self.$vux.toast.text('删除成功!', 'middle');
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
     }
   }
 }
@@ -180,6 +216,8 @@ body{
 }
 .project .project-main .main-item p{
   margin:1.5rem 0;
+  font-size: 0.875rem;
+  height: 1.1rem;
 }
 .project .project-footer{
   width: 100%;
@@ -206,6 +244,8 @@ body{
 }
 .project .project-footer .footer-item p{
   margin:1.5rem 0;
+  font-size: 0.875rem;
+  height: 1.1rem;
 }
 .footer-btn{
   width: 100%;

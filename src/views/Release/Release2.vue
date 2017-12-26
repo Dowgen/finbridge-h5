@@ -48,7 +48,7 @@
         @click.native="fundType = !fundType"></cell>
       </div>
       <div class="pro-type slide" :class="fundType?'animate':''">
-        <label v-for="item in fundList">
+        <label v-for="item in fundTypeList">
           <input v-model="fundOrigin" type="checkbox" :value="item.key" />{{item.label}} 
         </label>
       </div>
@@ -98,7 +98,7 @@ export default {
       fundType: false,
       cityVal: [],
       cityList: Lib.M.cityList,
-      fundList:[],
+      fundTypeList:[],
       companyName :'',  // 公司名
       operationTime :'',  // 运营时间(月)
       AddressDetail  :'',  // 公司地址
@@ -107,7 +107,8 @@ export default {
     }
   },
   mounted(){
-    this.getFundList();
+    this.assetTypeList = JSON.parse(localStorage.assetTypeList);
+    this.fundTypeList = JSON.parse(localStorage.fundTypeList);
     this.AorF = this.$route.query.AorF;
     if(this.AorF == 'fund') this.title='资金'
     else this.title = '资产'
@@ -140,21 +141,7 @@ export default {
           this.$router.push({ path: 'Release3', query: { AorF: this.AorF }})
         }
       }
-    },
-    /* 获取资金资产类型列表 */
-    getFundList(){
-      var self = this;
-      Lib.M.ajax({
-        url : '/info/findAssetAndFundConfig',
-        success:function(res){
-          if(res.code==200){
-            self.fundList=res.data.fund;
-          }else{
-            self.$vux.toast.text(res.error, 'middle');
-          }
-        }
-      });
-    },
+    }
   }
 }
 </script>
