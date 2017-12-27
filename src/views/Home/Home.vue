@@ -269,7 +269,7 @@ export default {
           var listTime = res.data[0].listTime;
           listTime = Date.parse(new Date(listTime))/ 1000;
 
-          self.countDownDay =Math.round(self.updateTime -(currentTime - listTime)/(60*60*24)) ;
+          self.countDownDay =Math.round(parseInt(self.updateTime) -(currentTime - listTime)/(60*60*24)) ;
 
           console.log(res);
         },
