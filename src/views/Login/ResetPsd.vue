@@ -42,7 +42,7 @@ export default {
       password:'',
       verifyCode:'',
       /* countdown所需参数 */
-      time1: 5,
+      time1: 60,
       start: false,
       countDownText:'发送验证码',
     }
@@ -60,7 +60,7 @@ export default {
     /* 倒计时结束时触发 */
     finish1 (index) {
       this.start = false
-      this.time1 = 5
+      this.time1 = 60
       this.countDownText = '重新发送'
     },
     /* 用户点击注册按钮 */

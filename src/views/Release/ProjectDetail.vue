@@ -73,7 +73,7 @@
     </div>
     <div class="footer-btn" style="display: flex;flex-direction: row">
       <div v-show="isLose == '0' && info.listStatus == 2" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
-      <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="click('share')">分享</div>
+      <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="shareTip">分享</div>
       <div v-show="isLose == '1'" class="btn-right" style="flex-grow: 1" @click="click('delete')">
         <img src="./img/delete.png" alt="" class="delete">
         删除
@@ -155,49 +155,41 @@ export default {
     this.AorF = this.$route.query.AorF;
     this.info = this.$route.query.info;
     this.isLose = this.$route.query.isLose;
-    //微信config配置
-    let self = this;
-    axios.all([self.getWxSig()])
-    .then(axios.spread(function (acct, perms) {
-        wx.config({
-          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-          appId: self.wxSig.appid, // 必填，公众号的唯一标识
-          timestamp: self.wxSig.timestamp, // 必填，生成签名的时间戳
-          nonceStr:  self.wxSig.noncestr, // 必填，生成签名的随机串
-          signature: self.wxSig.signature,   // 必填，签名，见附录1
-          jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-        });
-    }));
+    this.getWxSig()
+    
     //微信分享设置
-    wx.onMenuShareTimeline({
-      title: self.info.projectName, 
-      link: 'http://www.baidu.com',
-      /*link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
-        + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId, */
-      imgUrl: 'http://finbridge.cn/logo.png', 
-      success: function () { 
-        self.share();
-      },
-      cancel: function () { 
-          // 用户取消分享后执行的回调函数
-      }
-    });
+    let self = this;
+    wx.ready(function(){
+      wx.onMenuShareTimeline({
+        title: self.info.projectName, 
+        link: 'http://www.baidu.com',
+        /*link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
+          + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId, */
+        imgUrl: 'http://finbridge.cn/logo.png', 
+        success: function () { 
+          self.share();
+        },
+        cancel: function () { 
+            // 用户取消分享后执行的回调函数
+        }
+      });
 
-    wx.onMenuShareAppMessage({
-      title: self.info.projectName, 
-      desc: 'finbridge合作产品', 
-      /*link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
-        + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId,*/
-      link: 'http://www.baidu.com',
-      imgUrl: 'http://finbridge.cn/logo.png', 
-      /*type: '', // 分享类型,music、video或link，不填默认为link*/
-      /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
-      success: function () { 
-        self.share();
-      },
-      cancel: function () { 
-          // 用户取消分享后执行的回调函数
-      }
+      wx.onMenuShareAppMessage({
+        title: self.info.projectName, 
+        desc: 'finbridge合作产品', 
+        /*link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
+          + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId,*/
+        link: 'http://www.baidu.com',
+        imgUrl: 'http://finbridge.cn/logo.png', 
+        /*type: '', // 分享类型,music、video或link，不填默认为link*/
+        /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
+        success: function () { 
+          self.share();
+        },
+        cancel: function () { 
+            // 用户取消分享后执行的回调函数
+        }
+      });
     });
   },
   methods:{
@@ -210,7 +202,7 @@ export default {
       })
     },
     shareTip(){
-      this.$vux.alert.show('点击右上角，分享项目至即可重新生效')
+      this.$vux.alert.show('微信分享项目即可重新生效')
     },
     click(fun){
       var self = this, content = null, func=null;
@@ -282,12 +274,24 @@ export default {
         data:{url: location.href.split('#')[0]},
         success:function(res){
           if(res.code==200){
-            self.wxSig = res.data;
+            let wxSig = res.data;
+            wx.config({
+              debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+              appId: wxSig.appid, // 必填，公众号的唯一标识
+              timestamp: wxSig.timestamp, // 必填，生成签名的时间戳
+              nonceStr:  wxSig.noncestr, // 必填，生成签名的随机串
+              signature: wxSig.signature,   // 必填，签名，见附录1
+              jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
         }
       });
+    },
+    //微信分享设置
+    wxShare(){
+
     },
     //资金资产类型数字转化为文字
     getLabel(key,type){
