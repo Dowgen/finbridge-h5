@@ -239,10 +239,15 @@ export default {
 
           var currentTime = Date.parse(new Date())/ 1000;
 
-          var listTime = res.data[0].listTime;
-          listTime = Date.parse(new Date(listTime))/ 1000;
+          var listTime = res.data[0].listTime.replace(/-/g,'/');
+          listTime = (Date.parse(new Date(listTime))/ 1000);
+        
 
           var pastDays = (currentTime - listTime)/(60*60*24);
+
+
+          alert(currentTime)
+          alert(listTime)
 
           alert(self.updateTime)
           alert(pastDays)

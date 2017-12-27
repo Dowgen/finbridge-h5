@@ -52,7 +52,7 @@
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
-                  <p>{{Math.round(((Date.parse(new Date()) - Date.parse(new Date(item.listTime))) / 1000 / 86400))}}天</p>
+                  <p>{{Math.round(((Date.parse(new Date()) - Date.parse(new Date(item.listTime.replace(/-/g,'/')))) / 1000 / 86400))}}天</p>
                 </div>
               </div>
             </div>
@@ -104,7 +104,7 @@
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
-                  <p>{{Math.round(((Date.parse(new Date()) - Date.parse(new Date(oItem.listTime))) / 1000 / 86400))}}天</p>
+                  <p>{{Math.round(((Date.parse(new Date()) - Date.parse(new Date(oItem.listTime.replace(/-/g,'/')))) / 1000 / 86400))}}天</p>
                 </div>
               </div>
             </div>
