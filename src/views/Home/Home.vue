@@ -17,7 +17,7 @@
            <h4>{{RcmZc.projectName}}</h4>
            <p>倒计时{{countDownDay}}天</p>
            <p>
-             <span>{{getLabel(RcmZc.productType,'asset')}}</span>
+             <span v-if="RcmZc.productType">{{getLabel(RcmZc.productType,'asset')}}</span>
            </p>
            <p>
              <span>{{RcmZc.fundCostRegionFrom}}-{{RcmZc.fundCostRegionTo}}%</span>
@@ -32,7 +32,7 @@
            <h4>{{RcmZj.projectName}}</h4>
            <p>倒计时{{countDownDay}}天</p>
            <p>
-             <span>{{getLabel(RcmZj.fundType,'fund')}}</span>
+             <span v-if="RcmZj.fundType">{{getLabel(RcmZj.fundType,'fund')}}</span>
            </p>
            <p>
              <span>{{RcmZj.fundCostRegionFrom}}-{{RcmZj.fundCostRegionTo}}%</span>
