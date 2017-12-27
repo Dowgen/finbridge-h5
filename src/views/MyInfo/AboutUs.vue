@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     quitToLogin(){
+      localStorage.removeItem('userId');
       this.$router.push('./Login');
     },
     getMyInfo(){

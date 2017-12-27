@@ -1,5 +1,5 @@
 <template>
-  <div class="project">
+  <div class="project" v-if="$route.query.AorF==1">
     <div class="project-head">
       <div class="head">
         <span @click="$router.go(-1)" class="back"><img style=" width:0.72rem;height: 1.22rem;display: inline-block;" src="./img/back.png" alt=""></span>
@@ -54,9 +54,9 @@
       <div class="footer-item">
         <p>{{info.companyName || '无'}}</p>
         <p>{{info.operationTime}}个月</p>
-        <p>{{info.fundOrigin}}</p>
+        <p>{{getLabel(info.fundOrigin,'assest')}}</p>
         <p>{{info.companyAddress}}</p>
-        <p>{{info.companyBackground}}</p>
+        <p>{{info.companyBackground || '无'}}</p>
       </div>
     </div>
     <div class="project-footer">
@@ -73,7 +73,59 @@
     </div>
     <div class="footer-btn" style="display: flex;flex-direction: row">
       <div v-show="isLose == '0'" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
-      <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="click">分享</div>
+      <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="click('share')">分享</div>
+      <div v-show="isLose == '1'" class="btn-right" style="flex-grow: 1" @click="click('delete')">
+        <img src="./img/delete.png" alt="" class="delete">
+        删除
+      </div>
+    </div>
+  </div>
+
+  <div class="project" v-else-if="$route.query.AorF==2">
+    <div class="project-head">
+      <div class="head">
+        <span @click="$router.go(-1)" class="back"><img style=" width:0.72rem;height: 1.22rem;display: inline-block;" src="./img/back.png" alt=""></span>
+        <p>项目详情</p>
+      </div>
+      <div class="con">
+        <p class="p1">{{info.projectName}}</p>
+        <p class="p2">{{info.fundCostRegionFrom}}-{{info.fundCostRegionTo}}</p>
+        <p class="p3">资金成本区间(%）</p>
+        <div class="project-des">
+          <div class="item">
+            <p>资金类型: {{getLabel(info.fundType,'fund')}}</p>
+          </div>
+          <div class="item">
+            <p>资金规模: {{info.fundAnmount}}千万</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="project-main">
+      <div class="main-item">
+        <p>公司名称</p>
+        <p>青睐资产</p>
+      </div>
+      <div class="main-item">
+        <p>{{info.companyName}}</p>
+        <p>{{getLabel(info.findAssetType,'assest')}}</p>
+      </div>
+    </div>
+    <div class="project-footer">
+      <div class="footer-item">
+        <p>手机号码</p>
+        <p>微信号</p>
+        <p>QQ号</p>
+      </div>
+      <div class="footer-item">
+        <p>{{info.contactPhone}}</p>
+        <p>{{info.contactWechat}}</p>
+        <p>{{info.contactQQ}}</p>
+      </div>
+    </div>
+    <div class="footer-btn" style="display: flex;flex-direction: row">
+      <div v-show="isLose == '0'" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
+      <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="shareTip">分享</div>
       <div v-show="isLose == '1'" class="btn-right" style="flex-grow: 1" @click="click('delete')">
         <img src="./img/delete.png" alt="" class="delete">
         删除
@@ -84,6 +136,7 @@
 
 <script>
 import Lib from '@/assets/js/Lib'
+import axios from 'axios'
 
 export default {
   name: 'ProjectDetail',
@@ -92,22 +145,72 @@ export default {
   },
   data () {
     return {
+      AorF:null,
       isLose:null,
-      info:{}
+      info:{},
+      wxSig:{}
     }
   },
   mounted(){
+    this.AorF = this.$route.query.AorF;
     this.info = this.$route.query.info;
     this.isLose = this.$route.query.isLose;
+    //微信config配置
+    let self = this;
+    axios.all([self.getWxSig()])
+    .then(axios.spread(function (acct, perms) {
+        wx.config({
+          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          appId: self.wxSig.appid, // 必填，公众号的唯一标识
+          timestamp: self.wxSig.timestamp, // 必填，生成签名的时间戳
+          nonceStr:  self.wxSig.noncestr, // 必填，生成签名的随机串
+          signature: self.wxSig.signature,   // 必填，签名，见附录1
+          jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    }));
+    //微信分享设置
+    wx.onMenuShareTimeline({
+      title: self.info.projectName, 
+      link: 'http://www.baidu.com',
+      /*link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
+        + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId, */
+      imgUrl: 'http://finbridge.cn/logo.png', 
+      success: function () { 
+        self.share();
+      },
+      cancel: function () { 
+          // 用户取消分享后执行的回调函数
+      }
+    });
+
+    wx.onMenuShareAppMessage({
+      title: self.info.projectName, 
+      desc: 'finbridge合作产品', 
+      /*link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
+        + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId,*/
+      link: 'http://www.baidu.com',
+      imgUrl: 'http://finbridge.cn/logo.png', 
+      /*type: '', // 分享类型,music、video或link，不填默认为link*/
+      /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
+      success: function () { 
+        self.share();
+      },
+      cancel: function () { 
+          // 用户取消分享后执行的回调函数
+      }
+    });
   },
   methods:{
-    share(){
+    shareSuccess(){
       this.$vux.toast.show({
         showPositionValue: false,
         text: '分享成功',
         type: 'success',
         position: 'middle'
       })
+    },
+    shareTip(){
+      this.$vux.alert.show('点击右上角，分享项目至即可重新生效')
     },
     click(fun){
       var self = this, content = null, func=null;
@@ -130,7 +233,7 @@ export default {
       var self = this;
       Lib.M.ajax({
         url : '/public/unListProject',
-        data:{unListId:self.info.assetId},
+        data:{unListId:self.AorF==1?self.info.assetId:self.info.fundId},
         success:function(res){
           if(res.code==200){
             self.$vux.toast.text('下架成功!', 'middle');
@@ -145,7 +248,7 @@ export default {
       var self = this;
       Lib.M.ajax({
         url : '/public/deleteOnListProject',
-        data:{deleteId:self.info.assetId},
+        data:{deleteId:self.AorF==1?self.info.assetId:self.info.fundId},
         success:function(res){
           if(res.code==200){
             self.$vux.toast.text('下架成功!', 'middle');
@@ -154,7 +257,62 @@ export default {
           }
         }
       });
-    }
+    }, 
+    //分享
+    share(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/public/relistProject',
+        data:{reListId:self.AorF==1?self.info.assetId:self.info.fundId},
+        success:function(res){
+          if(res.code==200){
+            self.shareSuccess();
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+
+    },
+    //获取微信签名
+    getWxSig(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/wechat/wxSig',
+        data:{url: location.href.split('#')[0]},
+        success:function(res){
+          if(res.code==200){
+            self.wxSig = res.data;
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
+    //资金资产类型数字转化为文字
+    getLabel(key,type){
+      var f;
+      if(type=='fund')
+        f = JSON.parse(localStorage.fundTypeList);
+      else
+        f = JSON.parse(localStorage.assetTypeList);
+      console.log(typeof key)
+      if(typeof key == 'string'){
+        let array = [];
+        let keyArray = key.split(',');
+        for(let a in keyArray){
+          for(let i in f){
+            if(f[i].key == keyArray[a]) array.push(f[i].label)
+          }
+        }
+        return array.toString();
+      }else{
+        for(let i in f){
+          if(f[i].key == key) return f[i].label
+        }
+      }
+
+    },
   }
 }
 </script>
@@ -166,8 +324,10 @@ body{
 }
 .project{
   width: 100%;
-  height: 100%;
+  min-height: 41rem;
   background: rgba(239,239,224,1);
+  box-sizing:border-box;
+  padding-bottom: 3.065rem;
 }
 .project .project-head{
   width: 100%;
@@ -274,6 +434,8 @@ body{
   height: 0.8rem;
 }
 .footer-btn{
+  position: absolute;
+  bottom: 0;
   width: 100%;
   height: 3.065rem;
   background: #4083FF ;

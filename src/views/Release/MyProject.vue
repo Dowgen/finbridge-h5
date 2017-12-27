@@ -31,7 +31,7 @@
         <h3>资金</h3>
         <p>合规对接 量大稳定</p>
         <div>
-        <div class="item" v-for="item in fundList" @click="jumpTo(item,'f','0')">
+        <div class="item" v-for="item in fundList" @click="jumpTo(item,2,'0')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -59,7 +59,7 @@
         <h3>资产</h3>
         <p>风控审核 多元供给</p>
         <div>
-        <div class="item" v-for="item in assetList" @click="jumpTo(item,'a','0')">
+        <div class="item" v-for="item in assetList" @click="jumpTo(item,1,'0')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -90,7 +90,7 @@
         <h3>资金</h3>
         <p>合规对接 量大稳定</p>
         <div>
-        <div class="item" v-for="item in fundListLose" @click="jumpTo(item,'f','1')">
+        <div class="item" v-for="item in fundListLose" @click="jumpTo(item,2,'1')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -116,7 +116,7 @@
         <h3>资产</h3>
         <p>风控审核 多元供给</p>
         <div>
-        <div class="item" v-for="item in assetListLose" @click="jumpTo(item,'a','1')">
+        <div class="item" v-for="item in assetListLose" @click="jumpTo(item,1,'1')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -250,13 +250,16 @@ export default {
     },
     //跳转至详情页
     jumpTo(item,AorF,isLose){
-      if(AorF=='f'){
-        this.$router.push({path:'/FuDetail',
-          query:{info:item,isLose:isLose}})
-      }else{
-        this.$router.push({path:'/AsDetail',
-          query:{info:item,isLose:isLose}})
-      }
+      this.$router.push(
+        { 
+          path:'/ProjectDetail',
+          query:{
+            AorF:AorF,
+            info:item,
+            isLose:isLose
+          }
+        }
+      )
     }
   }
 }

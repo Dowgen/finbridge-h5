@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="con">
-          <div @click="ZjProjectDetail(item)" class="con-item" v-for="(item,index) in items">
+          <div @click="jumpToDetai(2,item.fundId)" class="con-item" v-for="(item,index) in items">
             <div class="item-title">
               <span></span>
               <span>{{item.projectName}}</span>
@@ -85,7 +85,7 @@
           </div>
         </div>
         <div class="con">
-          <div @click="ZcProjectDetail(oItem)" class="con-item" v-for="oItem in oItems">
+          <div @click="jumpToDetai(1,oItem.assetId)" class="con-item" v-for="oItem in oItems">
             <div class="item-title">
               <span></span>
               <span>{{oItem.projectName}}</span>
@@ -120,7 +120,7 @@
 
 import Lib from '@/assets/js/Lib'
 
-import { Loading, XButton, Confirm, Swiper, SwiperItem,ButtonTab, ButtonTabItem } from 'vux'
+import { ButtonTab, ButtonTabItem } from 'vux'
 
 import MainNav from '@/components/mainNav'
 
@@ -129,7 +129,7 @@ import $ from "jquery"
 export default {
   name: 'Home', 
   components: {
-    MainNav, Loading, XButton, Confirm, Swiper, SwiperItem,ButtonTab, ButtonTabItem
+    MainNav, ButtonTab, ButtonTabItem
   },
   data () {
     return {
@@ -156,6 +156,7 @@ export default {
   mounted(){
     this.getConfigByParameter();
     this.sort(1,1,2);
+    this.sort(1,1,1);
     this.getFundList();
 
   },
@@ -171,16 +172,11 @@ export default {
       $('.type').css('display','none');
       this.sort(1,1,2);
     },
-    ZjProjectDetail(item){
-      this.$router.push({'path':'/ZjLoginProjectDetail',query:{
-          item:item,
+    jumpToDetai(AorF,proId){
+      this.$router.push({'path':'/sqProjectDetail',query:{
+          AorF:AorF,
+          proId:proId
         }
-      })
-    },
-    ZcProjectDetail(oItem){
-      this.$router.push({'path':'/ZcLoginProjectDetail',query:{
-        oItem:oItem,
-      }
       })
     },
     getConfigByParameter(){

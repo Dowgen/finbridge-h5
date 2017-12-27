@@ -2,6 +2,7 @@
   <div>
     <div class="content" v-cloak>
       <swiper loop auto height="12.44rem" dots-position="center">
+
         <swiper-item :key="pic.picUrl" v-for="pic in img_src">
           <img :src="pic.picUrl" @click="linkTo(pic.linkUrl)">
         </swiper-item>
@@ -12,7 +13,7 @@
           <span @click="lookMore">查看更多<img src="./img/icon_more.png"/></span>
         </p>
        <div class="recommend-con">
-         <div @click="lookMore" class="zc con-item">
+         <div @click="jumpToDetai(1,RcmZc.assetId)" class="zc con-item">
            <h4>{{RcmZc.projectName}}</h4>
            <p>倒计时{{countDownDay}}天</p>
            <p>
@@ -27,15 +28,15 @@
              <span>总放款量</span>
            </p>
          </div>
-         <div @click="lookMore" class="zj con-item">
-           <h4>{{rcmZj.projectName}}</h4>
+         <div @click="jumpToDetai(2,RcmZj.fundId)" class="zj con-item">
+           <h4>{{RcmZj.projectName}}</h4>
            <p>倒计时{{countDownDay}}天</p>
            <p>
-             <span>{{getLabel(rcmZj.fundType,'fund')}}</span>
+             <span>{{getLabel(RcmZj.fundType,'fund')}}</span>
            </p>
            <p>
-             <span>{{rcmZj.fundCostRegionFrom}}-{{rcmZj.fundCostRegionTo}}%</span>
-             <span>{{rcmZj.fundAnmount}}</span>
+             <span>{{RcmZj.fundCostRegionFrom}}-{{RcmZj.fundCostRegionTo}}%</span>
+             <span>{{RcmZj.fundAnmount}}</span>
            </p>
            <p>
              <span>资金成本区间</span>
@@ -75,6 +76,7 @@
 <script>
 
 import Lib from '@/assets/js/Lib'
+import axios from 'axios'
 
 import { Swiper, SwiperItem, } from 'vux'
 
@@ -89,8 +91,20 @@ export default {
   },
   data () {
     return {
-      RcmZc:{},
-      rcmZj:{},
+      RcmZc:{
+        projectName:null,
+        productType:null,
+        fundCostRegionFrom:null,
+        fundCostRegionTo:null,
+        totalPayAmount:null
+      },
+      RcmZj:{
+        projectName:null,
+        fundType:null,
+        fundCostRegionFrom:null,
+        fundCostRegionTo:null,
+        fundAnmount:null
+      },
       img_src:[],
       countDownDay:'',
       updateTime:'',
@@ -104,14 +118,16 @@ export default {
     
   },
   mounted(){
-    /* 进入页面先获取token */
-    this.getToken();
-    /* 获取微信openId */
-    this.getOpenId();
+    let self = this;
+    axios.all([self.getToken()])
+    .then(axios.spread(function (acct, perms) {
+      self.getOpenId()
+      self.getFundList();
+      self.getConfigByParameter();
+      self.getArticle();
+    }));
     
-    this.getFundList();
-    this.getConfigByParameter();
-    this.getArticle();
+    
   },
   methods: {
     linkTo(picLink){
@@ -120,7 +136,8 @@ export default {
         console.log('picLink'+picLink);
       }
     },
-    //拿到code传给后台获取openId
+
+    //拿到code传给后台获取用户的微信openId
     getOpenId(){
       let code = Lib.M.GetQueryString('code');
       Lib.M.ajax({
@@ -183,6 +200,13 @@ export default {
     newsDetail(){
       this.$router.push('./NewsDetail')
     },
+    jumpToDetai(AorF,proId){
+      this.$router.push({'path':'/sqProjectDetail',query:{
+          AorF:AorF,
+          proId:proId
+        }
+      })
+    },
     lookMore(){
       this.$router.push('./Square')
     },
@@ -231,7 +255,7 @@ export default {
       Lib.M.ajax({
         url:'/fund/getRecommendFund',
         success:function (res) {
-          self.rcmZj = res.data[0];
+          self.RcmZj = res.data[0];
 
           var currentTime = Date.parse(new Date())/ 1000;
 

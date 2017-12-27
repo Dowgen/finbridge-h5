@@ -1,25 +1,26 @@
 <template>
   <div class="project">
+    <div v-if="$route.query.AorF==1">
     <div class="project-head">
       <div class="head">
         <span @click="$router.go(-1)" class="back"><img style=" width:0.72rem;height: 1.22rem;display: inline-block;" src="./img/back.png" alt=""></span>
         <p>项目详情</p>
       </div>
       <div class="con">
-        <p class="p1">{{$route.query.oItem.productName}}</p>
-        <p class="p2">{{$route.query.oItem.fundCostRegionFrom}}-{{$route.query.oItem.fundCostRegionTo}}</p>
+        <p class="p1">{{asDetail.productName}}</p>
+        <p class="p2">{{asDetail.fundCostRegionFrom}}-{{asDetail.fundCostRegionTo}}</p>
         <p class="p3">资金成本区间(%）</p>
         <div class="project-des">
           <div class="item">
-            <p>{{$route.query.oItem.perAmount}}元</p>
+            <p>{{asDetail.perAmount}}元</p>
             <p>件均额度</p>
           </div>
           <div class="item">
-            <p>{{$route.query.oItem.perPeriod}}天</p>
+            <p>{{asDetail.perPeriod}}天</p>
             <p>单笔期限</p>
           </div>
           <div class="item">
-            <p>{{$route.query.oItem.dailyPayAmount}}</p>
+            <p>{{asDetail.dailyPayAmount}}</p>
             <p style="border: none;">日放款量</p>
           </div>
         </div>
@@ -35,12 +36,12 @@
         <p>产品特色</p>
       </div>
       <div class="main-item">
-        <p>{{$route.query.oItem.projectName}}</p>
-        <p>{{getLabel($route.query.oItem.productType,'asset')}}</p><!---->
-        <p>{{$route.query.oItem.totalPayAmount}}</p>
-        <p>{{$route.query.oItem.debtRate}}</p>
-        <p>{{$route.query.oItem.projectName}}</p>
-        <p>{{$route.query.oItem.productFeature}}</p>
+        <p>{{asDetail.projectName}}</p>
+        <p>{{getLabel(asDetail.productType,'asset')}}</p><!---->
+        <p>{{asDetail.totalPayAmount}}</p>
+        <p>{{asDetail.debtRate}}</p>
+        <p>{{asDetail.projectName}}</p>
+        <p>{{asDetail.productFeature}}</p>
       </div>
     </div>
     <div class="project-footer">
@@ -52,11 +53,11 @@
         <p>公司背景</p>
       </div>
       <div class="footer-item">
-        <p>{{$route.query.oItem.companyName}}</p>
-        <p>{{$route.query.oItem.operationTime}}</p>
-        <p>{{$route.query.oItem.fundOrigin}}</p>
-        <p>{{$route.query.oItem.companyAddress}}</p>
-        <p>{{$route.query.oItem.companyBackground}}</p>
+        <p>{{asDetail.companyName||'无'}}</p>
+        <p>{{asDetail.operationTime}}</p>
+        <p>{{getLabel(asDetail.fundOrigin,'asset')}}</p>
+        <p>{{asDetail.companyAddress}}</p>
+        <p>{{asDetail.companyBackground ||'无'}}</p>
       </div>
     </div>
     <div class="footer-btn" v-show="key == 1" @click="contactCard">立即合作</div>
@@ -66,34 +67,102 @@
      <div class="contactCard">
        <div class="name">
           <img src="./img/ic_card_person.png" alt="">
-          {{$route.query.oItem.contactPerson}}先生
+          {{asDetail.contactPerson}}先生
         </div>
        <div class="contactWays">
          <p>
            <img src="./img/ic_wechat.png" alt="">
            微信号
          </p>
-         <p>{{$route.query.oItem.contactWechat}}</p>
+         <p>{{asDetail.contactWechat}}</p>
        </div>
        <div class="contactWays">
          <p>
            <img src="./img/ic_card_QQ.png" alt="">
            QQ号
          </p>
-         <p>{{$route.query.oItem.contactQQ}}</p>
+         <p>{{asDetail.contactQQ}}</p>
        </div>
        <div class="contactWays">
          <p>
            <img src="./img/ic_phone.png" alt="">
            手机号码
          </p>
-         <p>{{$route.query.oItem.contactPhone}}</p>
+         <p>{{asDetail.contactPhone}}</p>
        </div>
        <div class="foot-close" @click="closeContactCard">
          <img src="./img/ic_card_dropout.png" alt="">
        </div>
      </div>
-   </div>
+    </div>
+    </div>
+
+    <div v-if="$route.query.AorF==2">
+    <div class="project-head">
+      <div class="head">
+        <span @click="$router.go(-1)" class="back"><img style=" width:0.72rem;height: 1.22rem;display: inline-block;" src="./img/back.png" alt=""></span>
+        <p>项目详情</p>
+      </div>
+      <div class="con">
+        <p class="p1">{{fuDetail.projectName}}</p>
+        <p class="p2">{{fuDetail.fundCostRegionFrom}}-{{fuDetail.fundCostRegionTo}}</p>
+        <p class="p3">资金成本区间(%）</p>
+        <div class="project-des">
+          <div class="item">
+            <p>资金类型: {{getLabel(fuDetail.fundType,'fund')}}</p>
+          </div>
+          <div class="item">
+            <p>资金规模: {{fuDetail.fundAnmount}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="project-main">
+      <div class="main-item">
+        <p>公司名称</p>
+        <p>青睐资产</p>
+      </div>
+      <div class="main-item">
+        <p>{{fuDetail.companyName}}</p>
+        <p>{{getLabel(fuDetail.findAssetType,'asset')}}</p>
+      </div>
+    </div>
+    <div class="footer-btn" v-show="key == 1" @click="contactCard">立即合作</div>
+    <div class="footer-btn" v-show="key == 2">查看联系方式</div>
+
+    <div class="alert">
+      <div class="contactCard">
+        <div class="name">
+          <img src="./img/ic_card_person.png" alt="">
+          {{fuDetail.contactPerson}}先生
+        </div>
+        <div class="contactWays">
+          <p>
+            <img src="./img/ic_wechat.png" alt="">
+            微信号
+          </p>
+          <p>{{fuDetail.contactWechat}}</p>
+        </div>
+        <div class="contactWays">
+          <p>
+            <img src="./img/ic_card_QQ.png" alt="">
+            QQ号
+          </p>
+          <p>{{fuDetail.contactQQ}}</p>
+        </div>
+        <div class="contactWays">
+          <p>
+            <img src="./img/ic_phone.png" alt="">
+            手机号码
+          </p>
+          <p>{{fuDetail.contactPhone}}</p>
+        </div>
+        <div class="foot-close" @click="closeContactCard">
+          <img src="./img/ic_card_dropout.png" alt="">
+        </div>
+      </div>
+    </div>
+    </div>
   </div>
 </template>
 
@@ -111,7 +180,14 @@ export default {
   data () {
     return {
       key:1,
+      fuDetail:{},
+      asDetail:{},
+      hide:1,
     }
+  },
+  mounted(){
+    if(localStorage.userId!= undefined) this.hide = 0
+    this.getDetail();
   },
   methods:{
     /*share(){
@@ -135,10 +211,55 @@ export default {
         f = JSON.parse(localStorage.fundTypeList);
       else
         f = JSON.parse(localStorage.assetTypeList);
-      for(let i in f){
-        if(f[i].key == key) return f[i].label
+      console.log(typeof key)
+      if(typeof key == 'string'){
+        let array = [];
+        let keyArray = key.split(',');
+        for(let a in keyArray){
+          for(let i in f){
+            if(f[i].key == keyArray[a]) array.push(f[i].label)
+          }
+        }
+        return array.toString();
+      }else{
+        for(let i in f){
+          if(f[i].key == key) return f[i].label
+        }
       }
     },
+    //根据id查询详情
+    getDetail(){
+      var self = this;
+      var url = '', type='',type2='', data={};
+      if(this.$route.query.AorF == 1){
+        type = 'asDetail';
+        type2='asset';
+        url = '/asset/findAssetById';
+        data = {
+          assetId: this.$route.query.proId,
+          hide: self.hide
+        }
+      }else if(this.$route.query.AorF == 2){
+        type = 'fuDetail';
+        type2='fund';
+        url = '/fund/findFundById';
+        data = {
+          fundId: this.$route.query.proId,
+          hide: self.hide
+        }
+      } 
+      Lib.M.ajax({
+        url : url,
+        data: data,
+        success:function(res){
+          if(res.code==200){
+            self[type] = res.data[type2];
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    }
   }
 }
 </script>
@@ -149,9 +270,11 @@ body{
   padding-bottom:0 !important;
 }
 .project{
+  box-sizing:border-box;
   width: 100%;
-  height: 100%;
-  background: #D7D7D7 ;
+  min-height: 41rem;
+  background: #fff;
+  padding-bottom: 3.065rem;
 }
 .project .project-head{
   width: 100%;
@@ -236,7 +359,7 @@ body{
   flex-direction: row;
  /* height: 5.03rem;*/
   background: #fff;
-  margin-top: 0.625rem;
+  border-top: solid 0.625rem #d7d7d7;
 }
 .project .project-footer .footer-item:nth-of-type(1){
   flex: 1;
@@ -256,6 +379,8 @@ body{
   margin:1.5rem 0;
 }
 .footer-btn{
+  position: absolute;
+  bottom: 0;
   width: 100%;
   height: 3.065rem;
   background: #4083FF ;
