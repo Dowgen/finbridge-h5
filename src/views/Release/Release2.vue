@@ -22,7 +22,7 @@
     </div>
     <div class="assets-des1" v-if="AorF=='assets'">
       <div class="des-item">
-        <div class="des-item-l">公司名称</div>
+        <div class="des-item-l">公司名称(选填)</div>
         <div class="des-item-r">
           <input type="text" v-model="companyName" placeholder="请输入公司名称">
         </div>
@@ -68,7 +68,7 @@
         </div>
       </div>
       <div class="des-item">
-        <div class="des-item-l">公司背景</div>
+        <div class="des-item-l">公司背景(选填)</div>
         <div class="des-item-r">
           <input v-model="companyBackground" type="text" maxlength="24" placeholder="请填写24个字以内描述">
         </div>
@@ -116,16 +116,18 @@ export default {
   methods:{
     nextWay(){
       if(this.AorF=='fund'){
-        let a = JSON.parse(localStorage.addFundParams);
-        a.companyName = this.companyName;
-        localStorage.addFundParams = JSON.stringify(a);
-        this.$router.push({ path: 'Release3', query: { AorF: this.AorF }})
+        if(this.companyName ==''){
+          this.$vux.toast.text('参数请填写完整', 'middle');
+        }else{
+          let a = JSON.parse(localStorage.addFundParams);
+          a.companyName = this.companyName;
+          localStorage.addFundParams = JSON.stringify(a);
+          this.$router.push({ path: 'Release3', query: { AorF: this.AorF }})
+        }
       }else{
-        if( this.companyName =='' ||
-          this.operationTime =='' ||
+        if( this.operationTime =='' ||
           this.cityVal.length == 0 ||
           this.companyAddress  =='' ||
-          this.companyBackground =='' ||
           this.fundOrigin.length == 0){
           this.$vux.toast.text('参数请填写完整', 'middle');
         }else{

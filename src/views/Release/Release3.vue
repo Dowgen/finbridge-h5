@@ -94,7 +94,7 @@ export default {
     nextWay(){
       if( this.contactPerson == '' ||
           this.contactPhone == '' ||
-          /*this.contactQQ == '' ||*/
+          this.contactQQ == '' ||
           this.contactWechat == ''){
         this.$vux.toast.text('参数请填写完整', 'middle');
       }else{

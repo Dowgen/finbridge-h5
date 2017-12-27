@@ -40,13 +40,9 @@ const squareRoutes = [
     component: _import('Square/Square')
   },
   {
-    path: '/ZcLoginProjectDetail',
-    component: _import('Square/ZcLoginProjectDetail')
-  },
-  {
-    path: '/ZjLoginProjectDetail',
-    component: _import('Square/ZjLoginProjectDetail')
-  },
+    path: '/sqProjectDetail',
+    component: _import('Square/sqProjectDetail')
+  }
 ]
 //挂牌模块
 const ReleaseRoutes = [
@@ -66,11 +62,8 @@ const ReleaseRoutes = [
     path: '/Release3',
     component: _import('Release/Release3')
   },{
-    path: '/AsDetail',
-    component: _import('Release/AsDetail')
-  },{
-    path: '/FuDetail',
-    component: _import('Release/FuDetail')
+    path: '/ProjectDetail',
+    component: _import('Release/ProjectDetail')
   }
 ]
 //个人信息模块

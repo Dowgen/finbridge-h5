@@ -59,7 +59,7 @@
       <div class="des-item">
         <div class="des-item-l">资金成本区间</div>
         <div class="des-item-r range">
-          <input v-model="fundCostRegionFrom" type="number" maxlength="5"> &nbsp;-&nbsp; <input v-model="fundCostRegionTo" type="number" maxlength="5">
+          <input v-model="fundCostRegionFrom" type="number" min="0" max="100"> &nbsp;-&nbsp; <input v-model="fundCostRegionTo" type="number" min="0" max="100">
           %
         </div>
       </div>

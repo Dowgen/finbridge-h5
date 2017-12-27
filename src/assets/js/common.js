@@ -21,9 +21,12 @@ axios.interceptors.response.use(
                 case 303:
                     // 返回 303
                     vm.$vux.toast.text('session过期，请重新登录！','middle');
+                    vm.$router.push('/Login')
                     break;
                 case 401:
                     // 返回 401 重新获取token并刷新当前页面
+                    vm.$vux.toast.text('token刷新中...','middle');
+                    vm.$router.push('/')
                     break;
                 default: vm.$vux.toast.text('请求异常！请重试','middle')   
             }
