@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="footer-btn" style="display: flex;flex-direction: row">
-      <div v-show="isLose == '0'" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
+      <div v-show="isLose == '0' && info.listStatus==2" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
       <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="click">分享</div>
       <div v-show="isLose == '1'" class="btn-right" style="flex-grow: 1" @click="click('delete')">
         <img src="./img/delete.png" alt="" class="delete">
@@ -123,7 +123,8 @@ export default {
           }
         }
       });
-    }
+    },
+
   }
 }
 </script>
@@ -135,7 +136,8 @@ body{
 }
 .project{
   width: 100%;
-  height: 41rem;
+  height: 100%;
+  /*height: 41rem;*/
   background: rgba(239,239,224,1);
 }
 .project .project-head{
@@ -247,7 +249,7 @@ body{
 .footer-btn{
   width: 100%;
   height: 3.065rem;
-  background: #4083FF ;
+
   color: #fff;
   text-align: center;
   line-height: 3.065rem;
@@ -256,6 +258,7 @@ body{
   bottom: 0;
 }
 .btn-left{
+  background: #4083FF ;
   font-size: 1.125rem;
   color: #fff;
 }

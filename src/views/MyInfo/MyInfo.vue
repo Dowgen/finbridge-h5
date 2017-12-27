@@ -2,11 +2,11 @@
   <div>
     <div class="content">
       <div class="myHead">
-        <div class="avatar">
+        <!--<div class="avatar">
           <img v-show="noAvatar" class="avatar2" src="./img/img_placeholder.png">
           <img v-show="!noAvatar" class="avatar2" :src="img_id">
           <input id="upfile" type="file" name="upfile" accept="image/png,image/jpg,image/jpeg" @change='preivewImg'>
-        </div>
+        </div>-->
       </div>
       <div class="myInfo">
         <h4>您好,</h4>
@@ -205,13 +205,17 @@ export default {
     .aboutUs{
       width:19.69rem;
       height:3.44rem;
-      margin:3rem auto 0;
+     /* margin:3rem auto 0;*/
       background:#FF671B;
       border-radius: 1.72rem ;
       text-align: center;
       line-height: 3.44rem;
       color: #fff;
       font-size: 1.125rem;
+      position: absolute;
+      bottom: 4.5rem;
+      left: 50%;
+      margin-left: -9.845rem;
     }
   }
   

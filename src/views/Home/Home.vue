@@ -62,7 +62,7 @@
             <span class="read-num">782阅读量</span>
           </p>
         </div>-->
-        <div v-for="(news,index) in newsList" v-if="index < 3">
+        <div v-for="(news,index) in newsList" v-if="index < 2">
           <hotsItem2 :news="news" @click.native="lookNews(news.link)"></hotsItem2>
         </div>
         <div class="lookMore"  @click="newsDetail">查看更多({{lookCount}})</div>

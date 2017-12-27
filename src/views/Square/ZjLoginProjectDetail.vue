@@ -196,7 +196,7 @@ body{
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 22.7rem;
+  /*height: 22.7rem;*/
   margin: 0 auto;
   background: #fff;
 }
@@ -251,6 +251,8 @@ body{
   text-align: center;
   line-height: 3.065rem;
   font-size: 1.065rem;
+  position: absolute;
+  bottom: 0;
 }
 .alert{
   width: 100%;

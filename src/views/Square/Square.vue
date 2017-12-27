@@ -52,7 +52,7 @@
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
-                  <p>{{Math.round(validDay -((currentTime - (Date.parse(new Date(item.listTime)) / 1000))/(60*60*24)))}}天</p>
+                  <p>{{Math.round(((Date.parse(new Date()) - Date.parse(new Date(item.listTime))) / 1000 / 86400))}}天</p>
                 </div>
               </div>
             </div>
@@ -104,7 +104,7 @@
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
-                  <p>{{Math.round(validDay -((currentTime - (Date.parse(new Date(oItem.listTime)) / 1000))/(60*60*24)))}}天</p>
+                  <p>{{Math.round(((Date.parse(new Date()) - Date.parse(new Date(oItem.listTime))) / 1000 / 86400))}}天</p>
                 </div>
               </div>
             </div>
@@ -155,7 +155,6 @@ export default {
   },
   mounted(){
     this.getConfigByParameter();
-    this.getCurrent();
     this.sort(1,1,2);
     this.getFundList();
 
@@ -192,17 +191,14 @@ export default {
           'key':'unlistPeriod'
         },
         success:function (res) {
-          console.log(111111);
-          console.log(res);
           self.validDay = res.data[0].value;
+          /*console.log(111111);
+          console.log(self.validDay);*/
         },
         error:function(err){
           console.error(err);
         }
       });
-    },
-    getCurrent(){
-      self.currentTime = Date.parse(new Date())/ 1000
     },
     sort(chooseType,sortType,AorF){
       var self = this;
@@ -269,6 +265,7 @@ export default {
     position: absolute;
     left: 0;
     top: 0;
+    padding-bottom: 10rem;
     .active{
       color: #4083ff;
     }

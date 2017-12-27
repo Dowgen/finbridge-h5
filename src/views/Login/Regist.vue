@@ -3,7 +3,7 @@
     <!--<div class="hello-head">
       <img src="./img/close.png" alt="">
     </div>-->
-    <img class="logo" src="./img/img_signup.png">
+    <img class="logo" src="./img/logo.png">
     <h1 style="margin-top: 0.65rem;">&nbsp 您好！</h1>
     <h1>请注册开始使用</h1>
     <div class="input" style=" position: relative;">
@@ -159,10 +159,9 @@ export default {
     top: 1.5rem;
   }
   .logo{
-    width: 6.345rem;
-    height: 6.345rem;
-    margin: 0 auto;
-    margin-top: 3.125rem;
+    width: 4.25rem;
+    height: 4.25rem;
+    margin-top:4.97rem;
   }
   .hello h1{
     font-size:1.065rem;

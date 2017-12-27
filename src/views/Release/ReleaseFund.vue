@@ -146,6 +146,7 @@ export default {
   height: 41rem;
   background: #EFEFF4;
   margin: 0 auto;
+  padding-bottom:1.065rem;
 }
 .asset-process{
   width: 100%;
