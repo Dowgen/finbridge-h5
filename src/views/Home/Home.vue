@@ -237,24 +237,19 @@ export default {
           self.RcmZc = res.data[0];
         /*  console.log(res.data[0]);*/
 
-          var currentTime = Date.parse(new Date())/ 1000;
 
+
+          var currentTime = new Date();
           var listTime = res.data[0].listTime.replace(/-/g,'/');
-          listTime = (Date.parse(new Date(listTime))/ 1000);
-        
-
-          var pastDays = (currentTime - listTime)/(60*60*24);
-
-
-          alert(currentTime)
-          alert(listTime)
+          listTime = new Date(listTime);
+          var pastDays =   parseInt((currentTime - listTime)  /  1000  /  60  /  60  /24);
 
           alert(self.updateTime)
           alert(pastDays)
+          alert(self.updateTime -pastDays)
 
-          self.countDownDay =Math.ceil(self.updateTime -pastDays) ;
+          self.countDownDay =self.updateTime -pastDays ;
 
-          console.log(Math.round((currentTime - listTime)/(60*60*24)));
         },
         error:function(err){
           console.error(err);
