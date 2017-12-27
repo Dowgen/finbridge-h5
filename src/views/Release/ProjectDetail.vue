@@ -168,12 +168,14 @@ export default {
           jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
     }));
+    alert(self.info.projectName);
     //微信分享设置
     wx.onMenuShareTimeline({
       title: self.info.projectName, 
-      link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
-        + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId, 
-      imgUrl: './img/logo.png', 
+      link: 'http://www.baidu.com',
+      /*link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
+        + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId, */
+      imgUrl: 'http://finbridge.cn/logo.png', 
       success: function () { 
         self.share();
       },
@@ -185,9 +187,10 @@ export default {
     wx.onMenuShareAppMessage({
       title: self.info.projectName, 
       desc: 'finbridge合作产品', 
-      link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
-        + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId,
-      imgUrl: './img/logo.png', 
+      /*link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
+        + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId,*/
+      link: 'http://www.baidu.com',
+      imgUrl: 'http://finbridge.cn/logo.png', 
       /*type: '', // 分享类型,music、video或link，不填默认为link*/
       /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
       success: function () { 
