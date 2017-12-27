@@ -182,9 +182,11 @@ export default {
       key:1,
       fuDetail:{},
       asDetail:{},
+      hide:1,
     }
   },
   mounted(){
+    if(localStorage.userId.length!=0) self.hide = 0
     this.getDetail();
   },
   methods:{
@@ -233,12 +235,18 @@ export default {
         type = 'asDetail';
         type2='asset';
         url = '/asset/findAssetById';
-        data = {assetId: this.$route.query.proId}
+        data = {
+          assetId: this.$route.query.proId,
+          hide: self.hide
+        }
       }else if(this.$route.query.AorF == 2){
         type = 'fuDetail';
         type2='fund';
         url = '/fund/findFundById';
-        data = {fundId: this.$route.query.proId}
+        data = {
+          fundId: this.$route.query.proId,
+          hide: self.hide
+        }
       } 
       Lib.M.ajax({
         url : url,
