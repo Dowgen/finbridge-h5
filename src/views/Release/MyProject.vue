@@ -7,10 +7,10 @@
         <button-tab-item selected @on-item-click="loseEfficacy=false">未失效</button-tab-item>
         <button-tab-item @on-item-click="loseEfficacy=true">已失效</button-tab-item>
       </button-tab>
-      <div class="btn addAs" @click="click('addFund')">
+      <div class="btn addAs" @click="click('addAssets')">
         <span>+</span> 添加资产
       </div>
-      <div class="btn addFu" @click="click('addAssets')">
+      <div class="btn addFu" @click="click('addFund')">
         <span>+</span> 添加资金
       </div>
     </div>
