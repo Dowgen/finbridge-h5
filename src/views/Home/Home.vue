@@ -245,14 +245,10 @@ export default {
 
           var pastDays = (currentTime - listTime)/(60*60*24);
 
+          alert(typeof self.updateTime)
+          /*alert(typeof pastDays)*/
 
-          alert(currentTime)
-          alert(listTime)
-
-          alert(self.updateTime)
-          alert(pastDays)
-
-          self.countDownDay =Math.ceil(self.updateTime -pastDays) ;
+          self.countDownDay =Math.ceil(parseInt(self.updateTime) -pastDays) ;
 
           console.log(Math.round((currentTime - listTime)/(60*60*24)));
         },
