@@ -125,7 +125,7 @@
     </div>
     <div class="footer-btn" style="display: flex;flex-direction: row">
       <div v-show="isLose == '0'" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
-      <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="click">分享</div>
+      <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="shareTip">分享</div>
       <div v-show="isLose == '1'" class="btn-right" style="flex-grow: 1" @click="click('delete')">
         <img src="./img/delete.png" alt="" class="delete">
         删除
@@ -168,7 +168,6 @@ export default {
           jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
     }));
-    alert(self.info.projectName);
     //微信分享设置
     wx.onMenuShareTimeline({
       title: self.info.projectName, 
@@ -202,13 +201,16 @@ export default {
     });
   },
   methods:{
-    showShare(){
+    shareSuccess(){
       this.$vux.toast.show({
         showPositionValue: false,
         text: '分享成功',
         type: 'success',
         position: 'middle'
       })
+    },
+    shareTip(){
+      this.$vux.alert.show('点击右上角，分享项目至即可重新生效')
     },
     click(fun){
       var self = this, content = null, func=null;
@@ -218,9 +220,6 @@ export default {
       }else if(fun=='delete'){
         content = '是否确认删除此项目？';
         func = self.delete;
-      }else{
-        content = '是否确认分享？';
-        func = self.share;
       }
       this.$vux.confirm.show({
         content: content,
@@ -267,7 +266,7 @@ export default {
         data:{reListId:self.AorF==1?self.info.assetId:self.info.fundId},
         success:function(res){
           if(res.code==200){
-            self.showShare();
+            self.shareSuccess();
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
