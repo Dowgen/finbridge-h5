@@ -72,7 +72,7 @@
       </div>
     </div>
     <div class="footer-btn" style="display: flex;flex-direction: row">
-      <div v-show="isLose == '0'" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
+      <div v-show="isLose == '0' && info.listStatus == 2" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
       <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="click('share')">分享</div>
       <div v-show="isLose == '1'" class="btn-right" style="flex-grow: 1" @click="click('delete')">
         <img src="./img/delete.png" alt="" class="delete">
@@ -124,7 +124,7 @@
       </div>
     </div>
     <div class="footer-btn" style="display: flex;flex-direction: row">
-      <div v-show="isLose == '0'" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
+      <div v-show="isLose == '0' && info.listStatus == 2" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
       <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="shareTip">分享</div>
       <div v-show="isLose == '1'" class="btn-right" style="flex-grow: 1" @click="click('delete')">
         <img src="./img/delete.png" alt="" class="delete">
@@ -324,7 +324,8 @@ body{
 }
 .project{
   width: 100%;
-  min-height: 41rem;
+  height: 100%;
+  /*min-height: 41rem;*/
   background: rgba(239,239,224,1);
   box-sizing:border-box;
   padding-bottom: 3.065rem;
@@ -438,13 +439,13 @@ body{
   bottom: 0;
   width: 100%;
   height: 3.065rem;
-  background: #4083FF ;
   color: #fff;
   text-align: center;
   line-height: 3.065rem;
   font-size: 1.065rem;
 }
 .btn-left{
+  background: #4083FF ;
   font-size: 1.125rem;
   color: #fff;
 }
