@@ -242,7 +242,13 @@ export default {
           var listTime = res.data[0].listTime;
           listTime = Date.parse(new Date(listTime))/ 1000;
 
-          self.countDownDay =Math.round(self.updateTime -(currentTime - listTime)/(60*60*24)) ;
+          var pastDays = (currentTime - listTime)/(60*60*24);
+
+          alert(self.updateTime);
+          alert(pastDays);
+
+          self.countDownDay =Math.ceil(self.updateTime -pastDays) ;
+
           console.log(Math.round((currentTime - listTime)/(60*60*24)));
         },
         error:function(err){
