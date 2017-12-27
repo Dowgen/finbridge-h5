@@ -6,7 +6,7 @@
         <p>新闻资讯</p>
       </div>
       <div class="news-con">
-        <div v-for="(news,index) in newsList" v-if="index >= 3">
+        <div v-for="(news,index) in newsList" v-if="index >= 2">
           <hotsItem2 :news="news" @click.native="lookNews(news.link)"></hotsItem2>
         </div>
 

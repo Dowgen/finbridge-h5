@@ -144,6 +144,7 @@ export default {
     width: 100%;
     height: 100%;
   }
+
   .logo{
     width: 4.25rem;
     height: 4.25rem;

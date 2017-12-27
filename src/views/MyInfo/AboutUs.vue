@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     quitToLogin(){
-      this.$router.push('./');
+      this.$router.push('./Login');
     },
     getMyInfo(){
       var self = this;
