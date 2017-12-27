@@ -186,7 +186,7 @@ export default {
     }
   },
   mounted(){
-    if(localStorage.userId.length!=0) self.hide = 0
+    if(localStorage.userId!= undefined) self.hide = 0
     this.getDetail();
   },
   methods:{
