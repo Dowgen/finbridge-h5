@@ -243,9 +243,9 @@ export default {
           listTime = Date.parse(new Date(listTime))/ 1000;
 
           var pastDays = (currentTime - listTime)/(60*60*24);
-
-          alert(self.updateTime);
-          alert(pastDays);
+          
+          self.$vux.alert.show(self.updateTime)
+          self.$vux.alert.show(pastDays)
 
           self.countDownDay =Math.ceil(self.updateTime -pastDays) ;
 
