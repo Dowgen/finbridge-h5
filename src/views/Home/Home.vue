@@ -2,8 +2,9 @@
   <div>
     <div class="content" v-cloak>
       <swiper loop auto height="12.44rem" dots-position="center">
-        <swiper-item :key="pic.id" v-for="pic in img_src">
-          <img :src="pic.picUrl">
+
+        <swiper-item :key="pic.picUrl" v-for="pic in img_src">
+          <img :src="pic.picUrl" @click="linkTo(pic.linkUrl)">
         </swiper-item>
       </swiper>
       <div class="recommend">
@@ -109,7 +110,8 @@ export default {
       updateTime:'',
       newsList:[],
       link:'',
-      lookCount:''
+      lookCount:'',
+      picLink:''
     }
   },
   computed:{
@@ -128,6 +130,13 @@ export default {
     
   },
   methods: {
+    linkTo(picLink){
+      if(picLink !== '' && picLink !== null){
+        window.location.href = picLink;
+        console.log('picLink'+picLink);
+      }
+    },
+
     //拿到code传给后台获取用户的微信openId
     getOpenId(){
       let code = Lib.M.GetQueryString('code');
@@ -268,7 +277,8 @@ export default {
         url:'/info/getCarouselFigure',
         success:function (res) {
           self.img_src=res.data;
-          /*console.log(self.img_src);*/
+          console.log(3333);
+          console.log(res);
         },
         error:function(err){
           console.error(err);
@@ -352,7 +362,7 @@ export default {
           flex-grow: 1;
           border: 0.06rem solid #F2F2F2;
           text-align: left;
-          padding:1rem 0 1rem 1rem;
+          padding:1rem 0 3rem 1rem;
           margin: 1rem 1rem 0 0;
           h4{
             font-size: 0.94rem;
@@ -380,9 +390,13 @@ export default {
             span{
               font-size:0.875rem;
               color:#F84F60;
+              position: absolute;
+            }
+            span:nth-of-type(1){
+              left:0rem;
+              top: 0;
             }
             span:nth-of-type(2){
-              position: absolute;
               right: 0.5rem;
               top: 0;
             }
@@ -392,11 +406,15 @@ export default {
             span{
               font-size:0.625rem;
               color:#98A0AF;
+              position: absolute;
+            }
+            span:nth-of-type(1){
+              left: 0rem;
+              top: 1rem;
             }
             span:nth-of-type(2){
-              position: absolute;
               right: 0.5rem;
-              top: 0;
+              top: 1rem;
             }
           }
         }
