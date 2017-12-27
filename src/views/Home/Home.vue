@@ -17,7 +17,7 @@
            <h4>{{RcmZc.projectName}}</h4>
            <p>倒计时{{countDownDay}}天</p>
            <p>
-             <span>{{getLabel(RcmZc.productType,'asset')}}</span>
+             <span v-if="RcmZc.productType">{{getLabel(RcmZc.productType,'asset')}}</span>
            </p>
            <p>
              <span>{{RcmZc.fundCostRegionFrom}}-{{RcmZc.fundCostRegionTo}}%</span>
@@ -32,7 +32,7 @@
            <h4>{{RcmZj.projectName}}</h4>
            <p>倒计时{{countDownDay}}天</p>
            <p>
-             <span>{{getLabel(RcmZj.fundType,'fund')}}</span>
+             <span v-if="RcmZj.fundType">{{getLabel(RcmZj.fundType,'fund')}}</span>
            </p>
            <p>
              <span>{{RcmZj.fundCostRegionFrom}}-{{RcmZj.fundCostRegionTo}}%</span>
@@ -238,7 +238,6 @@ export default {
         /*  console.log(res.data[0]);*/
 
 
-
           var currentTime = new Date();
           var listTime = res.data[0].listTime.replace(/-/g,'/');
           listTime = new Date(listTime);
@@ -268,7 +267,7 @@ export default {
           var listTime = res.data[0].listTime;
           listTime = Date.parse(new Date(listTime))/ 1000;
 
-          self.countDownDay =Math.round(self.updateTime -(currentTime - listTime)/(60*60*24)) ;
+          self.countDownDay =Math.round(parseInt(self.updateTime) -(currentTime - listTime)/(60*60*24)) ;
 
           console.log(res);
         },
