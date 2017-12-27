@@ -175,7 +175,7 @@ export default {
         + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId, 
       imgUrl: './img/logo.png', 
       success: function () { 
-          console.log(imgUrl);
+        self.share();
       },
       cancel: function () { 
           // 用户取消分享后执行的回调函数
@@ -191,8 +191,7 @@ export default {
       /*type: '', // 分享类型,music、video或link，不填默认为link*/
       /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
       success: function () { 
-          // 用户确认分享后执行的回调函数
-          console.log(imgUrl);
+        self.share();
       },
       cancel: function () { 
           // 用户取消分享后执行的回调函数
