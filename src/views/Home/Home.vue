@@ -15,7 +15,7 @@
        <div class="recommend-con">
          <div @click="jumpToDetai(1,RcmZc.assetId)" class="zc con-item">
            <h4>{{RcmZc.projectName}}</h4>
-           <p>倒计时{{countDownDay}}天</p>
+           <p>倒计时{{countDownDay1}}天</p>
            <p>
              <span v-if="RcmZc.productType">{{getLabel(RcmZc.productType,'asset')}}</span>
            </p>
@@ -30,7 +30,7 @@
          </div>
          <div @click="jumpToDetai(2,RcmZj.fundId)" class="zj con-item">
            <h4>{{RcmZj.projectName}}</h4>
-           <p>倒计时{{countDownDay}}天</p>
+           <p>倒计时{{countDownDay2}}天</p>
            <p>
              <span v-if="RcmZj.fundType">{{getLabel(RcmZj.fundType,'fund')}}</span>
            </p>
@@ -106,7 +106,8 @@ export default {
         fundAnmount:null
       },
       img_src:[],
-      countDownDay:'',
+      countDownDay1:'',
+      countDownDay2:'',
       updateTime:'',
       newsList:[],
       link:'',
@@ -243,11 +244,7 @@ export default {
           listTime = new Date(listTime);
           var pastDays =   parseInt((currentTime - listTime)  /  1000  /  60  /  60  /24);
 
-          alert(self.updateTime)
-          alert(pastDays)
-          alert(self.updateTime -pastDays)
-
-          self.countDownDay =self.updateTime -pastDays ;
+          self.countDownDay1 =self.updateTime -pastDays ;
 
         },
         error:function(err){
@@ -262,14 +259,13 @@ export default {
         success:function (res) {
           self.RcmZj = res.data[0];
 
-          var currentTime = Date.parse(new Date())/ 1000;
+          var currentTime = new Date();
+          var listTime = res.data[0].listTime.replace(/-/g,'/');
+          listTime = new Date(listTime);
+          var pastDays =   parseInt((currentTime - listTime)  /  1000  /  60  /  60  /24);
 
-          var listTime = res.data[0].listTime;
-          listTime = Date.parse(new Date(listTime))/ 1000;
+          self.countDownDay2 =self.updateTime -pastDays ;
 
-          self.countDownDay =Math.round(parseInt(self.updateTime) -(currentTime - listTime)/(60*60*24)) ;
-
-          console.log(res);
         },
         error:function(err){
           console.error(err);
