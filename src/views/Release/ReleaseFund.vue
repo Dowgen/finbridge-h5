@@ -225,10 +225,12 @@ export default {
   border:none;
   outline: none;
   text-align: right;
+  width: 100%;
+  height: 100%;
 }
 .range input{
-  width:2.595rem;
-  height:1.44rem;
+  width:2.595rem !important;
+  height:1.44rem !important;
   padding-right: 0.3rem;
   border: 0.06rem solid #333 !important;
   outline: none;

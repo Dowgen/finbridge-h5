@@ -238,16 +238,7 @@ export default {
         url : '/asset/getRecommendAsset',
         success:function(res){
           self.RcmZc = res.data[0];
-        /*  console.log(res.data[0]);*/
-
-
-          var currentTime = new Date();
-          var listTime = res.data[0].listTime.replace(/-/g,'/');
-          listTime = new Date(listTime);
-          var pastDays =   parseInt((currentTime - listTime)  /  1000  /  60  /  60  /24);
-
-          self.countDownDay1 =self.validPeriod -pastDays ;
-
+          self.countDownDay1 = Lib.M.getCountDownDay(res.data[0].listTime,self.validPeriod);
         },
         error:function(err){
           console.error(err);
@@ -260,14 +251,7 @@ export default {
         url:'/fund/getRecommendFund',
         success:function (res) {
           self.RcmZj = res.data[0];
-
-          var currentTime = new Date();
-          var listTime = res.data[0].listTime.replace(/-/g,'/');
-          listTime = new Date(listTime);
-          var pastDays =   parseInt((currentTime - listTime)  /  1000  /  60  /  60  /24);
-
-          self.countDownDay2 =self.validPeriod -pastDays ;
-
+          self.countDownDay2 =Lib.M.getCountDownDay(res.data[0].listTime,self.validPeriod);
         },
         error:function(err){
           console.error(err);

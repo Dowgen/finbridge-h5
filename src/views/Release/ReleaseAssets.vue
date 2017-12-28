@@ -43,16 +43,16 @@
         </label>
       </div>
       <div class="des-item">
-        <div class="des-item-l">件均额度</div>
+        <div class="des-item-l">件均额度(选填)</div>
         <div class="des-item-r"><input v-model="perAmount" type="number" placeholder="元"></div>
       </div>
       <div class="des-item">
-        <div class="des-item-l">产品特色</div>
+        <div class="des-item-l">产品特色(选填)</div>
         <div class="des-item-r"><input v-model="productFeature" type="text" maxlength="20" placeholder="请填写10-20个字以内"></div>
       </div>
       <div class="des-item">
-        <div class="des-item-l">单笔期限(天)</div>
-        <div class="des-item-r"><input v-model="perPeriod" type="number" maxlength="10" placeholder="请填写贷款期限"></div>
+        <div class="des-item-l">产品期限(天)</div>
+        <div class="des-item-r"><input v-model="perPeriod" type="text" maxlength="10" placeholder="请填写贷款期限"></div>
       </div>
     </div>
     <div class="assets-des2">
@@ -64,7 +64,7 @@
         </div>
       </div>
       <div class="des-item">
-        <div class="des-item-l">日放款规模</div>
+        <div class="des-item-l">日放款规模(选填)</div>
         <div class="des-item-r"><input v-model="dailyPayAmount" type="number" maxlength="20" placeholder="百万"></div>
       </div>
       <div class="des-item">
@@ -72,7 +72,7 @@
         <div class="des-item-r"><input v-model="totalPayAmount" type="number" maxlength="20" placeholder="千万"></div>
       </div>
       <div class="des-item">
-        <div class="des-item-l">坏账率</div>
+        <div class="des-item-l">坏账率(选填)</div>
         <div class="des-item-r"><input v-model="debtRate" type="number" maxlength="5" placeholder="%"></div>
       </div>
       <div class="des-item">
@@ -121,14 +121,14 @@ export default {
     nextWay(){
       if( this.projectName == '' ||
           this.productType == '' ||
-          this.perAmount == '' ||
-          this.productFeature == '' ||
+          /*this.perAmount == '' ||*/
+          /*this.productFeature == '' ||*/
           this.perPeriod == '' || 
           this.fundCostRegionFrom == '' || 
           this.fundCostRegionTo == '' ||
-          this.dailyPayAmount == '' || 
-          this.totalPayAmount == '' || 
-          this.debtRate == '' ){
+          /*this.dailyPayAmount == '' || */
+          this.totalPayAmount == '' 
+         /* this.debtRate == ''*/ ){
         this.$vux.toast.text('参数请填写完整', 'middle');
       }else{
         let addAssetParams = {
@@ -237,6 +237,8 @@ export default {
   border:none;
   outline: none;
   text-align: right;
+  width: 100%;
+  height: 100%;
 }
 .assets-des2{
   width: 100%;

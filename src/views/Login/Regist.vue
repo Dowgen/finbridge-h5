@@ -22,7 +22,7 @@
       @click.native="clickBtn" style="margin: 0 auto 1.595rem"></Btn>
       <Btn backgroundColor="#4083FF" msg="注册" v-show="phoneNum!==''"
       @click.native="clickBtn" style="margin: 0 auto 1.595rem"></Btn>
-      <router-link to="/" style="color: #4083FF;">已有账户? 立即登录</router-link>
+      <router-link to="/Login" style="color: #4083FF;">已有账户? 立即登录</router-link>
     </div>
   </div>
 </template>

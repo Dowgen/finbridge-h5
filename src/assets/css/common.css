@@ -73,6 +73,7 @@ input,textarea{
   	-webkit-appearance: none; 
 }
 input{
+  font-size:0.9rem;
     background: rgba(0,0,0,0);
 }
 
@@ -155,21 +156,27 @@ html {
 }
 
 /* placeholder颜色 */
+
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+  font-size: 0.9rem;
     color:    #c6c7cc;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  font-size: 0.9rem;
    color:    #c6c7cc;
    opacity:  1;
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
+  font-size: 0.9rem;
    color:    #c6c7cc;
    opacity:  1;
 }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
+  font-size: 0.9rem;
    color:    #c6c7cc;
 }
 ::-ms-input-placeholder { /* Microsoft Edge */
+  font-size: 0.9rem;
    color:    #c6c7cc;
 }
 

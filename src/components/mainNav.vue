@@ -39,7 +39,7 @@ export default {
   //相关操作事件
   methods: {
     to(where){
-      this.$vux.alert.show(localStorage.userId);
+      /*this.$vux.alert.show(localStorage.userId);*/
       let self = this;
       if(localStorage.userId != undefined){
         if(where=='Project'){
@@ -48,12 +48,12 @@ export default {
           this.$router.push('MyInfo')
         }
       }else{
-        this.$vux.confirm.show({
+        /*this.$vux.confirm.show({
         content: '挂牌或查看个人信息需要登录,是否确认登录?',
-          onConfirm () {
+          onConfirm () {*/
             self.$router.push('Login')
-          }
-        })
+         /* }
+        })*/
       }
     }
   }

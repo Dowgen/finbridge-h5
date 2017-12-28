@@ -25,8 +25,8 @@ axios.interceptors.response.use(
                     break;
                 case 401:
                     // 返回 401 重新获取token并刷新当前页面
-                    vm.$vux.toast.text('token刷新中...','middle');
-                    vm.$router.push('/')
+                    getToken();
+                    vm.$router.go(0);
                     break;
                 default: vm.$vux.toast.text('请求异常！请重试','middle')   
             }
@@ -58,10 +58,10 @@ function getToken(){
     });
     axios({
         method: 'post',
-        url: 'https://finbridge.cn/uaa/oauth/token',
+        url: 'http://118.31.189.23:8060/uaa/oauth/token',
         params: {
-            username:'anil',
-            password:'password',
+            username:'juhe',
+            password:'Juhe2017!@#',
             grant_type:'password',
             scope:'read write'
         },
@@ -74,7 +74,6 @@ function getToken(){
         vm.$vux.loading.hide();
         if(res.status == 200 ){
             localStorage.token = res.data.access_token;
-            window.location.reload();
         }else{
             vm.$vux.toast.text('获取token异常！请重试')
         }
@@ -83,6 +82,7 @@ function getToken(){
         vm.$vux.toast.text('获取token异常！请重试')
     });
 }
+getToken();
 
 var Rxports = {
 	/* wb add start */
@@ -92,6 +92,14 @@ var Rxports = {
     cityList: pickerList.cityList,
     /*workTypeList: pickerList.workTypeList,*/
     /*adviceList: pickerList.adviceList,*/
+
+    /** 输入起始日期和有效天数，返回剩余天数 */
+    getCountDownDay:function (beginDate,efDay){
+        var now = new Date();
+        var beginDate = new Date(beginDate.replace(/-/g,'/'));
+        var pastDays = parseInt((now - beginDate)  /  1000  /  60  /  60  /24);
+        return (efDay - pastDays) ;
+    },
 	/* wb add end */
 
 

@@ -31,7 +31,7 @@
         <h3>资金</h3>
         <p>合规对接 量大稳定</p>
         <div>
-        <div class="item" v-for="item in fundList" @click="jumpTo(item,2,'0')">
+        <div class="item" v-for="item in fundList.slice(0,showItem02)" @click="jumpTo(2,item.fundId,'0')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -41,8 +41,9 @@
             <p>{{item.projectName}}</p>
             <div>
               <div>
-                <span>3天</span>
-                <i>|</i>
+                <span v-if="item.listStatus==2">
+                {{getCountDownDay(item.listTime,validPeriod)}}天</span>
+                <i v-if="item.listStatus==2">|</i>
                 <span>{{getLabel(item.fundType,'fund')}}</span>
               </div>
               <img v-show="item.listStatus==1" src="./img/label_judge.png"/>
@@ -51,7 +52,7 @@
           </div>
         </div>
         </div>
-        <div class="seeAll">
+        <div class="seeAll" @click="showItem02=fundList.length">
           查看全部({{fundList.length}})
         </div>
       </div>
@@ -59,7 +60,7 @@
         <h3>资产</h3>
         <p>风控审核 多元供给</p>
         <div>
-        <div class="item" v-for="item in assetList" @click="jumpTo(item,1,'0')">
+        <div class="item" v-for="item in assetList.slice(0,showItem01)" @click="jumpTo(1,item.assetId,'0')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -69,8 +70,9 @@
             <p>{{item.projectName}}</p>
             <div>
               <div>
-                <span>3天</span>
-                <i>|</i>
+                <span v-if="item.listStatus==2">
+                {{getCountDownDay(item.listTime,validPeriod)}}天</span>
+                <i v-if="item.listStatus==2">|</i>
                 <span>{{getLabel(item.productType,'asset')}}</span>
               </div>
               <img v-show="item.listStatus==1" src="./img/label_judge.png"/>
@@ -79,7 +81,7 @@
           </div>
         </div>
         </div>
-        <div class="seeAll">
+        <div class="seeAll" @click="showItem01=assetList.length">
           查看全部({{assetList.length}})
         </div>
       </div>
@@ -90,7 +92,7 @@
         <h3>资金</h3>
         <p>合规对接 量大稳定</p>
         <div>
-        <div class="item" v-for="item in fundListLose" @click="jumpTo(item,2,'1')">
+        <div class="item" v-for="item in fundListLose.slice(0,showItem12)" @click="jumpTo(2,item.fundId,'1')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -100,15 +102,16 @@
             <p>{{item.projectName}}</p>
             <div>
               <div>
-                <span>3天</span>
-                <i>|</i>
+                <span v-if="item.listStatus==2">
+                {{getCountDownDay(item.listTime,validPeriod)}}天</span>
+                <i v-if="item.listStatus==2">|</i>
                 <span>{{getLabel(item.fundType,'fund')}}</span>
               </div>
             </div>
           </div>
         </div>
         </div>
-        <div class="seeAll">
+        <div class="seeAll" @click="showItem12=fundListLose.length">
           查看全部({{fundListLose.length}})
         </div>
       </div>
@@ -116,7 +119,7 @@
         <h3>资产</h3>
         <p>风控审核 多元供给</p>
         <div>
-        <div class="item" v-for="item in assetListLose" @click="jumpTo(item,1,'1')">
+        <div class="item" v-for="item in assetListLose.slice(0,showItem11)" @click="jumpTo(1,item.assetId,'1')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -126,15 +129,16 @@
             <p>{{item.projectName}}</p>
             <div>
               <div>
-                <span>3天</span>
-                <i>|</i>
+                <span v-if="item.listStatus==2">
+                {{getCountDownDay(item.listTime,validPeriod)}}天</span>
+                <i v-if="item.listStatus==2">|</i>
                 <span>{{getLabel(item.productType,'asset')}}</span>
               </div>
             </div>
           </div>
         </div>
         </div>
-        <div class="seeAll">
+        <div class="seeAll" @click="showItem11=assetListLose.length">
           查看全部({{assetListLose.length}})
         </div>
       </div>
@@ -159,8 +163,13 @@ export default {
   },
   data () {
     return {
+      showItem01:3,//未失效，资产
+      showItem11:3,//已失效，资产
+      showItem02:3,//未失效，资金
+      showItem12:3,//已失效，资金
       hasProject:null,
       loseEfficacy:false,
+      validPeriod:null,
       assetList:[],
       fundList:[],
       assetListLose:[],
@@ -179,6 +188,7 @@ export default {
   mounted(){
     this.getMyProject();
     this.getFundList();
+    this.getConfigByParameter();
   },
   methods: {
     //资金资产类型数字转化为文字
@@ -195,6 +205,23 @@ export default {
     click (key) {
       if(key=='addFund') this.$router.push('/ReleaseFund')
       else this.$router.push('/ReleaseAssets')
+    },
+    getConfigByParameter(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/config/getConfigByParameter',
+        data:{
+          'key':'unlistPeriod'
+        },
+        success:function (res) {
+          self.validPeriod = res.data[0].value;
+          /*console.log(111111);
+          console.log(self.validPeriod);*/
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
     },
     /* 查询个人项目 */
     getMyProject(){
@@ -249,17 +276,21 @@ export default {
       });
     },
     //跳转至详情页
-    jumpTo(item,AorF,isLose){
+    jumpTo(AorF,proId,isLose){
       this.$router.push(
         { 
           path:'/ProjectDetail',
           query:{
             AorF:AorF,
-            info:item,
+            proId:proId,
             isLose:isLose
           }
         }
       )
+    },
+    //倒计时计算
+    getCountDownDay(beginDate,efDay){
+      return Lib.M.getCountDownDay(beginDate,efDay);
     }
   }
 }
