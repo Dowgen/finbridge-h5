@@ -41,8 +41,9 @@
             <p>{{item.projectName}}</p>
             <div>
               <div>
-                <span>3天</span>
-                <i>|</i>
+                <span v-if="item.listStatus==2">
+                {{getCountDownDay(item.listTime,validPeriod)}}天</span>
+                <i v-if="item.listStatus==2">|</i>
                 <span>{{getLabel(item.fundType,'fund')}}</span>
               </div>
               <img v-show="item.listStatus==1" src="./img/label_judge.png"/>
@@ -69,8 +70,9 @@
             <p>{{item.projectName}}</p>
             <div>
               <div>
-                <span>3天</span>
-                <i>|</i>
+                <span v-if="item.listStatus==2">
+                {{getCountDownDay(item.listTime,validPeriod)}}天</span>
+                <i v-if="item.listStatus==2">|</i>
                 <span>{{getLabel(item.productType,'asset')}}</span>
               </div>
               <img v-show="item.listStatus==1" src="./img/label_judge.png"/>
@@ -100,8 +102,9 @@
             <p>{{item.projectName}}</p>
             <div>
               <div>
-                <span>3天</span>
-                <i>|</i>
+                <span v-if="item.listStatus==2">
+                {{getCountDownDay(item.listTime,validPeriod)}}天</span>
+                <i v-if="item.listStatus==2">|</i>
                 <span>{{getLabel(item.fundType,'fund')}}</span>
               </div>
             </div>
@@ -126,8 +129,9 @@
             <p>{{item.projectName}}</p>
             <div>
               <div>
-                <span>3天</span>
-                <i>|</i>
+                <span v-if="item.listStatus==2">
+                {{getCountDownDay(item.listTime,validPeriod)}}天</span>
+                <i v-if="item.listStatus==2">|</i>
                 <span>{{getLabel(item.productType,'asset')}}</span>
               </div>
             </div>
@@ -161,6 +165,7 @@ export default {
     return {
       hasProject:null,
       loseEfficacy:false,
+      validPeriod:null,
       assetList:[],
       fundList:[],
       assetListLose:[],
@@ -179,6 +184,7 @@ export default {
   mounted(){
     this.getMyProject();
     this.getFundList();
+    this.getConfigByParameter();
   },
   methods: {
     //资金资产类型数字转化为文字
@@ -195,6 +201,23 @@ export default {
     click (key) {
       if(key=='addFund') this.$router.push('/ReleaseFund')
       else this.$router.push('/ReleaseAssets')
+    },
+    getConfigByParameter(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/config/getConfigByParameter',
+        data:{
+          'key':'unlistPeriod'
+        },
+        success:function (res) {
+          self.validPeriod = res.data[0].value;
+          /*console.log(111111);
+          console.log(self.validPeriod);*/
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
     },
     /* 查询个人项目 */
     getMyProject(){
@@ -260,6 +283,10 @@ export default {
           }
         }
       )
+    },
+    //倒计时计算
+    getCountDownDay(beginDate,efDay){
+      return Lib.M.getCountDownDay(beginDate,efDay);
     }
   }
 }

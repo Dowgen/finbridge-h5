@@ -39,7 +39,7 @@ export default {
   //相关操作事件
   methods: {
     to(where){
-      this.$vux.alert.show(localStorage.userId);
+      /*this.$vux.alert.show(localStorage.userId);*/
       let self = this;
       if(localStorage.userId != undefined){
         if(where=='Project'){

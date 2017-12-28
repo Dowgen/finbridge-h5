@@ -329,7 +329,7 @@ body{
 .project{
   width: 100%;
   height: 100%;
-  /*min-height: 41rem;*/
+  min-height: 40rem; 
   background: rgba(239,239,224,1);
   box-sizing:border-box;
   padding-bottom: 3.065rem;
