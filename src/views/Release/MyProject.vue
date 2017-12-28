@@ -435,17 +435,21 @@ export default {
   .useless .left>p{
     color:#adb4b8 !important;
   }
-  /* .vux-popover{
-    background-color:#fff;
-    top:0 !important;
+  .vux-button-group > a.vux-button-tab-item-first {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
   }
-  .popover-demo-content {
-    width: 7rem;
-    height:4rem;
-    line-height:4rem;
-    background: #fff;
-    color:#3478f6;
-    border-radius:10px;
-    box-shadow:0px 2px 20px 0px #808080;
-  } */
+  .vux-button-group > a.vux-button-tab-item-last {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-color:#4083ff;
+  }
+  .vux-button-group > a.vux-button-tab-item-first:after{
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+  .vux-button-group > a.vux-button-tab-item-last:after{
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
 </style>
