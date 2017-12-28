@@ -156,14 +156,14 @@ export default {
     this.info = this.$route.query.info;
     this.isLose = this.$route.query.isLose;
     this.getWxSig()
-    
-    //微信分享设置
     var self = this;
+    console.log()
+    //微信分享设置
     wx.onMenuShareTimeline({
       title: self.info.projectName, 
       /*link: 'http://finbridge.cn',*/
       link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
-        + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId, 
+        + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId), 
       imgUrl: 'http://finbridge.cn/logo.png', 
       success: function () { 
         self.share();
@@ -177,7 +177,7 @@ export default {
       title: self.info.projectName, 
       desc: 'finbridge合作产品', 
       link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
-        + '&proId=' + self.AorF==1?self.info.assetId:self.info.fundId,
+        + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId),
       /*link: 'http://finbridge.cn',*/
       imgUrl: 'http://finbridge.cn/logo.png', 
       /*type: '', // 分享类型,music、video或link，不填默认为link*/
@@ -298,7 +298,6 @@ export default {
         f = JSON.parse(localStorage.fundTypeList);
       else
         f = JSON.parse(localStorage.assetTypeList);
-      console.log(typeof key)
       if(typeof key == 'string'){
         let array = [];
         let keyArray = key.split(',');
