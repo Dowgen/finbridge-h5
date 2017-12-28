@@ -350,7 +350,7 @@ export default {
         display: flex;
         flex-direction: row;
         .con-item{
-          height: 6rem;
+          height: 7rem;
           flex-grow: 1;
           border: 0.06rem solid #F2F2F2;
           text-align: left;

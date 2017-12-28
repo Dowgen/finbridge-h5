@@ -237,6 +237,58 @@ export default {
         }
       }
     },
+    //获取微信签名
+    getWxSig(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/wechat/wxSig',
+        data:{url: location.href.split('#')[0]},
+        success:function(res){
+          if(res.code==200){
+            let wxSig = res.data;
+            wx.config({
+              debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+              appId: wxSig.appid, // 必填，公众号的唯一标识
+              timestamp: wxSig.timestamp, // 必填，生成签名的时间戳
+              nonceStr:  wxSig.noncestr, // 必填，生成签名的随机串
+              signature: wxSig.signature,   // 必填，签名，见附录1
+              jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+            //微信分享设置
+            wx.onMenuShareTimeline({
+              title: self.info.projectName, 
+              /*link: 'http://finbridge.cn',*/
+              link:  location.href, 
+              imgUrl: 'http://finbridge.cn/logo.png', 
+              success: function () { 
+                self.share();
+              },
+              cancel: function () { 
+                  // 用户取消分享后执行的回调函数
+              }
+            });
+
+            wx.onMenuShareAppMessage({
+              title: self.info.projectName, 
+              desc: 'finbridge合作产品', 
+              link:  location.href,
+              /*link: 'http://finbridge.cn',*/
+              imgUrl: 'http://finbridge.cn/logo.png', 
+              /*type: '', // 分享类型,music、video或link，不填默认为link*/
+              /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
+              success: function () { 
+                self.share();
+              },
+              cancel: function () { 
+                  // 用户取消分享后执行的回调函数
+              }
+            });
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
     //根据id查询详情
     getDetail(){
       var self = this;
@@ -264,6 +316,7 @@ export default {
         success:function(res){
           if(res.code==200){
             self[type] = res.data[type2];
+            self.getWxSig();
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
