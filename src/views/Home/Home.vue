@@ -120,13 +120,13 @@ export default {
   },
   mounted(){
     let self = this;
-    /*axios.all([self.getToken()])
-    .then(axios.spread(function (acct, perms) {*/
+    axios.all([self.getToken()])
+    .then(axios.spread(function (acct, perms) {
       self.getOpenId()
       self.getFundList();
       self.getConfigByParameter();
       self.getArticle();
-    /*}));*/
+    }));
     
     
   },
