@@ -199,7 +199,17 @@ export default {
       })
     },*/
     contactCard(){
-      $('.alert').css('display','block')
+      var self = this;
+      if(localStorage.userId != undefined){
+        $('.alert').css('display','block')
+      }else{
+        this.$vux.confirm.show({
+        content: '查看联系方式需要登录,是否确认登录?',
+          onConfirm () {
+            self.$router.push('Login')
+          }
+        })
+      }
     },
     closeContactCard(){
       $('.alert').css('display','none')
@@ -404,7 +414,7 @@ body{
   height: 21.5rem;
   background: url("./img/contact_card_bg.png") no-repeat center;
   background-size: 100% 100%;
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   margin-left: -9.4075rem;

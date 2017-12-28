@@ -98,7 +98,6 @@ var Rxports = {
         var now = new Date();
         var beginDate = new Date(beginDate.replace(/-/g,'/'));
         var pastDays = parseInt((now - beginDate)  /  1000  /  60  /  60  /24);
-
         return (efDay - pastDays) ;
     },
 	/* wb add end */

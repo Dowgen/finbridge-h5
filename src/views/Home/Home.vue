@@ -236,7 +236,7 @@ export default {
         url : '/asset/getRecommendAsset',
         success:function(res){
           self.RcmZc = res.data[0];
-          self.countDownDay1 = Lib.M.getCountDownDay(res.data[0].listTime,self.updateTime);
+          self.countDownDay1 = Lib.M.getCountDownDay(res.data[0].listTime,self.validPeriod);
         },
         error:function(err){
           console.error(err);
@@ -249,7 +249,7 @@ export default {
         url:'/fund/getRecommendFund',
         success:function (res) {
           self.RcmZj = res.data[0];
-          self.countDownDay2 =Lib.M.getCountDownDay(res.data[0].listTime,self.updateTime);
+          self.countDownDay2 =Lib.M.getCountDownDay(res.data[0].listTime,self.validPeriod);
         },
         error:function(err){
           console.error(err);
