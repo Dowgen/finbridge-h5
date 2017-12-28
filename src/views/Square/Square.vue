@@ -10,7 +10,7 @@
       <div class="zj" v-show="zj">
         <div class="zj-head">
          <div @click="sort(1,1,2),isActive='comprehension'" :class="isActive=='comprehension'?'active':''">综合排序</div>
-         <div @click="isActive='total',isAsc?sort(2,1,2):sort(2,2,2)" :class="isActive=='total'?'active':''">总放款规模
+         <div @click="isActive='total',isAsc?sort(2,1,2):sort(2,2,2)" :class="isActive=='total'?'active':''">资金规模
            <img v-show="!isAsc" src="./img/ic_arrow_down.png" alt="">
            <img v-show="isAsc" src="./img/arrow_up.png" alt="">
          </div>

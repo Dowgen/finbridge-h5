@@ -31,7 +31,7 @@
         <h3>资金</h3>
         <p>合规对接 量大稳定</p>
         <div>
-        <div class="item" v-for="item in fundList" @click="jumpTo(2,item.fundId,'0')">
+        <div class="item" v-for="item in fundList.slice(0,showItem02)" @click="jumpTo(2,item.fundId,'0')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -52,7 +52,7 @@
           </div>
         </div>
         </div>
-        <div class="seeAll">
+        <div class="seeAll" @click="showItem02=fundList.length">
           查看全部({{fundList.length}})
         </div>
       </div>
@@ -60,7 +60,7 @@
         <h3>资产</h3>
         <p>风控审核 多元供给</p>
         <div>
-        <div class="item" v-for="item in assetList" @click="jumpTo(1,item.assetId,'0')">
+        <div class="item" v-for="item in assetList.slice(0,showItem01)" @click="jumpTo(1,item.assetId,'0')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -81,7 +81,7 @@
           </div>
         </div>
         </div>
-        <div class="seeAll">
+        <div class="seeAll" @click="showItem01=assetList.length">
           查看全部({{assetList.length}})
         </div>
       </div>
@@ -92,7 +92,7 @@
         <h3>资金</h3>
         <p>合规对接 量大稳定</p>
         <div>
-        <div class="item" v-for="item in fundListLose" @click="jumpTo(2,item.fundId,'1')">
+        <div class="item" v-for="item in fundListLose.slice(0,showItem12)" @click="jumpTo(2,item.fundId,'1')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -111,7 +111,7 @@
           </div>
         </div>
         </div>
-        <div class="seeAll">
+        <div class="seeAll" @click="showItem12=fundListLose.length">
           查看全部({{fundListLose.length}})
         </div>
       </div>
@@ -119,7 +119,7 @@
         <h3>资产</h3>
         <p>风控审核 多元供给</p>
         <div>
-        <div class="item" v-for="item in assetListLose" @click="jumpTo(1,item.assetId,'1')">
+        <div class="item" v-for="item in assetListLose.slice(0,showItem11)" @click="jumpTo(1,item.assetId,'1')">
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -138,7 +138,7 @@
           </div>
         </div>
         </div>
-        <div class="seeAll">
+        <div class="seeAll" @click="showItem11=assetListLose.length">
           查看全部({{assetListLose.length}})
         </div>
       </div>
@@ -163,6 +163,10 @@ export default {
   },
   data () {
     return {
+      showItem01:3,//未失效，资产
+      showItem11:3,//已失效，资产
+      showItem02:3,//未失效，资金
+      showItem12:3,//已失效，资金
       hasProject:null,
       loseEfficacy:false,
       validPeriod:null,

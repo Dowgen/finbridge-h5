@@ -207,7 +207,7 @@ export default {
         data:{deleteId:self.AorF==1?self.info.assetId:self.info.fundId},
         success:function(res){
           if(res.code==200){
-            self.$vux.toast.text('下架成功!', 'middle');
+            self.$vux.toast.text('删除成功!', 'middle');
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
@@ -310,9 +310,10 @@ export default {
         data: data,
         success:function(res){
           if(res.code==200){
-            console.log('fuck');
             self.info = res.data[type2];
-            self.getWxSig();
+            if(self.isLose == '0'){
+              self.getWxSig();
+            }
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }

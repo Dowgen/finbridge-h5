@@ -88,7 +88,7 @@
            <img src="./img/ic_phone.png" alt="">
            手机号码
          </p>
-         <p>{{asDetail.contactPhone}}</p>
+         <p @click="callphone(asDetail.contactPhone)">{{asDetail.contactPhone}}</p>
        </div>
        <div class="foot-close" @click="closeContactCard">
          <img src="./img/ic_card_dropout.png" alt="">
@@ -155,7 +155,7 @@
             <img src="./img/ic_phone.png" alt="">
             手机号码
           </p>
-          <p>{{fuDetail.contactPhone}}</p>
+          <p @click="callphone(fuDetail.contactPhone)">{{fuDetail.contactPhone}}</p>
         </div>
         <div class="foot-close" @click="closeContactCard">
           <img src="./img/ic_card_dropout.png" alt="">
@@ -269,6 +269,9 @@ export default {
           }
         }
       });
+    },
+    callphone(phone){    
+        window.location.href = "tel:"+phone;
     }
   }
 }

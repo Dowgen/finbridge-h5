@@ -41,20 +41,20 @@
       </div>
       <div class="des-item contactWay">
         <div class="des-item-l">
-          <!-- <input type="checkbox"> -->微信号
+          <!-- <input type="checkbox"> -->微信号(选填)
         </div>
         <div class="des-item-r">
           <input v-model="contactWechat" type="text" maxlength="11" placeholder="请填写您的微信号">
         </div>
       </div>
-      <div class="des-item contactWay"  style="border-bottom: 0.06rem solid #ECECEC;">
+      <!-- <div class="des-item contactWay"  style="border-bottom: 0.06rem solid #ECECEC;">
         <div class="des-item-l">
-          <!-- <input type="checkbox"> -->QQ号
+          <input type="checkbox">QQ号
         </div>
         <div class="des-item-r">
           <input v-model="contactQQ" type="number" maxlength="11" placeholder="请填写您的QQ号">
         </div>
-      </div>
+      </div> -->
 
     </div>
 
@@ -81,7 +81,7 @@ export default {
       gender:'male',
       contactPerson:'',
       contactPhone:'',
-      contactQQ:'',
+      /*contactQQ:'',*/
       contactWechat:''
     }
   },
@@ -93,9 +93,9 @@ export default {
   methods:{
     nextWay(){
       if( this.contactPerson == '' ||
-          this.contactPhone == '' ||
-          this.contactQQ == '' ||
-          this.contactWechat == ''){
+          this.contactPhone == '' 
+          /*this.contactQQ == '' ||*/
+          /*this.contactWechat == ''*/){
         this.$vux.toast.text('参数请填写完整', 'middle');
       }else{
         this.addFund();
@@ -108,7 +108,7 @@ export default {
       info = {
         contactPerson: this.contactPerson,
         contactPhone: this.contactPhone,
-        contactQQ: this.contactQQ,
+        contactQQ: '',
         contactWechat: this.contactWechat,
         belongTo: localStorage.userId
       };
@@ -207,6 +207,8 @@ export default {
   border:none;
   outline: none;
   text-align: right;
+  width: 100%;
+  height: 100%;
 }
 .next{
   width: 100%;

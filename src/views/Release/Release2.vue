@@ -61,12 +61,12 @@
           </div>
         </div>
       </div>
-      <div class="des-item">
+      <!-- <div class="des-item">
         <div class="des-item-l"></div>
         <div class="des-item-r">
           <input v-model="AddressDetail" type="text" placeholder="请填写具体街道门牌号">
         </div>
-      </div>
+      </div> -->
       <div class="des-item">
         <div class="des-item-l">公司背景(选填)</div>
         <div class="des-item-r">
@@ -134,7 +134,7 @@ export default {
           let b = {
             companyName: this.companyName,
             operationTime: parseInt(this.operationTime),
-            companyAddress: this.cityVal.join(',')+ ' ' + this.AddressDetail,
+            companyAddress: this.cityVal.join(',')/*+ ' ' + this.AddressDetail*/,
             companyBackground: this.companyBackground,
             fundOrigin: this.fundOrigin.join(',')
           };
@@ -216,6 +216,8 @@ export default {
   border:none;
   outline: none;
   text-align: right;
+  width: 100%;
+  height: 100%;
 }
 .next{
   width: 100%;
