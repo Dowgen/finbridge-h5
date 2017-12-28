@@ -52,7 +52,7 @@
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
-                  <p>{{Math.round(((Date.parse(new Date()) - Date.parse(new Date(item.listTime.replace(/-/g,'/')))) / 1000 / 86400))}}天</p>
+                  <p>{{validPeriod - (parseInt((new Date() - new Date(item.listTime.replace(/-/g,'/'))) / 86400000))}}天</p>
                 </div>
               </div>
             </div>
@@ -104,7 +104,7 @@
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
-                  <p>{{Math.round(((Date.parse(new Date()) - Date.parse(new Date(oItem.listTime.replace(/-/g,'/')))) / 1000 / 86400))}}天</p>
+                  <p>{{validPeriod - parseInt((new Date() - new Date(oItem.listTime.replace(/-/g,'/'))) / 86400000)}}天</p>
                 </div>
               </div>
             </div>
@@ -139,7 +139,7 @@ export default {
       key:2,
       items:[],
       oItems:[],
-      validDay:'',
+      validPeriod:'',
       img_src:'',
       countDownDay:'',
       currentTime:'',
@@ -187,9 +187,9 @@ export default {
           'key':'unlistPeriod'
         },
         success:function (res) {
-          self.validDay = res.data[0].value;
+          self.validPeriod = res.data[0].value;
           /*console.log(111111);
-          console.log(self.validDay);*/
+          console.log(self.validPeriod);*/
         },
         error:function(err){
           console.error(err);

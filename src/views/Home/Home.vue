@@ -108,7 +108,7 @@ export default {
       img_src:[],
       countDownDay1:'',
       countDownDay2:'',
-      updateTime:'',
+      validPeriod:'',
       newsList:[],
       link:'',
       lookCount:'',
@@ -219,7 +219,7 @@ export default {
           'key':'unlistPeriod'
         },
         success:function (res) {
-          self.updateTime = res.data[0].value;
+          self.validPeriod = res.data[0].value;
           self.getRecommendZc();
           self.getRecommendFund();
           self.getCarouselFigure();
@@ -244,7 +244,7 @@ export default {
           listTime = new Date(listTime);
           var pastDays =   parseInt((currentTime - listTime)  /  1000  /  60  /  60  /24);
 
-          self.countDownDay1 =self.updateTime -pastDays ;
+          self.countDownDay1 =self.validPeriod -pastDays ;
 
         },
         error:function(err){
@@ -264,7 +264,7 @@ export default {
           listTime = new Date(listTime);
           var pastDays =   parseInt((currentTime - listTime)  /  1000  /  60  /  60  /24);
 
-          self.countDownDay2 =self.updateTime -pastDays ;
+          self.countDownDay2 =self.validPeriod -pastDays ;
 
         },
         error:function(err){
