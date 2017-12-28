@@ -7,7 +7,7 @@
     <h1>{{msg}}</h1>
     <div class="input" style=" position: relative;">
       <input v-model="phoneNum" type="text" placeholder="手机号" class="phone" maxlength="11">
-      <input v-model="password" type="password" placeholder="密码" class="psd" maxlength="16">
+      <input v-model="password" type="password" placeholder="密码" class="psd" maxlength="14">
       <span class="miss-psd" @click="resetPsd">忘记密码？</span>
     </div>
     <Btn msg="登录" backgroundColor="#4083FF" @click.native="clickBtn"></Btn>
@@ -99,6 +99,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  ::-webkit-input-placeholder { /* WebKit browsers */
+    font-size: 0.94rem;
+    letter-spacing: 1px;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    font-size: 0.94rem;
+    letter-spacing: 1px;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    font-size: 0.94rem;
+    letter-spacing: 1px;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+    font-size: 0.94rem;
+    letter-spacing: 1px;
+  }
   .hello{
     position: absolute;
     width: 100%;
@@ -107,7 +123,7 @@ export default {
   .logo{
     width: 4.25rem;
     height: 4.25rem;
-    margin-top:4.97rem;
+    margin-top:2rem;
   }
   .hello .hello-head{
     text-align: right;
@@ -132,7 +148,7 @@ export default {
   .hello .input{
     width:19.53rem;
     height:6.25rem;
-    margin:3rem auto 0;
+    margin:3rem auto 0.655rem;
     border: 0.06rem solid #9C9C9C;
     border-radius: 0.31rem ;
   }
@@ -145,6 +161,7 @@ export default {
     color:#4E4E4E;
     text-indent: 1rem;
     outline: none;
+    border-radius: 0px;
   }
   .hello .input .phone{
     border-bottom: 0.06rem solid #9C9C9C;
@@ -166,7 +183,7 @@ export default {
     font-size:0.815rem;
     position: absolute;
     left: 0;
-    bottom: 2rem;
+    bottom: 1.28rem;
     text-align: center;
   }
 </style>

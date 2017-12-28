@@ -13,7 +13,7 @@
           <span @click="lookMore">查看更多<img src="./img/icon_more.png"/></span>
         </p>
        <div class="recommend-con">
-         <div @click="jumpToDetai(1,RcmZc.assetId)" class="zc con-item">
+         <div @click="jumpToDetai(1,RcmZc.assetId)" class="zc con-item" style="margin-right: 0.1575rem;">
            <h4>{{RcmZc.projectName}}</h4>
            <p>倒计时{{countDownDay1}}天</p>
            <p>
@@ -27,8 +27,9 @@
              <span>资金成本区间</span>
              <span>总放款量</span>
            </p>
+           <span class="middleLine"></span>
          </div>
-         <div @click="jumpToDetai(2,RcmZj.fundId)" class="zj con-item">
+         <div @click="jumpToDetai(2,RcmZj.fundId)" class="zj con-item" style="margin-left: 0.1575rem;">
            <h4>{{RcmZj.projectName}}</h4>
            <p>倒计时{{countDownDay2}}天</p>
            <p>
@@ -42,6 +43,7 @@
              <span>资金成本区间</span>
              <span>总放款量</span>
            </p>
+           <span class="middleLine"></span>
          </div>
        </div>
       </div>
@@ -323,6 +325,7 @@ export default {
 
 <style lang="less" scoped>
   .content{
+    width: 100%;
     background: #EFEFF4;
     padding-bottom:3.8rem;
     position: absolute;
@@ -333,11 +336,10 @@ export default {
       height: 100%;
     }
     .recommend{
-      width:100%;
       background: #fff;
       /*height:12rem;*/
       box-sizing: border-box;
-      border-top: solid 0.375rem #f2f2f2;
+      border-top: solid 0.5rem #EFEFF4;
       padding: 0.815rem 0.94rem 1.065rem;
       &>p{
         display:flex;
@@ -349,10 +351,14 @@ export default {
         }
         &>span:nth-child(2){
           font-size:0.815rem;
+          margin-right: 0.44rem;
+          position: relative;
           &>img{
             width:0.22rem;
             height:0.345rem;
-            margin-left: 0.3rem;
+            position: absolute;
+            top: 0.4rem;
+            right: -0.5rem;
           }
         }
       }
@@ -360,29 +366,39 @@ export default {
         display: flex;
         flex-direction: row;
         .con-item{
+          height: 6rem;
           flex-grow: 1;
           border: 0.06rem solid #F2F2F2;
           text-align: left;
-          padding:1rem 0 3rem 1rem;
-          margin: 1rem 1rem 0 0;
+          padding:0.97rem 0 1.315rem 0.845rem;
+          margin:1.065rem 0;
           h4{
             font-size: 0.94rem;
             color: #1C3A53;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.53rem;
+          }
+          .middleLine{
+            display: block;
+            width: 0.06rem;
+            height: 1.375rem;
+            background: #EAEAEA;
+            margin: 1.2rem auto 0;
           }
           p:nth-of-type(1){
             font-size: 0.625rem;
             color: #98A0AF;
           }
           p:nth-of-type(2){
-            margin:0.4rem 0 0.9rem 0;
+            margin:0.405rem 0 0.905rem 0;
             span{
               width:2.94rem;
               height:0.875rem;
-              padding:0.2rem;
+              line-height: 0.875rem;
+              text-align: center;
               border: 0.06rem solid #699EFF;
               font-size:0.625rem;
               color:#699EFF;
+              margin-right: 0.28rem;
             }
           }
           p:nth-of-type(3){
@@ -392,13 +408,14 @@ export default {
               font-size:0.875rem;
               color:#F84F60;
               position: absolute;
+              font-weight: bolder;
             }
             span:nth-of-type(1){
               left:0rem;
               top: 0;
             }
             span:nth-of-type(2){
-              right: 0.5rem;
+              right: 1.125rem;
               top: 0;
             }
           }
@@ -411,11 +428,11 @@ export default {
             }
             span:nth-of-type(1){
               left: 0rem;
-              top: 1rem;
+              top: 1.13rem;
             }
             span:nth-of-type(2){
-              right: 0.5rem;
-              top: 1rem;
+              right: 1.125rem;
+              top: 1.13rem;
             }
           }
         }

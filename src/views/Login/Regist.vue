@@ -4,11 +4,11 @@
       <img src="./img/close.png" alt="">
     </div>-->
     <img class="logo" src="./img/logo.png">
-    <h1 style="margin-top: 0.65rem;">&nbsp 您好！</h1>
+    <h1 style="margin-top: 0.655rem;">&nbsp 您好！</h1>
     <h1>请注册开始使用</h1>
     <div class="input" style=" position: relative;">
       <input type="text" placeholder="手机号码" class="phone" maxlength="11" v-model="phoneNum">
-      <input type="password" placeholder="请输入密码" class="psd" maxlength="16" v-model="password">
+      <input type="password" placeholder="请输入密码" class="psd" maxlength="14" v-model="password">
       <input type="number" v-model="verifyCode">
       <span class="yzm">
         <div v-show="start" >
@@ -19,9 +19,9 @@
     </div>
     <div class="footer">
       <Btn backgroundColor="#D7D7D7" msg="注册" v-show="phoneNum==''"
-      @click.native="clickBtn"></Btn>
+      @click.native="clickBtn" style="margin: 0 auto 1.595rem"></Btn>
       <Btn backgroundColor="#4083FF" msg="注册" v-show="phoneNum!==''"
-      @click.native="clickBtn"></Btn>
+      @click.native="clickBtn" style="margin: 0 auto 1.595rem"></Btn>
       <router-link to="/" style="color: #4083FF;">已有账户? 立即登录</router-link>
     </div>
   </div>
@@ -141,6 +141,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  ::-webkit-input-placeholder { /* WebKit browsers */
+    font-size: 0.94rem;
+    letter-spacing: 1px;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    font-size: 0.94rem;
+    letter-spacing: 1px;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    font-size: 0.94rem;
+    letter-spacing: 1px;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+    font-size: 0.94rem;
+    letter-spacing: 1px;
+  }
   .hello{
     position: absolute;
     width: 100%;
@@ -161,7 +177,7 @@ export default {
   .logo{
     width: 4.25rem;
     height: 4.25rem;
-    margin-top:4.97rem;
+    margin-top:1.97rem;
   }
   .hello h1{
     font-size:1.065rem;
@@ -174,7 +190,7 @@ export default {
   .hello .input{
     width:19.53rem;
     /*height:6.25rem;*/
-    margin:1.53rem auto 0;
+    margin:1.565rem auto 0;
     border: 0.06rem solid #9C9C9C;
     border-radius: 0.31rem ;
   }
@@ -187,6 +203,7 @@ export default {
     color:#4E4E4E;
     text-indent: 1rem;
     outline: none;
+    border-radius: 0px;
   }
   .hello .input .phone{
     border-bottom: 0.06rem solid #9C9C9C;
@@ -213,6 +230,6 @@ export default {
     font-size:0.815rem;
     text-align: center;
     position: absolute;
-    bottom: 2rem;
+    bottom: 1.065rem;
   }
 </style>

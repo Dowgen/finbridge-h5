@@ -329,14 +329,14 @@ body{
 .project{
   width: 100%;
   height: 100%;
-  /*min-height: 41rem;*/
+  min-height: 40rem;
   background: rgba(239,239,224,1);
   box-sizing:border-box;
   padding-bottom: 3.065rem;
 }
 .project .project-head{
   width: 100%;
-  height: 15.94rem;
+  height: 14.69rem;
   background: url("./img/bg_details.png") no-repeat center;
   background-size: 100% 100%;
   overflow: hidden;
@@ -439,7 +439,7 @@ body{
   height: 0.8rem;
 }
 .footer-btn{
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   height: 3.065rem;

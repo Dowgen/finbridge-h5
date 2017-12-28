@@ -141,6 +141,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  ::-webkit-input-placeholder { /* WebKit browsers */
+    font-size: 0.815rem;
+    letter-spacing: 1px;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    font-size: 0.815rem;
+    letter-spacing: 1px;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    font-size: 0.815rem;
+    letter-spacing: 1px;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+    font-size: 0.815rem;
+    letter-spacing: 1px;
+  }
 .assets{
   width: 100%;
   height: 41rem;

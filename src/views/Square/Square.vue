@@ -52,7 +52,7 @@
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
-                  <p>{{validPeriod - (parseInt((new Date() - new Date(item.listTime.replace(/-/g,'/'))) / 86400000))}}天</p>
+                  <p>{{validPeriod - (parseInt((new Date() - new Date(item.listTime.replace(/-/g,'/'))) / 86400000))}} <span>天</span></p>
                 </div>
               </div>
             </div>
@@ -104,7 +104,7 @@
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
-                  <p>{{validPeriod - parseInt((new Date() - new Date(oItem.listTime.replace(/-/g,'/'))) / 86400000)}}天</p>
+                  <p>{{validPeriod - parseInt((new Date() - new Date(oItem.listTime.replace(/-/g,'/'))) / 86400000)}} <span>天</span></p>
                 </div>
               </div>
             </div>
@@ -267,31 +267,31 @@ export default {
     }
     .square-head{
       width: 100%;
-      height: 3.595rem;
+      height: 2.75rem;
       background: #fff;
       overflow: hidden;
       .button-tab{
         width:13.75rem;
         height: 1.6rem;
-        margin:1.4rem auto 0;
-        border-radius: 0;
+        margin:0.575rem auto 0;
+        border-radius: 4px;
       }
       .vux-button-group > a.vux-button-tab-item-first {
-        border-top-left-radius: 0.25rem;
-        border-bottom-left-radius: 0.25rem;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
       }
       .vux-button-group > a.vux-button-tab-item-last {
-        border-top-right-radius: 0.25rem;
-        border-bottom-right-radius: 0.25rem;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
         border-color:#4083ff;
       }
       .vux-button-group > a.vux-button-tab-item-first:after{
-        border-top-left-radius: 0.25rem;
-        border-bottom-left-radius: 0.25rem;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
       }
       .vux-button-group > a.vux-button-tab-item-last:after{
-        border-top-right-radius: 0.25rem;
-        border-bottom-right-radius: 0.25rem;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
       }
     }
     .zj{
@@ -309,7 +309,7 @@ export default {
             height: 0.565rem;
             position: absolute;
             top: 0.4rem;
-            right:1rem;
+            right:0.65rem;
           }
         }
         div:nth-of-type(3){
@@ -319,7 +319,7 @@ export default {
             height: 0.25rem;
             position: absolute;
             top: 0.6rem;
-            right: 1.4rem;
+            right: 1.2rem;
           }
         }
       }
@@ -331,10 +331,10 @@ export default {
           padding: 0 1rem;
           .item-title{
             text-align: left;
-            line-height: 2.4rem;
+            line-height: 2.315rem;
             font-size: 0.815rem;
             color: #333333 ;
-            border-bottom:0.06rem solid #EAEAEA;
+            border-bottom:0.06rem dashed #EAEAEA;
             position: relative;
             span:nth-of-type(1){
               display: inline-block;
@@ -342,7 +342,7 @@ export default {
               height: 0.9rem;
               background: #4083FF;
               position: absolute;
-              top: 0.75rem;
+              top: 0.65rem;
               margin-right: 1rem;
             }
             span:nth-of-type(2){
@@ -358,7 +358,7 @@ export default {
               p:nth-of-type(1){
                 font-size: 1.5rem;
                 color: #FF671B;
-                margin:1rem 0 0.5rem;
+                margin:1.25rem 0 0.4rem;
                 span{
                   font-size: 0.815rem;
                 }
@@ -371,13 +371,12 @@ export default {
             .right{
               flex: 2;
               height: 3rem;
-              border-left: 0.06rem solid #EAEAEA;
-              margin-top: 1rem;
-              margin-left: 1.5rem;
+              border-left: 0.06rem solid #E6E7EB;
+              margin-top: 1.47rem;
+              /*margin-left: 1.5rem;*/
               div{
                 /*width: 13.5rem;*/
                 font-size: 0.75rem;
-                line-height: 1.6rem;
                 overflow: hidden;
                 position: relative;
                 p:nth-of-type(1){
@@ -388,19 +387,23 @@ export default {
                   background: #F3AE43;
                   float: left;
                   position: absolute;
-                  left: 0.8rem;
-                  top: 0.5rem;
+                  left: 4.56rem;
+                  top: 0.3rem;
                 }
                 p:nth-of-type(2){
                   display: inline-block;
                   color: #A3A3A3;
                   float: left;
-                  margin-left: 1.6rem;
+                  margin-left: 5.315rem;
+                  margin-bottom: 0.75rem;
                 }
                 p:nth-of-type(3){
                   display: inline-block;
                   color: #4083FF;
                   float: right;
+                  span{
+                    color: #666;
+                  }
                 }
               }
 

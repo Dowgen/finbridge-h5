@@ -35,14 +35,14 @@ export default {
 <style scoped>
 .header{
   width:100%;
-  height:4rem;
+  height:2.75rem;
   background: #fff;
   margin: 0 auto;
   font-size: 1.065rem;
   color: #000;
   text-align: center;
   position: relative;
-  line-height: 4rem;
+  line-height: 2.75rem;
   font-weight: 600;
  /* border-bottom: solid 1px #b4b4b4;*/
 }

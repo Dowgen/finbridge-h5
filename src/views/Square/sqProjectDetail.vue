@@ -272,13 +272,13 @@ body{
 .project{
   box-sizing:border-box;
   width: 100%;
-  min-height: 41rem;
+  min-height: 40rem;
   background: #fff;
   padding-bottom: 3.065rem;
 }
 .project .project-head{
   width: 100%;
-  height: 15.94rem;
+  height: 14.69rem;
   background: url("./img/bg_details.png") no-repeat center;
   background-size: 100% 100%;
   overflow: hidden;
@@ -379,7 +379,7 @@ body{
   margin:1.5rem 0;
 }
 .footer-btn{
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   height: 3.065rem;
@@ -404,7 +404,7 @@ body{
   height: 21.5rem;
   background: url("./img/contact_card_bg.png") no-repeat center;
   background-size: 100% 100%;
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   margin-left: -9.4075rem;

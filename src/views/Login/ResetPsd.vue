@@ -7,7 +7,7 @@
     <h1>欢迎再次回来</h1>
     <div class="input" style=" position: relative;">
       <input type="text" placeholder="手机号码" class="phone" maxlength="11" v-model="phoneNum">
-      <input type="password" placeholder="请重置密码" class="psd" maxlength="16" v-model="password">
+      <input type="password" placeholder="请重置密码" class="psd" maxlength="14" v-model="password">
       <input type="number" v-model="verifyCode">
       <span class="yzm">
         <div v-show="start" >
@@ -18,8 +18,8 @@
     </div>
     <div class="footer">
       <Btn backgroundColor="#D7D7D7" msg="登录" 
-       v-show="phoneNum==''" @click.native="clickBtn"></Btn >
-      <Btn backgroundColor="#4083FF" msg="登录" v-show="phoneNum!==''" @click.native="clickBtn"></Btn >
+       v-show="phoneNum==''" @click.native="clickBtn" style="margin: 0 auto 1.28rem"></Btn >
+      <Btn backgroundColor="#4083FF" msg="登录" v-show="phoneNum!==''" @click.native="clickBtn" style="margin: 0 auto 1.28rem"></Btn >
       <router-link to="/" style="color: #4083FF;">已有账户? 立即登录</router-link>
     </div>
   </div>
@@ -139,6 +139,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  ::-webkit-input-placeholder { /* WebKit browsers */
+    font-size: 0.94rem;
+    letter-spacing: 1px;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    font-size: 0.94rem;
+    letter-spacing: 1px;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    font-size: 0.94rem;
+    letter-spacing: 1px;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+    font-size: 0.94rem;
+    letter-spacing: 1px;
+  }
   .hello{
     position: absolute;
     width: 100%;
@@ -148,7 +164,7 @@ export default {
   .logo{
     width: 4.25rem;
     height: 4.25rem;
-    margin-top: 4.94rem;
+    margin-top: 1.97rem;
   }
   .hello .hello-head{
     text-align: right;
@@ -186,6 +202,7 @@ export default {
     color:#4E4E4E;
     text-indent: 1rem;
     outline: none;
+    border-radius: 0px;
   }
   .hello .input .phone{
     border-bottom: 0.06rem solid #9C9C9C;
@@ -211,7 +228,7 @@ export default {
     width: 100%;
     font-size:0.815rem;
     position: absolute;
-    bottom: 2rem;
+    bottom: 1.28rem;
     text-align: center;
   }
 </style>
