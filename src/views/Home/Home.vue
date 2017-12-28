@@ -108,7 +108,7 @@ export default {
       img_src:[],
       countDownDay1:'',
       countDownDay2:'',
-      updateTime:'',
+      validPeriod:'',
       newsList:[],
       link:'',
       lookCount:'',
@@ -219,7 +219,7 @@ export default {
           'key':'unlistPeriod'
         },
         success:function (res) {
-          self.updateTime = res.data[0].value;
+          self.validPeriod = res.data[0].value;
           self.getRecommendZc();
           self.getRecommendFund();
           self.getCarouselFigure();
@@ -250,7 +250,6 @@ export default {
         success:function (res) {
           self.RcmZj = res.data[0];
           self.countDownDay2 =Lib.M.getCountDownDay(res.data[0].listTime,self.updateTime);
-
         },
         error:function(err){
           console.error(err);
