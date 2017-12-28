@@ -152,43 +152,45 @@ export default {
     }
   },
   mounted(){
-    this.AorF = this.$route.query.AorF;
-    this.info = this.$route.query.info;
-    this.isLose = this.$route.query.isLose;
-    this.getWxSig()
     var self = this;
-    console.log()
-    //微信分享设置
-    wx.onMenuShareTimeline({
-      title: self.info.projectName, 
-      /*link: 'http://finbridge.cn',*/
-      link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
-        + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId), 
-      imgUrl: 'http://finbridge.cn/logo.png', 
-      success: function () { 
-        self.share();
-      },
-      cancel: function () { 
-          // 用户取消分享后执行的回调函数
-      }
-    });
+    self.AorF = self.$route.query.AorF;
+    self.isLose = self.$route.query.isLose;
 
-    wx.onMenuShareAppMessage({
-      title: self.info.projectName, 
-      desc: 'finbridge合作产品', 
-      link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
-        + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId),
-      /*link: 'http://finbridge.cn',*/
-      imgUrl: 'http://finbridge.cn/logo.png', 
-      /*type: '', // 分享类型,music、video或link，不填默认为link*/
-      /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
-      success: function () { 
-        self.share();
-      },
-      cancel: function () { 
-          // 用户取消分享后执行的回调函数
-      }
-    });
+    axios.all([ self.getDetail(), self.getWxSig() ])
+    .then(axios.spread(function (acct, perms) {
+      //微信分享设置
+      wx.onMenuShareTimeline({
+        title: self.info.projectName, 
+        /*link: 'http://finbridge.cn',*/
+        link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
+          + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId), 
+        imgUrl: 'http://finbridge.cn/logo.png', 
+        success: function () { 
+          self.share();
+        },
+        cancel: function () { 
+            // 用户取消分享后执行的回调函数
+        }
+      });
+
+      wx.onMenuShareAppMessage({
+        title: self.info.projectName, 
+        desc: 'finbridge合作产品', 
+        link: 'http://finbridge.cn/#/sqProjectDetail?AorF=' + self.AorF
+          + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId),
+        /*link: 'http://finbridge.cn',*/
+        imgUrl: 'http://finbridge.cn/logo.png', 
+        /*type: '', // 分享类型,music、video或link，不填默认为link*/
+        /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
+        success: function () { 
+          self.share();
+        },
+        cancel: function () { 
+            // 用户取消分享后执行的回调函数
+        }
+      });
+    }));
+    
   },
   methods:{
     shareSuccess(){
@@ -287,9 +289,38 @@ export default {
         }
       });
     },
-    //微信分享设置
-    wxShare(){
-
+    //根据id查询详情
+    getDetail(){
+      var self = this;
+      var url = '', type='',type2='', data={};
+      if(this.$route.query.AorF == 1){
+        type = 'asDetail';
+        type2='asset';
+        url = '/asset/findAssetById';
+        data = {
+          assetId: this.$route.query.proId,
+          hide: 0
+        }
+      }else if(this.$route.query.AorF == 2){
+        type = 'fuDetail';
+        type2='fund';
+        url = '/fund/findFundById';
+        data = {
+          fundId: this.$route.query.proId,
+          hide: 0
+        }
+      } 
+      Lib.M.ajax({
+        url : url,
+        data: data,
+        success:function(res){
+          if(res.code==200){
+            self.info = res.data[type2];
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
     },
     //资金资产类型数字转化为文字
     getLabel(key,type){
