@@ -24,6 +24,10 @@ const LoginRoutes = [
 const HomeRoutes = [
   {
     path: '/',
+    redirect: '/Home'
+  },
+  {
+    path: '/Home',
     component: _import('Home/Home')
   },
   {

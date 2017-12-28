@@ -20,7 +20,7 @@
       <Btn backgroundColor="#D7D7D7" msg="登录" 
        v-show="phoneNum==''" @click.native="clickBtn"></Btn >
       <Btn backgroundColor="#4083FF" msg="登录" v-show="phoneNum!==''" @click.native="clickBtn"></Btn >
-      <router-link to="/" style="color: #4083FF;">已有账户? 立即登录</router-link>
+      <router-link to="/Login" style="color: #4083FF;">已有账户? 立即登录</router-link>
     </div>
   </div>
 </template>
