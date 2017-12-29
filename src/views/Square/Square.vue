@@ -127,7 +127,7 @@ import MainNav from '@/components/mainNav'
 import $ from "jquery"
 
 export default {
-  name: 'Home', 
+  name: 'Square', 
   components: {
     MainNav, ButtonTab, ButtonTabItem
   },
@@ -150,8 +150,14 @@ export default {
 
     }
   },
-  computed:{
-    
+  beforeRouteEnter(to, from, next) {
+    console.log(to)
+    if(from.path =='/sqProjectDetail'){
+      to.meta.keepAlive = true;
+    }else if(to.path =='/Square'){
+      to.meta.keepAlive = false;
+    }
+    next();
   },
   mounted(){
     this.getConfigByParameter();

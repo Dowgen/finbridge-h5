@@ -3,7 +3,7 @@
     <div v-if="$route.query.AorF==1">
     <div class="project-head">
       <div class="head">
-        <span @click="$router.go(-1)" class="back"><img style=" width:0.72rem;height: 1.22rem;display: inline-block;" src="./img/back.png" alt=""></span>
+        <span @click="$router.go(-1)" class="back" v-show="$route.query.fromShare!='y'"><img style=" width:0.72rem;height: 1.22rem;display: inline-block;" src="./img/back.png" alt=""></span>
         <p>项目详情</p>
       </div>
       <div class="con">
@@ -60,47 +60,19 @@
         <p>{{info.companyBackground ||'无'}}</p>
       </div>
     </div>
-    <div class="footer-btn" v-show="key == 1" @click="contactCard">立即合作</div>
-    <div class="footer-btn" v-show="key == 2">查看联系方式</div>
-
-   <div class="alert">
-     <div class="contactCard">
-       <div class="name">
-          <img src="./img/ic_card_person.png" alt="">
-          {{info.contactPerson}}先生
-        </div>
-       <div class="contactWays">
-         <p>
-           <img src="./img/ic_wechat.png" alt="">
-           微信号
-         </p>
-         <p>{{info.contactWechat}}</p>
-       </div>
-       <!-- <div class="contactWays">
-         <p>
-           <img src="./img/ic_card_QQ.png" alt="">
-           QQ号
-         </p>
-         <p>{{info.contactQQ}}</p>
-       </div> -->
-       <div class="contactWays">
-         <p>
-           <img src="./img/ic_phone.png" alt="">
-           手机号码
-         </p>
-         <p @click="callphone(info.contactPhone)">{{info.contactPhone}}</p>
-       </div>
-       <div class="foot-close" @click="closeContactCard">
-         <img src="./img/ic_card_dropout.png" alt="">
-       </div>
-     </div>
+    <div class="footer-btn" v-show="key == 1">
+      <div v-show="$route.query.fromShare == 'y'" class="btn-left">我要发布</div>
+      <div class="btn-right" @click="contactCard">
+        立即合作
+      </div>
     </div>
+    <div class="footer-btn" v-show="key == 2">查看联系方式</div>
     </div>
 
     <div v-if="$route.query.AorF==2">
     <div class="project-head">
       <div class="head">
-        <span @click="$router.go(-1)" class="back"><img style=" width:0.72rem;height: 1.22rem;display: inline-block;" src="./img/back.png" alt=""></span>
+        <span @click="$router.go(-1)" class="back" v-show="$route.query.fromShare!='y'"><img style=" width:0.72rem;height: 1.22rem;display: inline-block;" src="./img/back.png" alt=""></span>
         <p>项目详情</p>
       </div>
       <div class="con">
@@ -127,8 +99,14 @@
         <p>{{getLabel(info.findAssetType,'asset')}}</p>
       </div>
     </div>
-    <div class="footer-btn" v-show="key == 1" @click="contactCard">立即合作</div>
+    <div class="footer-btn" v-show="key == 1">
+      <div v-show="$route.query.fromShare == 'y'" class="btn-left">我要发布</div>
+      <div class="btn-right" @click="contactCard">
+        立即合作
+      </div>
+    </div>
     <div class="footer-btn" v-show="key == 2">查看联系方式</div>
+    </div>
 
     <div class="alert">
       <div class="contactCard">
@@ -162,7 +140,6 @@
         </div>
       </div>
     </div>
-    </div>
   </div>
 </template>
 
@@ -184,19 +161,26 @@ export default {
       hide:1,
     }
   },
+  beforeRouteLeave(to, from, next) {
+
+     // 设置下一个路由的 meta
+    to.meta.keepAlive = true;  // B 跳转到 A 时，让 A 缓存，即不刷新
+    next();
+  },
   mounted(){
+    console.log(this.$route.query.fromShare!='y')
     if(localStorage.userId!= undefined) this.hide = 0
     this.getDetail();
   },
   methods:{
-    /*share(){
+    shareSuccess(){
       this.$vux.toast.show({
         showPositionValue: false,
         text: '分享成功',
         type: 'success',
         position: 'middle'
       })
-    },*/
+    },
     contactCard(){
       var self = this;
       if(localStorage.userId != undefined){
@@ -255,11 +239,11 @@ export default {
             //微信分享设置
             wx.onMenuShareTimeline({
               title: self.info.projectName, 
-              /*link: 'http://finbridge.cn',*/
-              link:  location.href, 
-              imgUrl: 'http://finbridge.cn/logo.png', 
+              /*link: Lib.M.domain,*/
+              link:  location.href+'&fromShare=y', 
+              imgUrl: Lib.M.domain + '/logo.png', 
               success: function () { 
-                self.share();
+                self.shareSuccess();
               },
               cancel: function () { 
                   // 用户取消分享后执行的回调函数
@@ -268,14 +252,14 @@ export default {
 
             wx.onMenuShareAppMessage({
               title: self.info.projectName, 
-              desc: '51资金资产，为您搭建金融桥梁', 
-              link:  location.href,
-              /*link: 'http://finbridge.cn',*/
-              imgUrl: 'http://finbridge.cn/logo.png', 
+              desc: '关注51资金资产公众号，获取更多信息', 
+              link:  location.href+'&fromShare=y',
+              /*link: Lib.M.domain,*/
+              imgUrl: Lib.M.domain + '/logo.png', 
               /*type: '', // 分享类型,music、video或link，不填默认为link*/
               /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
               success: function () { 
-                self.share();
+                self.shareSuccess();
               },
               cancel: function () { 
                   // 用户取消分享后执行的回调函数
@@ -441,6 +425,8 @@ body{
   margin:1.5rem 0;
 }
 .footer-btn{
+  display: flex;
+  flex-direction: row;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -450,6 +436,18 @@ body{
   text-align: center;
   line-height: 3.065rem;
   font-size: 1.065rem;
+}
+.btn-right{
+  flex:3;
+  background: #4083FF ;
+  font-size: 1.125rem;
+  color: #fff;
+}
+.btn-left{
+  flex:2;
+  background: #fff;
+  font-size: 1.125rem;
+  color: #B5B5B5;
 }
 .alert{
   width: 100%;

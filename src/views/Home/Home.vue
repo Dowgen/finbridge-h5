@@ -141,7 +141,11 @@ export default {
             'code':code
           },
           success:function (res) {
-            localStorage.openId = res.data.openId;
+            if(res.code==200){
+              localStorage.openId = res.data.openId;
+            }else{
+              self.$vux.toast.text(res.error, 'middle');
+            }
           },
           error:function(err){
             console.error(err);
@@ -174,7 +178,7 @@ export default {
           grant_type:'password',
           scope:'read write'
         },*/
-        url : 'https://fb.moneyboom.cn/uaa/oauth/token',
+        url : 'http://118.31.189.23:8060/uaa/oauth/token',
         headers: {
           Accept:'application/json',
           Authorization:'Basic anVoZV9jYXNobG9hbjpKdWhlMTIzNjc4IUAj'
