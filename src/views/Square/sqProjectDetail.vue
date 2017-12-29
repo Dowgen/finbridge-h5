@@ -7,20 +7,20 @@
         <p>项目详情</p>
       </div>
       <div class="con">
-        <p class="p1">{{asDetail.productName}}</p>
-        <p class="p2">{{asDetail.fundCostRegionFrom}}-{{asDetail.fundCostRegionTo}}</p>
+        <p class="p1">{{info.productName}}</p>
+        <p class="p2">{{info.fundCostRegionFrom}}-{{info.fundCostRegionTo}}</p>
         <p class="p3">资金成本区间(%）</p>
         <div class="project-des">
           <div class="item">
-            <p>{{asDetail.perAmount}}元</p>
+            <p>{{info.perAmount}}元</p>
             <p>件均额度</p>
           </div>
           <div class="item">
-            <p>{{asDetail.perPeriod}}天</p>
+            <p>{{info.perPeriod}}天</p>
             <p>单笔期限</p>
           </div>
           <div class="item">
-            <p>{{asDetail.dailyPayAmount}}</p>
+            <p>{{info.dailyPayAmount}}</p>
             <p style="border: none;">日放款量</p>
           </div>
         </div>
@@ -36,12 +36,12 @@
         <p>产品特色</p>
       </div>
       <div class="main-item">
-        <p>{{asDetail.projectName}}</p>
-        <p>{{getLabel(asDetail.productType,'asset')}}</p><!---->
-        <p>{{asDetail.totalPayAmount}}</p>
-        <p>{{asDetail.debtRate}}</p>
-        <p>{{asDetail.projectName}}</p>
-        <p>{{asDetail.productFeature}}</p>
+        <p>{{info.projectName}}</p>
+        <p>{{getLabel(info.productType,'asset')}}</p><!---->
+        <p>{{info.totalPayAmount}}</p>
+        <p>{{info.debtRate}}</p>
+        <p>{{info.projectName}}</p>
+        <p>{{info.productFeature}}</p>
       </div>
     </div>
     <div class="project-footer">
@@ -53,11 +53,11 @@
         <p>公司背景</p>
       </div>
       <div class="footer-item">
-        <p>{{asDetail.companyName||'无'}}</p>
-        <p>{{asDetail.operationTime}}</p>
-        <p>{{getLabel(asDetail.fundOrigin,'asset')}}</p>
-        <p>{{asDetail.companyAddress}}</p>
-        <p>{{asDetail.companyBackground ||'无'}}</p>
+        <p>{{info.companyName||'无'}}</p>
+        <p>{{info.operationTime}}</p>
+        <p>{{getLabel(info.fundOrigin,'asset')}}</p>
+        <p>{{info.companyAddress}}</p>
+        <p>{{info.companyBackground ||'无'}}</p>
       </div>
     </div>
     <div class="footer-btn" v-show="key == 1" @click="contactCard">立即合作</div>
@@ -67,28 +67,28 @@
      <div class="contactCard">
        <div class="name">
           <img src="./img/ic_card_person.png" alt="">
-          {{asDetail.contactPerson}}先生
+          {{info.contactPerson}}先生
         </div>
        <div class="contactWays">
          <p>
            <img src="./img/ic_wechat.png" alt="">
            微信号
          </p>
-         <p>{{asDetail.contactWechat}}</p>
+         <p>{{info.contactWechat}}</p>
        </div>
-       <div class="contactWays">
+       <!-- <div class="contactWays">
          <p>
            <img src="./img/ic_card_QQ.png" alt="">
            QQ号
          </p>
-         <p>{{asDetail.contactQQ}}</p>
-       </div>
+         <p>{{info.contactQQ}}</p>
+       </div> -->
        <div class="contactWays">
          <p>
            <img src="./img/ic_phone.png" alt="">
            手机号码
          </p>
-         <p @click="callphone(asDetail.contactPhone)">{{asDetail.contactPhone}}</p>
+         <p @click="callphone(info.contactPhone)">{{info.contactPhone}}</p>
        </div>
        <div class="foot-close" @click="closeContactCard">
          <img src="./img/ic_card_dropout.png" alt="">
@@ -104,15 +104,15 @@
         <p>项目详情</p>
       </div>
       <div class="con">
-        <p class="p1">{{fuDetail.projectName}}</p>
-        <p class="p2">{{fuDetail.fundCostRegionFrom}}-{{fuDetail.fundCostRegionTo}}</p>
+        <p class="p1">{{info.projectName}}</p>
+        <p class="p2">{{info.fundCostRegionFrom}}-{{info.fundCostRegionTo}}</p>
         <p class="p3">资金成本区间(%）</p>
         <div class="project-des">
           <div class="item">
-            <p>资金类型: {{getLabel(fuDetail.fundType,'fund')}}</p>
+            <p>资金类型: {{getLabel(info.fundType,'fund')}}</p>
           </div>
           <div class="item">
-            <p>资金规模: {{fuDetail.fundAnmount}}</p>
+            <p>资金规模: {{info.fundAnmount}}</p>
           </div>
         </div>
       </div>
@@ -123,8 +123,8 @@
         <p>青睐资产</p>
       </div>
       <div class="main-item">
-        <p>{{fuDetail.companyName}}</p>
-        <p>{{getLabel(fuDetail.findAssetType,'asset')}}</p>
+        <p>{{info.companyName}}</p>
+        <p>{{getLabel(info.findAssetType,'asset')}}</p>
       </div>
     </div>
     <div class="footer-btn" v-show="key == 1" @click="contactCard">立即合作</div>
@@ -134,28 +134,28 @@
       <div class="contactCard">
         <div class="name">
           <img src="./img/ic_card_person.png" alt="">
-          {{fuDetail.contactPerson}}先生
+          {{info.contactPerson}}先生
         </div>
         <div class="contactWays">
           <p>
             <img src="./img/ic_wechat.png" alt="">
             微信号
           </p>
-          <p>{{fuDetail.contactWechat}}</p>
+          <p>{{info.contactWechat}}</p>
         </div>
-        <div class="contactWays">
+        <!-- <div class="contactWays">
           <p>
             <img src="./img/ic_card_QQ.png" alt="">
             QQ号
           </p>
-          <p>{{fuDetail.contactQQ}}</p>
-        </div>
+          <p>{{info.contactQQ}}</p>
+        </div> -->
         <div class="contactWays">
           <p>
             <img src="./img/ic_phone.png" alt="">
             手机号码
           </p>
-          <p @click="callphone(fuDetail.contactPhone)">{{fuDetail.contactPhone}}</p>
+          <p @click="callphone(info.contactPhone)" style="color:#4083ff">{{info.contactPhone}}</p>
         </div>
         <div class="foot-close" @click="closeContactCard">
           <img src="./img/ic_card_dropout.png" alt="">
@@ -180,8 +180,7 @@ export default {
   data () {
     return {
       key:1,
-      fuDetail:{},
-      asDetail:{},
+      info:{},
       hide:1,
     }
   },
@@ -221,7 +220,6 @@ export default {
         f = JSON.parse(localStorage.fundTypeList);
       else
         f = JSON.parse(localStorage.assetTypeList);
-      console.log(typeof key)
       if(typeof key == 'string'){
         let array = [];
         let keyArray = key.split(',');
@@ -292,9 +290,8 @@ export default {
     //根据id查询详情
     getDetail(){
       var self = this;
-      var url = '', type='',type2='', data={};
+      var url = '',type2='', data={};
       if(this.$route.query.AorF == 1){
-        type = 'asDetail';
         type2='asset';
         url = '/asset/findAssetById';
         data = {
@@ -302,7 +299,6 @@ export default {
           hide: self.hide
         }
       }else if(this.$route.query.AorF == 2){
-        type = 'fuDetail';
         type2='fund';
         url = '/fund/findFundById';
         data = {
@@ -315,7 +311,7 @@ export default {
         data: data,
         success:function(res){
           if(res.code==200){
-            self[type] = res.data[type2];
+            self.info = res.data[type2];
             self.getWxSig();
           }else{
             self.$vux.toast.text(res.error, 'middle');

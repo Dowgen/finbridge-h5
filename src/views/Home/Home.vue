@@ -122,15 +122,7 @@ export default {
   },
   mounted(){
     let self = this;
-    axios.all([self.getToken()])
-    .then(axios.spread(function (acct, perms) {
-      self.getOpenId()
-      self.getFundList();
-      self.getConfigByParameter();
-      self.getArticle();
-    }));
-    
-    
+    self.getToken();
   },
   methods: {
     linkTo(picLink){
@@ -142,19 +134,21 @@ export default {
 
     //拿到code传给后台获取用户的微信openId
     getOpenId(){
-      let code = Lib.M.GetQueryString('code');
-      Lib.M.ajax({
-        url:'/wechat/getOpenId',
-        data:{
-          'code':code
-        },
-        success:function (res) {
-          localStorage.openId = res.data.openId;
-        },
-        error:function(err){
-          console.error(err);
-        }
-      });
+      let code = Lib.M.GetQueryString('code')
+      if(code!=null){
+        Lib.M.ajax({
+          url:'/wechat/getOpenId',
+          data:{
+            'code':code
+          },
+          success:function (res) {
+            localStorage.openId = res.data.openId;
+          },
+          error:function(err){
+            console.error(err);
+          }
+        });
+      }
     },
     //资金资产类型数字转化为文字
     getLabel(key,type){
@@ -194,6 +188,10 @@ export default {
         },
         success:function(data){
           localStorage.token = data.access_token;
+          self.getOpenId()
+          self.getFundList();
+          self.getConfigByParameter();
+          self.getArticle();
         },
         error:function(err){
           console.error(err);

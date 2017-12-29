@@ -76,7 +76,11 @@ export default {
 
         }else{
           /* 先验证短信，然后根据登录方式决定是注册还是更改密码 */
-          this.regist();
+          if(localStorage.openId!=null){
+            this.regist();
+          }else{
+            this.$vux.toast.text("请关注'51资金资产'公众号,通过公众号注册", 'middle')
+          }
         }
       }
     },

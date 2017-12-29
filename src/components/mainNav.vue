@@ -50,10 +50,16 @@ export default {
       }else{
         /*this.$vux.confirm.show({
         content: '挂牌或查看个人信息需要登录,是否确认登录?',
-          onConfirm () {*/
+          onConfirm () {
             self.$router.push('Login')
-         /* }
+          }
         })*/
+
+        if(localStorage.openId!=null){
+          self.$router.push('Login')
+        }else{
+          this.$vux.toast.text("查看完整信息,请关注'51资金资产'公众号", 'middle')
+        }
       }
     }
   }

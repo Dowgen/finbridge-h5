@@ -63,12 +63,12 @@
       <div class="footer-item">
         <p>手机号码</p>
         <p>微信号</p>
-        <p>QQ号</p>
+        <!-- <p>QQ号</p> -->
       </div>
       <div class="footer-item">
         <p>{{info.contactPhone}}</p>
         <p>{{info.contactWechat}}</p>
-        <p>{{info.contactQQ}}</p>
+        <!-- <p>{{info.contactQQ}}</p> -->
       </div>
     </div>
     <div class="footer-btn" style="display: flex;flex-direction: row">
@@ -115,12 +115,12 @@
       <div class="footer-item">
         <p>手机号码</p>
         <p>微信号</p>
-        <p>QQ号</p>
+        <!-- <p>QQ号</p> -->
       </div>
       <div class="footer-item">
         <p>{{info.contactPhone}}</p>
         <p>{{info.contactWechat}}</p>
-        <p>{{info.contactQQ}}</p>
+        <!-- <p>{{info.contactQQ}}</p> -->
       </div>
     </div>
     <div class="footer-btn" style="display: flex;flex-direction: row">
@@ -193,6 +193,7 @@ export default {
         success:function(res){
           if(res.code==200){
             self.$vux.toast.text('下架成功!', 'middle');
+            self.$router.replace('MyProject');
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
@@ -208,6 +209,7 @@ export default {
         success:function(res){
           if(res.code==200){
             self.$vux.toast.text('删除成功!', 'middle');
+            self.$router.replace('MyProject');
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
@@ -287,9 +289,8 @@ export default {
     //根据id查询详情
     getDetail(){
       var self = this;
-      var url = '', type='',type2='', data={};
+      var url = '', type2='', data={};
       if(this.$route.query.AorF == 1){
-        type = 'asDetail';
         type2='asset';
         url = '/asset/findAssetById';
         data = {
@@ -297,7 +298,6 @@ export default {
           hide: 0
         }
       }else if(this.$route.query.AorF == 2){
-        type = 'fuDetail';
         type2='fund';
         url = '/fund/findFundById';
         data = {
