@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="des-item" style="border-bottom: 0.06rem solid #ECECEC;">
-        <div class="des-item-l">运营时间</div>
+        <div class="des-item-l">运营时间(月)</div>
         <div class="des-item-r">
           <input v-model="operationTime" type="number" placeholder="请详细填写*年*个月">
         </div>

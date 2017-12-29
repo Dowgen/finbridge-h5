@@ -2,12 +2,15 @@ import * as pickerList from './pickerList'; /* popup-picker所需的列表数据
 import { ToastPlugin,LoadingPlugin } from 'vux'
 import Vue from 'vue';
 import axios from 'axios';
+import $ from 'jquery';
+
 Vue.use(ToastPlugin); 
 Vue.use(LoadingPlugin); 
 
 
 //定义一个空vue对象，以备后用
 var vm = new Vue({});
+
 //全局域名设置
 var domain = 'https://fb.moneyboom.cn';
 
@@ -36,7 +39,8 @@ axios.interceptors.response.use(
         return Promise.reject(error)   // 返回接口返回的错误信息
     }
 );
-        
+//input字符限制
+$("[type='number']").attr('onKeypress',"return (/[\d]/.test(String.fromCharCode(event.keyCode)))");      
 
 /* 进页面的时候就判断一下设备是安卓还是ios */
 (function(){
@@ -85,6 +89,7 @@ function getToken(){
     });
 }
 
+//库
 var Rxports = {
 	/* wb add start */
     /* 域名 */

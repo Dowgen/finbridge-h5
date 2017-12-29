@@ -255,7 +255,7 @@ export default {
               link: Lib.M.domain + '/#/sqProjectDetail?AorF=' + self.AorF
                 + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId) 
                 +'&fromShare=y', 
-              imgUrl: Lib.M.domain + '/logo.png', 
+              imgUrl: 'https://finbridge.cn/logo.png', 
               success: function () { 
                 if(self.isLose=='0') self.share();
               },
@@ -270,7 +270,7 @@ export default {
               link: Lib.M.domain + '/#/sqProjectDetail?AorF=' + self.AorF
                 + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId)
                 +'&fromShare=y',
-              imgUrl: Lib.M.domain + '/logo.png', 
+              imgUrl: 'https://finbridge.cn/logo.png', 
               /*type: '', // 分享类型,music、video或link，不填默认为link*/
               /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
               success: function () { 

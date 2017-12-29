@@ -254,9 +254,8 @@ export default {
             //微信分享设置
             wx.onMenuShareTimeline({
               title: self.info.projectName, 
-              /*link: Lib.M.domain,*/
               link:  location.href+'&fromShare=y', 
-              imgUrl: Lib.M.domain + '/logo.png', 
+              imgUrl: 'https://finbridge.cn/logo.png', 
               success: function () { 
                 self.shareSuccess();
               },
@@ -269,8 +268,7 @@ export default {
               title: self.info.projectName, 
               desc: '关注51资金资产公众号，获取更多信息', 
               link:  location.href+'&fromShare=y',
-              /*link: Lib.M.domain,*/
-              imgUrl: Lib.M.domain + '/logo.png', 
+              imgUrl: 'https://finbridge.cn/logo.png', 
               /*type: '', // 分享类型,music、video或link，不填默认为link*/
               /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
               success: function () { 

@@ -52,7 +52,7 @@
       </div>
       <div class="des-item">
         <div class="des-item-l">产品期限(天)</div>
-        <div class="des-item-r"><input v-model="perPeriod" type="text" maxlength="10" placeholder="请填写贷款期限"></div>
+        <div class="des-item-r"><input v-model="perPeriod" type="number" maxlength="10" placeholder="请填写贷款期限"></div>
       </div>
     </div>
     <div class="assets-des2">
