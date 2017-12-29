@@ -61,7 +61,7 @@
       </div>
     </div>
     <div class="footer-btn" v-show="key == 1">
-      <div v-show="$route.query.fromShare == 'y'" class="btn-left">我要发布</div>
+      <div v-show="$route.query.fromShare == 'y'" class="btn-left" @click="jumpTo">我要发布</div>
       <div class="btn-right" @click="contactCard">
         立即合作
       </div>
@@ -100,7 +100,7 @@
       </div>
     </div>
     <div class="footer-btn" v-show="key == 1">
-      <div v-show="$route.query.fromShare == 'y'" class="btn-left">我要发布</div>
+      <div v-show="$route.query.fromShare == 'y'" class="btn-left" @click="jumpTo">我要发布</div>
       <div class="btn-right" @click="contactCard">
         立即合作
       </div>
@@ -173,6 +173,21 @@ export default {
     this.getDetail();
   },
   methods:{
+    jumpTo(){
+      Lib.M.ajax({
+        url : '/config/getConfigByParameter',
+        data: {
+          key: 'wechatShareReturnLink'
+        },
+        success:function(res){
+          if(res.code==200){
+            window.location.href = res.data[0].value;
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
     shareSuccess(){
       this.$vux.toast.show({
         showPositionValue: false,
@@ -438,13 +453,13 @@ body{
   font-size: 1.065rem;
 }
 .btn-right{
-  flex:3;
+  flex:30;
   background: #4083FF ;
   font-size: 1.125rem;
   color: #fff;
 }
 .btn-left{
-  flex:2;
+  flex:16;
   background: #fff;
   font-size: 1.125rem;
   color: #B5B5B5;

@@ -8,6 +8,8 @@ Vue.use(LoadingPlugin);
 
 //定义一个空vue对象，以备后用
 var vm = new Vue({});
+//全局域名设置
+var domain = 'https://fb.moneyboom.cn';
 
 // axios response 拦截器
 axios.interceptors.response.use(
@@ -58,7 +60,7 @@ function getToken(){
     });
     axios({
         method: 'post',
-        url: 'http://118.31.189.23:8060/uaa/oauth/token',
+        url: domain + '/uaa/oauth/token',
         params: {
             username:'juhe',
             password:'Juhe2017!@#',
@@ -86,7 +88,7 @@ function getToken(){
 var Rxports = {
 	/* wb add start */
     /* 域名 */
-    domain: 'https://finbridge.cn',
+    domain: domain,
     /**    列表    **/
     eduList: pickerList.eduList,
     mariList: pickerList.mariList,
@@ -140,7 +142,7 @@ var Rxports = {
             },
 			// `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
   			// 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
-			baseURL:'http://118.31.189.23:8060/finbridge-base',
+			baseURL: domain + '/finbridge-base',
 			timeout: opts.timeout || 0,
 			responseType: opts.dataType || 'json'
 		}).then(function(res){

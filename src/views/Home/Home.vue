@@ -178,7 +178,7 @@ export default {
           grant_type:'password',
           scope:'read write'
         },*/
-        url : 'http://118.31.189.23:8060/uaa/oauth/token',
+        url : Lib.M.domain + '/uaa/oauth/token',
         headers: {
           Accept:'application/json',
           Authorization:'Basic anVoZV9jYXNobG9hbjpKdWhlMTIzNjc4IUAj'
