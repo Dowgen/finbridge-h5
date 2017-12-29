@@ -237,8 +237,10 @@ export default {
       Lib.M.ajax({
         url : '/asset/getRecommendAsset',
         success:function(res){
-          self.RcmZc = res.data[0];
-          self.countDownDay1 = Lib.M.getCountDownDay(res.data[0].listTime,self.validPeriod);
+          var index = parseInt(Math.random(0,res.data.length));
+
+          self.RcmZc = res.data[index];
+          self.countDownDay1 = Lib.M.getCountDownDay(res.data[index].listTime,self.validPeriod);
         },
         error:function(err){
           console.error(err);
@@ -250,8 +252,13 @@ export default {
       Lib.M.ajax({
         url:'/fund/getRecommendFund',
         success:function (res) {
-          self.RcmZj = res.data[0];
-          self.countDownDay2 =Lib.M.getCountDownDay(res.data[0].listTime,self.validPeriod);
+          var index = parseInt(Math.random(0,res.data.length));
+          console.log('index'+index);
+          console.log('length'+res.data.length);
+          console.log('随机数'+Math.random(0, res.data.length));
+
+          self.RcmZj = res.data[index];
+          self.countDownDay2 =Lib.M.getCountDownDay(res.data[index].listTime,self.validPeriod);
         },
         error:function(err){
           console.error(err);
