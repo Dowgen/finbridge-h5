@@ -41,7 +41,10 @@ const HomeRoutes = [
 const squareRoutes = [
   {
     path: '/Square',
-    component: _import('Square/Square')
+    component: _import('Square/Square'),
+    meta: {
+        keepAlive: true // 需要被缓存
+    }
   },
   {
     path: '/sqProjectDetail',

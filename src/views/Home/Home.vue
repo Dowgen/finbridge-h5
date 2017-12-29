@@ -128,7 +128,6 @@ export default {
     linkTo(picLink){
       if(picLink !== '' && picLink !== null){
         window.location.href = picLink;
-        console.log('picLink'+picLink);
       }
     },
 
@@ -164,7 +163,7 @@ export default {
     getToken(){
       var self = this;
       Lib.M.ajax({
-        /*url : 'http://192.168.2.169:8060/uaa/oauth/token',
+        /*url : 'https://fb.moneyboom.cn/uaa/oauth/token',
         headers: {
           Accept:'application/json',
           Authorization:'Basic Y2xpZW50OnNlY3JldA=='
@@ -175,7 +174,7 @@ export default {
           grant_type:'password',
           scope:'read write'
         },*/
-        url : 'http://118.31.189.23:8060/uaa/oauth/token',
+        url : 'https://fb.moneyboom.cn/uaa/oauth/token',
         headers: {
           Accept:'application/json',
           Authorization:'Basic anVoZV9jYXNobG9hbjpKdWhlMTIzNjc4IUAj'
@@ -235,7 +234,7 @@ export default {
       Lib.M.ajax({
         url : '/asset/getRecommendAsset',
         success:function(res){
-          var index = parseInt(Math.random(0,res.data.length));
+          var index = parseInt(Math.random()*res.data.length);
 
           self.RcmZc = res.data[index];
           self.countDownDay1 = Lib.M.getCountDownDay(res.data[index].listTime,self.validPeriod);
@@ -250,10 +249,7 @@ export default {
       Lib.M.ajax({
         url:'/fund/getRecommendFund',
         success:function (res) {
-          var index = parseInt(Math.random(0,res.data.length));
-          console.log('index'+index);
-          console.log('length'+res.data.length);
-          console.log('随机数'+Math.random(0, res.data.length));
+          var index = parseInt(Math.random()*res.data.length);
 
           self.RcmZj = res.data[index];
           self.countDownDay2 =Lib.M.getCountDownDay(res.data[index].listTime,self.validPeriod);
@@ -269,8 +265,6 @@ export default {
         url:'/info/getCarouselFigure',
         success:function (res) {
           self.img_src=res.data;
-          console.log(3333);
-          console.log(res);
         },
         error:function(err){
           console.error(err);

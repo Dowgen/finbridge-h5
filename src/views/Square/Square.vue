@@ -28,7 +28,7 @@
             </label>
           </div>
           <div class="btn">
-            <span class="confirm" @click="confirm()">确定</span>
+            <span class="confirm" @click="confirm(1,1,2)">确定</span>
             <span class="cancel" @click="cancel()">取消</span>
           </div>
         </div>
@@ -80,7 +80,7 @@
             </label>
           </div>
           <div class="btn">
-            <span class="confirm" @click="confirm">确定</span>
+            <span class="confirm" @click="confirm(1,1,1)">确定</span>
             <span class="cancel" @click="cancel">取消</span>
           </div>
         </div>
@@ -164,13 +164,12 @@ export default {
     chooseType(){
       $('.type').css('display','block');
     },
-    confirm(){
+    confirm(chooseType,sortType,AorF){
       $('.type').css('display','none');
-      this.sort(1,1,2);
+      this.sort(chooseType,sortType,AorF);
     },
     cancel(){
       $('.type').css('display','none');
-      this.sort(1,1,2);
     },
     jumpToDetai(AorF,proId){
       this.$router.push({'path':'/sqProjectDetail',query:{
@@ -256,12 +255,12 @@ export default {
 <style lang="less" scoped>
   .content{
     width: 100%;
-    height: 100%;
+    min-height: 40rem;
     background: #EFEFF4;
     position: absolute;
     left: 0;
     top: 0;
-    padding-bottom: 10rem;
+    padding-bottom: 5rem;
     .active{
       color: #4083ff;
     }

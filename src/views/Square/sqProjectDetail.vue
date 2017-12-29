@@ -268,7 +268,7 @@ export default {
 
             wx.onMenuShareAppMessage({
               title: self.info.projectName, 
-              desc: 'finbridge合作产品', 
+              desc: '51资金资产，为您搭建金融桥梁', 
               link:  location.href,
               /*link: 'http://finbridge.cn',*/
               imgUrl: 'http://finbridge.cn/logo.png', 
