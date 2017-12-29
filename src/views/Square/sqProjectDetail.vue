@@ -444,7 +444,6 @@ body{
   bottom: 0;
   width: 100%;
   height: 3.065rem;
-  background: #4083FF ;
   color: #fff;
   text-align: center;
   line-height: 3.065rem;
@@ -457,8 +456,9 @@ body{
   color: #fff;
 }
 .btn-left{
+  background: url('./img/button_bg.png');
+  background-size: 100% 100%;
   flex:16;
-  background: #fff;
   font-size: 1.125rem;
   color: #B5B5B5;
 }

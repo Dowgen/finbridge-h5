@@ -21,7 +21,7 @@
       </button-tab>
       <div class="using" v-show="!loseEfficacy">
       <div class="fund-item-con">
-        <div @click="show1=true" class="item_add"><img src="./img/item_add.png"></div>
+        <!-- <div @click="show1=true" class="item_add"><img src="./img/item_add.png"></div> -->
         <!-- <popover placement="bottom">
           <div class="item_add"><img src="./img/item_add.png"></div>
           <div slot="content" class="popover-demo-content">
@@ -142,6 +142,11 @@
           查看全部({{assetListLose.length}})
         </div>
       </div>
+      </div>
+
+      <div class="item-add">
+        <img v-show="show1==false" src="./img/add_button_nor.png" @click="show1=true">
+        <img v-show="show1==true" src="./img/add_button_press.png">
       </div>
     </div>
     <main-nav which="MyProject"></main-nav>
@@ -297,6 +302,18 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .item-add{
+    position:fixed;
+    width: 5rem;
+    height: 4.815rem;
+    z-index:10;
+    bottom:0; left:0;right:0;
+    margin:auto;
+    img{
+      width: 5rem;
+      height: 4.815rem;
+    }
+  }
   .content1{
     box-sizing:border-box;
     padding-top: 1.5rem;

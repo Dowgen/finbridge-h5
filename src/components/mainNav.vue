@@ -8,7 +8,7 @@
       <img v-show="which!=='square'" src="./img/square.png">
       <img v-show="which=='square'" src="./img/square_color.png">
     </router-link>
-    <div @click="to('Project')">
+    <div @click="to('Project')" >
       <img v-show="which!=='MyProject'" src="./img/release.png">
       <img v-show="which=='MyProject'" src="./img/release_color.png">
     </div>
@@ -79,7 +79,7 @@ export default {
   justify-content: space-around;
   align-items: center;
   /*border-top: solid .3rem #f2f2f2;*/
-  z-index: 999;
+  z-index: 9;
 }
 .nav img{
   width:1.47rem;

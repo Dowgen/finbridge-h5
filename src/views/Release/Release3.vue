@@ -223,7 +223,7 @@ export default {
   border:none;
   outline: none;
   text-align: right;
-  width: 100%;
+  width: 90%;
   height: 100%;
 }
 .next{
