@@ -217,6 +217,7 @@ export default {
                 // 用户取消分享后执行的回调函数
             }
           });
+          next();
         }else{
           vm.$vux.toast.text(res.error, 'middle');
         }
