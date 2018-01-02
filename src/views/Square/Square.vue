@@ -3,8 +3,8 @@
     <div class="content">
       <div class="square-head">
         <button-tab class="button-tab">
-          <button-tab-item selected @on-item-click="zj=true">资金</button-tab-item>
-          <button-tab-item @on-item-click="zj=false" @click="sort(1,1,1)">资产</button-tab-item>
+          <button-tab-item selected @on-item-click="zj=true">资金方</button-tab-item>
+          <button-tab-item @on-item-click="zj=false" @click="sort(1,1,1)">资产方</button-tab-item>
         </button-tab>
       </div>
       <div class="zj" v-show="zj">
@@ -154,7 +154,7 @@ export default {
     console.log(to)
     if(from.path =='/sqProjectDetail'){
       to.meta.keepAlive = true;
-    }else if(to.path =='/Square'){
+    }else /*if(to.path =='/Square')*/{
       to.meta.keepAlive = false;
     }
     next();
