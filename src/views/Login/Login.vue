@@ -12,7 +12,8 @@
     </div>
     <Btn msg="登录" backgroundColor="#4083FF" @click.native="clickBtn"></Btn>
     <div class="footer">
-      <p @click="jumpTo" style="color: #4083FF;">亲，还没注册? 立即前往注册</p>
+      <!-- <p @click="jumpTo" style="color: #4083FF;">亲，还没注册? 立即前往注册</p> -->
+      <router-link to="/Regist" style="color: #4083FF;">亲，还没注册? 立即前往注册</router-link>>
     </div>
 
 
