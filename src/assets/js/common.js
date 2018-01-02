@@ -31,7 +31,6 @@ axios.interceptors.response.use(
                 case 401:
                     // 返回 401 重新获取token并刷新当前页面
                     getToken();
-                    window.location.reload();
                     break;
                 default: vm.$vux.toast.text('请求异常！请重试','middle')   
             }
@@ -42,7 +41,7 @@ axios.interceptors.response.use(
 //input字符限制
 $("[type='number']").attr('onKeypress',"return (/[\d]/.test(String.fromCharCode(event.keyCode)))");      
 
-/* 进页面的时候就判断一下设备是安卓还是ios */
+/* 进页面的时候就判断一下设备是安卓还是ios 
 (function(){
     let u = navigator.userAgent, app = navigator.appVersion;
     //android终端或者uc浏览器
@@ -55,7 +54,7 @@ $("[type='number']").attr('onKeypress',"return (/[\d]/.test(String.fromCharCode(
     else if(isiOS) device=4
     else device=5
     localStorage.deviceType = device
-})()
+})()*/
 
 /** 获取token  **/
 function getToken(){
@@ -83,6 +82,7 @@ function getToken(){
         }else{
             vm.$vux.toast.text('获取token异常！请重试')
         }
+        window.location.reload();
     }).catch(function (error){
         vm.$vux.loading.hide();
         vm.$vux.toast.text('获取token异常！请重试')
