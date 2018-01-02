@@ -37,7 +37,7 @@
       </div>
       <div class="main-item">
         <p>{{info.projectName}}</p>
-        <p v-if="localStorage.fundTypeList">{{getLabel(info.productType,'asset')}}</p><!---->
+        <p v-if="fundTypeList">{{getLabel(info.productType,'asset')}}</p><!---->
         <p>{{info.totalPayAmount}}千万</p>
         <p>{{info.debtRate}}%</p>
         <p>{{info.projectName}}</p>
@@ -55,7 +55,7 @@
       <div class="footer-item">
         <p>{{info.companyName||'无'}}</p>
         <p>{{info.operationTime}}</p>
-        <p v-if="localStorage.fundTypeList">{{getLabel(info.fundOrigin,'asset')}}</p>
+        <p v-if="fundTypeList">{{getLabel(info.fundOrigin,'asset')}}</p>
         <p>{{info.companyAddress}}</p>
         <p>{{info.companyBackground ||'无'}}</p>
       </div>
@@ -81,7 +81,7 @@
         <p class="p3">资金成本区间(%）</p>
         <div class="project-des">
           <div class="item">
-            <p v-if="localStorage.fundTypeList">资金类型: {{getLabel(info.fundType,'fund')}}</p>
+            <p v-if="fundTypeList">资金类型: {{getLabel(info.fundType,'fund')}}</p>
           </div>
           <div class="item">
             <p>资金规模: {{info.fundAnmount}}千万</p>
@@ -96,7 +96,7 @@
       </div>
       <div class="main-item">
         <p>{{info.companyName}}</p>
-        <p v-if="localStorage.fundTypeList">{{getLabel(info.findAssetType,'asset')}}</p>
+        <p v-if="fundTypeList">{{getLabel(info.findAssetType,'asset')}}</p>
       </div>
     </div>
     <div class="footer-btn" v-show="key == 1">
@@ -159,6 +159,8 @@ export default {
       key:1,
       info:{},
       hide:1,
+      fundTypeList:[],
+      assetTypeList:[],
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -168,8 +170,8 @@ export default {
     next();
   },
   mounted(){
-    console.log(this.$route.query.fromShare!='y')
     if(localStorage.userId!= undefined) this.hide = 0
+    this.getFundList();
     this.getDetail();
   },
   methods:{
@@ -212,13 +214,28 @@ export default {
     closeContactCard(){
       $('.alert').css('display','none')
     },
+    /* 获取资金资产类型列表 */
+    getFundList(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/info/findAssetAndFundConfig',
+        success:function(res){
+          if(res.code==200){
+            self.fundTypeList=res.data.fund;
+            self.assetTypeList = res.data.asset
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
     //资金资产类型数字转化为文字
     getLabel(key,type){
       var f;
       if(type=='fund')
-        f = JSON.parse(localStorage.fundTypeList);
+        f = this.fundTypeList;
       else
-        f = JSON.parse(localStorage.assetTypeList);
+        f = this.assetTypeList;
       if(typeof key == 'string'){
         let array = [];
         let keyArray = key.split(',');
