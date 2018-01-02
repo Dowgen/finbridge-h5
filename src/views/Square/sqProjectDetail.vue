@@ -61,7 +61,7 @@
       </div>
     </div>
     <div class="footer-btn" v-show="key == 1">
-      <div v-show="$route.query.fromShare == 'y'" class="btn-left" @click="jumpTo">我要发布</div>
+      <div v-show="$route.query.fromShare == 'y'" class="btn-left" @click="jumpTo" style="color:#4083ff;">我要发布</div>
       <div class="btn-right" @click="contactCard">
         立即合作
       </div>
@@ -100,7 +100,7 @@
       </div>
     </div>
     <div class="footer-btn" v-show="key == 1">
-      <div v-show="$route.query.fromShare == 'y'" class="btn-left" @click="jumpTo">我要发布</div>
+      <div v-show="$route.query.fromShare == 'y'" class="btn-left" @click="jumpTo" style="color:#4083ff;">我要发布</div>
       <div class="btn-right" @click="contactCard">
         立即合作
       </div>
@@ -163,12 +163,12 @@ export default {
       assetTypeList:[],
     }
   },
-  beforeRouteLeave(to, from, next) {
+  /*beforeRouteLeave(to, from, next) {
 
      // 设置下一个路由的 meta
     to.meta.keepAlive = true;  // B 跳转到 A 时，让 A 缓存，即不刷新
     next();
-  },
+  },*/
   mounted(){
     if(localStorage.userId!= undefined) this.hide = 0
     this.getFundList();

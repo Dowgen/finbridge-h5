@@ -32,7 +32,7 @@ axios.interceptors.response.use(
                     // 返回 401 重新获取token并刷新当前页面
                     getToken();
                     break;
-                default: vm.$vux.toast.text('请求异常！请重试','middle')   
+                default: vm.$vux.toast.text('服务暂不可用，请稍后再试','middle')   
             }
         }
         return Promise.reject(error)   // 返回接口返回的错误信息
