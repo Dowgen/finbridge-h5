@@ -24,7 +24,7 @@ const LoginRoutes = [
 const HomeRoutes = [
   {
     path: '/',
-    redirect: '/Home'
+    redirect: '/Regist'
   },
   {
     path: '/Home',
