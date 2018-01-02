@@ -37,7 +37,7 @@
       </div>
       <div class="main-item">
         <p>{{info.projectName}}</p>
-        <p>{{getLabel(info.productType,'asset')}}</p><!---->
+        <p v-if="localStorage.fundTypeList">{{getLabel(info.productType,'asset')}}</p><!---->
         <p>{{info.totalPayAmount}}千万</p>
         <p>{{info.debtRate}}%</p>
         <p>{{info.projectName}}</p>
@@ -55,7 +55,7 @@
       <div class="footer-item">
         <p>{{info.companyName||'无'}}</p>
         <p>{{info.operationTime}}</p>
-        <p>{{getLabel(info.fundOrigin,'asset')}}</p>
+        <p v-if="localStorage.fundTypeList">{{getLabel(info.fundOrigin,'asset')}}</p>
         <p>{{info.companyAddress}}</p>
         <p>{{info.companyBackground ||'无'}}</p>
       </div>
@@ -81,7 +81,7 @@
         <p class="p3">资金成本区间(%）</p>
         <div class="project-des">
           <div class="item">
-            <p>资金类型: {{getLabel(info.fundType,'fund')}}</p>
+            <p v-if="localStorage.fundTypeList">资金类型: {{getLabel(info.fundType,'fund')}}</p>
           </div>
           <div class="item">
             <p>资金规模: {{info.fundAnmount}}千万</p>
@@ -96,7 +96,7 @@
       </div>
       <div class="main-item">
         <p>{{info.companyName}}</p>
-        <p>{{getLabel(info.findAssetType,'asset')}}</p>
+        <p v-if="localStorage.fundTypeList">{{getLabel(info.findAssetType,'asset')}}</p>
       </div>
     </div>
     <div class="footer-btn" v-show="key == 1">
