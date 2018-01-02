@@ -27,7 +27,7 @@
              <span>资金成本区间</span>
              <span>总放款量/千万</span>
            </p>
-           <span class="middleLine"></span>
+           <!-- <span class="middleLine"></span> -->
          </div>
          <div @click="jumpToDetai(2,RcmZj.fundId)" class="zj con-item" style="margin-left: 0.1575rem;">
            <h4>{{RcmZj.projectName}}</h4>
@@ -43,7 +43,7 @@
              <span>资金成本区间</span>
              <span>总放款量/千万</span>
            </p>
-           <span class="middleLine"></span>
+           <!-- <span class="middleLine"></span> -->
          </div>
        </div>
       </div>
@@ -354,7 +354,7 @@ export default {
         flex-direction: row;
         .con-item{
           width:0;
-          /*height: 7rem;*/
+          min-height: 7rem;
           flex-grow: 1;
           border: 0.06rem solid #F2F2F2;
           text-align: left;
