@@ -15,6 +15,9 @@ const LoginRoutes = [
     path: '/Regist',
     component: _import('Login/Regist')
   },{
+    path: '/RegistForWX',
+    redirect: '/Regist'
+  },{
     path: '/ResetPsd',
     component: _import('Login/ResetPsd')
   }
@@ -24,7 +27,7 @@ const LoginRoutes = [
 const HomeRoutes = [
   {
     path: '/',
-    redirect: '/Regist'
+    redirect: '/Home'
   },
   {
     path: '/Home',
