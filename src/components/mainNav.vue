@@ -74,6 +74,7 @@ export default {
   bottom: 0;
   height: 3.8rem;
   width: 100%;
+  max-width: 640px;
   background: white;
   display: flex;
   justify-content: space-around;
