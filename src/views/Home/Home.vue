@@ -191,7 +191,7 @@ export default {
         },
         success:function(data){
           localStorage.token = data.access_token;
-          self.getOpenId()
+          /*self.getOpenId()*/
           self.getFundList();
           self.getConfigByParameter();
           self.getArticle();

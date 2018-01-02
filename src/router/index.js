@@ -95,6 +95,7 @@ const MyInfoRoutes = [
 ]
 
 export default new Router({
+  mode: 'history',
   routes: 
     LoginRoutes.concat(
       HomeRoutes,
