@@ -244,7 +244,6 @@ export default {
         success:function(res){
           if(res.code==200){
             self.wechatShareReturnLink = res.data[0].value;
-            window.location.href = res.data[0].value;
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
