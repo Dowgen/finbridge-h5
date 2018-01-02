@@ -21,11 +21,11 @@
            </p>
            <p>
              <span>{{RcmZc.fundCostRegionFrom}}-{{RcmZc.fundCostRegionTo}}%</span>
-             <span>{{RcmZc.totalPayAmount}}千万</span>
+             <span>{{RcmZc.totalPayAmount}}</span>
            </p>
            <p>
              <span>资金成本区间</span>
-             <span>总放款量</span>
+             <span>总放款量/千万</span>
            </p>
            <span class="middleLine"></span>
          </div>
@@ -37,11 +37,11 @@
            </p>
            <p>
              <span>{{RcmZj.fundCostRegionFrom}}-{{RcmZj.fundCostRegionTo}}%</span>
-             <span>{{RcmZj.fundAnmount}}千万</span>
+             <span>{{RcmZj.fundAnmount}}</span>
            </p>
            <p>
              <span>资金成本区间</span>
-             <span>总放款量</span>
+             <span>总放款量/千万</span>
            </p>
            <span class="middleLine"></span>
          </div>
