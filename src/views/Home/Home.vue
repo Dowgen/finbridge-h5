@@ -21,7 +21,7 @@
            </p>
            <p>
              <span>{{RcmZc.fundCostRegionFrom}}-{{RcmZc.fundCostRegionTo}}%</span>
-             <span>{{RcmZc.totalPayAmount}}</span>
+             <span>{{RcmZc.totalPayAmount}}千万</span>
            </p>
            <p>
              <span>资金成本区间</span>
@@ -37,7 +37,7 @@
            </p>
            <p>
              <span>{{RcmZj.fundCostRegionFrom}}-{{RcmZj.fundCostRegionTo}}%</span>
-             <span>{{RcmZj.fundAnmount}}</span>
+             <span>{{RcmZj.fundAnmount}}千万</span>
            </p>
            <p>
              <span>资金成本区间</span>
@@ -353,7 +353,8 @@ export default {
         display: flex;
         flex-direction: row;
         .con-item{
-          height: 7rem;
+          width:0;
+          /*height: 7rem;*/
           flex-grow: 1;
           border: 0.06rem solid #F2F2F2;
           text-align: left;

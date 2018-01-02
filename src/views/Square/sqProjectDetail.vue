@@ -20,7 +20,7 @@
             <p>单笔期限</p>
           </div>
           <div class="item">
-            <p>{{info.dailyPayAmount}}</p>
+            <p>{{info.dailyPayAmount}}百万</p>
             <p style="border: none;">日放款量</p>
           </div>
         </div>
@@ -38,8 +38,8 @@
       <div class="main-item">
         <p>{{info.projectName}}</p>
         <p>{{getLabel(info.productType,'asset')}}</p><!---->
-        <p>{{info.totalPayAmount}}</p>
-        <p>{{info.debtRate}}</p>
+        <p>{{info.totalPayAmount}}千万</p>
+        <p>{{info.debtRate}}%</p>
         <p>{{info.projectName}}</p>
         <p>{{info.productFeature}}</p>
       </div>
@@ -84,7 +84,7 @@
             <p>资金类型: {{getLabel(info.fundType,'fund')}}</p>
           </div>
           <div class="item">
-            <p>资金规模: {{info.fundAnmount}}</p>
+            <p>资金规模: {{info.fundAnmount}}千万</p>
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@
       <div class="main-item">
         <p>{{info.projectName}}</p>
         <p>{{info.productType}}</p>
-        <p>{{info.totalPayAmount}}</p>
+        <p>{{info.totalPayAmount}}千万</p>
         <p>{{info.debtRate}}%</p>
         <p>{{info.productName || '无'}}</p>
         <p style="line-height: 24px">{{info.productFeature}}</p>
