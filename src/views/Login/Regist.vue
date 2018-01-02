@@ -49,7 +49,32 @@ export default {
       countDownText:'发送验证码',
     }
   },
+  mounted(){
+    self.getOpenId();
+  },
   methods: {
+    //拿到code传给后台获取用户的微信openId
+    getOpenId(){
+      let code = Lib.M.GetQueryString('code')
+      if(code!=null){
+        Lib.M.ajax({
+          url:'/wechat/getOpenId',
+          data:{
+            'code':code
+          },
+          success:function (res) {
+            if(res.code==200){
+              localStorage.openId = res.data.openId;
+            }else{
+              self.$vux.toast.text(res.error, 'middle');
+            }
+          },
+          error:function(err){
+            console.error(err);
+          }
+        });
+      }
+    },
     /* 开始倒计时 */
     begin1(){
       if(Lib.M.isPhoneWrong(this.phoneNum)){
