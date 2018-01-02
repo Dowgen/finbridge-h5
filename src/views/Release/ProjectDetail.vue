@@ -153,7 +153,6 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    var self = this;
     //微信分享设置
     Lib.M.ajax({
       url : '/wechat/wxSig',
@@ -172,7 +171,7 @@ export default {
           //微信分享设置
           wx.onMenuShareTimeline({
             title: '51资金资产', 
-            link:  self.wechatShareReturnLink, 
+            link:  sessionStorage.wechatShareReturnLink, 
             imgUrl: 'https://finbridge.cn/logo.png', 
             success: function () { 
               vm.$vux.toast.show({
@@ -190,7 +189,7 @@ export default {
           wx.onMenuShareAppMessage({
             title: '51资金资产', 
             desc: '关注51资金资产公众号，获取更多信息', 
-            link:  self.wechatShareReturnLink,
+            link:  sessionStorage.wechatShareReturnLink,
             imgUrl: 'https://finbridge.cn/logo.png', 
             /*type: '', // 分享类型,music、video或link，不填默认为link*/
             /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
@@ -228,7 +227,7 @@ export default {
         },
         success:function(res){
           if(res.code==200){
-            self.wechatShareReturnLink = res.data[0].value;
+            sessionStorage.wechatShareReturnLink = res.data[0].value;
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
