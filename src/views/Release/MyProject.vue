@@ -307,7 +307,7 @@ export default {
     width: 5rem;
     height: 4.815rem;
     z-index:10;
-    bottom:0; left:0;right:0;
+    bottom:2.7rem; right:0;
     margin:auto;
     img{
       width: 5rem;

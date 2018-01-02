@@ -171,7 +171,7 @@ export default {
           //微信分享设置
           wx.onMenuShareTimeline({
             title: '51资金资产', 
-            link:  sessionStorage.wechatShareReturnLink, 
+            link:  location.href, 
             imgUrl: 'https://finbridge.cn/logo.png', 
             success: function () { 
               vm.$vux.toast.show({
@@ -189,7 +189,7 @@ export default {
           wx.onMenuShareAppMessage({
             title: '51资金资产', 
             desc: '关注51资金资产公众号，获取更多信息', 
-            link:  sessionStorage.wechatShareReturnLink,
+            link:  location.href,
             imgUrl: 'https://finbridge.cn/logo.png', 
             /*type: '', // 分享类型,music、video或link，不填默认为link*/
             /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
@@ -216,10 +216,10 @@ export default {
     this.AorF = this.$route.query.AorF;
     this.isLose = this.$route.query.isLose;
     this.getDetail();
-    this.getReturnLink();
+    /*this.getReturnLink();*/
   },
   methods:{
-    getReturnLink(){
+    /*getReturnLink(){
       Lib.M.ajax({
         url : '/config/getConfigByParameter',
         data: {
@@ -227,13 +227,13 @@ export default {
         },
         success:function(res){
           if(res.code==200){
-            sessionStorage.wechatShareReturnLink = res.data[0].value;
+            self.wechatShareReturnLink = res.data[0].value;
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
         }
       });
-    },
+    },*/
     shareSuccess(){
       this.$vux.toast.show({
         showPositionValue: false,
