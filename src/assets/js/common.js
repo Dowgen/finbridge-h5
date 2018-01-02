@@ -31,7 +31,6 @@ axios.interceptors.response.use(
                 case 401:
                     // 返回 401 重新获取token并刷新当前页面
                     getToken();
-                    window.location.reload();
                     break;
                 default: vm.$vux.toast.text('请求异常！请重试','middle')   
             }
@@ -83,6 +82,7 @@ function getToken(){
         }else{
             vm.$vux.toast.text('获取token异常！请重试')
         }
+        window.location.reload();
     }).catch(function (error){
         vm.$vux.loading.hide();
         vm.$vux.toast.text('获取token异常！请重试')
