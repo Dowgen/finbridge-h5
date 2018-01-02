@@ -131,7 +131,7 @@ export default {
       }
     },
 
-    /*//拿到code传给后台获取用户的微信openId
+    //拿到code传给后台获取用户的微信openId
     getOpenId(){
       let code = Lib.M.GetQueryString('code')
       if(code!=null){
@@ -152,7 +152,7 @@ export default {
           }
         });
       }
-    },*/
+    },
     //资金资产类型数字转化为文字
     getLabel(key,type){
       var f;
@@ -191,7 +191,7 @@ export default {
         },
         success:function(data){
           localStorage.token = data.access_token;
-          /*self.getOpenId()*/
+          self.getOpenId()
           self.getFundList();
           self.getConfigByParameter();
           self.getArticle();

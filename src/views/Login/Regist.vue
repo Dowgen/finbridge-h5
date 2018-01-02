@@ -50,7 +50,7 @@ export default {
     }
   },
   mounted(){
-    self.getOpenId();
+    this.getOpenId();
   },
   methods: {
     //拿到code传给后台获取用户的微信openId
