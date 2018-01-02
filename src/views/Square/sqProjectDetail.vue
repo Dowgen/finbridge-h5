@@ -229,13 +229,13 @@ export default {
     if(localStorage.userId!= undefined) this.hide = 0
     this.getFundList();
     this.getDetail();
-    this.getReturnLink();
+    /*this.getReturnLink();*/
   },
   methods:{
     jumpTo(){
-      window.location.href = sessionStorage.wechatShareReturnLink;
+      window.location.href = 'https://finbridge.cn';
     },
-    getReturnLink(){
+    /*getReturnLink(){
       Lib.M.ajax({
         url : '/config/getConfigByParameter',
         data: {
@@ -249,7 +249,7 @@ export default {
           }
         }
       });
-    },
+    },*/
     shareSuccess(){
       this.$vux.toast.show({
         showPositionValue: false,
@@ -266,7 +266,7 @@ export default {
         this.$vux.confirm.show({
         content: '查看联系方式需要登录,是否确认登录?',
           onConfirm () {
-            window.location.href = sessionStorage.wechatShareReturnLink;
+            self.$router.push('Login')
           }
         })
       }
