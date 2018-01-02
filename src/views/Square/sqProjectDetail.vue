@@ -161,10 +161,11 @@ export default {
       hide:1,
       fundTypeList:[],
       assetTypeList:[],
+      wechatShareReturnLink:''
     }
   },
   beforeRouteLeave(to, from, next) {
-
+    var self = this;
     //微信分享设置
     Lib.M.ajax({
       url : '/wechat/wxSig',
@@ -183,7 +184,7 @@ export default {
           //微信分享设置
           wx.onMenuShareTimeline({
             title: '51资金资产', 
-            link:  location.href, 
+            link:  self.wechatShareReturnLink, 
             imgUrl: 'https://finbridge.cn/logo.png', 
             success: function () { 
               vm.$vux.toast.show({
@@ -201,7 +202,7 @@ export default {
           wx.onMenuShareAppMessage({
             title: '51资金资产', 
             desc: '关注51资金资产公众号，获取更多信息', 
-            link:  location.href,
+            link:  self.wechatShareReturnLink,
             imgUrl: 'https://finbridge.cn/logo.png', 
             /*type: '', // 分享类型,music、video或link，不填默认为link*/
             /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
@@ -228,9 +229,13 @@ export default {
     if(localStorage.userId!= undefined) this.hide = 0
     this.getFundList();
     this.getDetail();
+    this.getReturnLink();
   },
   methods:{
     jumpTo(){
+      window.location.href = this.wechatShareReturnLink;
+    },
+    getReturnLink(){
       Lib.M.ajax({
         url : '/config/getConfigByParameter',
         data: {
@@ -238,6 +243,7 @@ export default {
         },
         success:function(res){
           if(res.code==200){
+            self.wechatShareReturnLink = res.data[0].value;
             window.location.href = res.data[0].value;
           }else{
             self.$vux.toast.text(res.error, 'middle');
