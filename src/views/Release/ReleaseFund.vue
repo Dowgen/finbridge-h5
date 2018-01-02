@@ -15,7 +15,7 @@
     <div class="assets-des1">
       <div class="des-item">
         <div class="des-item-l">项目名称</div>
-        <div class="des-item-r"><input v-model="projectName" type="text" placeholder="填写格式“**** 第*号”"></div>
+        <div class="des-item-r"><input v-model="projectName" type="text" placeholder="填写格式“****寻资产”" maxlength="9"></div>
       </div>
       <div class="des-item" style="position:relative">
         <div class="des-item-l">资金类型</div>

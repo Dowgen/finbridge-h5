@@ -260,6 +260,8 @@ export default {
         success:function(res){
           if(res.code==200){
             let wxSig = res.data;
+            let params = '&fromShare=y';
+            if(self.$route.query.fromShare=='y') params = '';
             wx.config({
               debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
               appId: wxSig.appid, // 必填，公众号的唯一标识
@@ -271,7 +273,7 @@ export default {
             //微信分享设置
             wx.onMenuShareTimeline({
               title: self.info.projectName, 
-              link:  location.href+'&fromShare=y', 
+              link:  location.href + params, 
               imgUrl: 'https://finbridge.cn/logo.png', 
               success: function () { 
                 self.shareSuccess();
@@ -284,7 +286,7 @@ export default {
             wx.onMenuShareAppMessage({
               title: self.info.projectName, 
               desc: '关注51资金资产公众号，获取更多信息', 
-              link:  location.href+'&fromShare=y',
+              link:  location.href + params,
               imgUrl: 'https://finbridge.cn/logo.png', 
               /*type: '', // 分享类型,music、video或link，不填默认为link*/
               /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
