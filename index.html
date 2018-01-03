@@ -15,6 +15,18 @@
     <div style="display:none"><img src="https://finbridge.cn/logo.png" ></div>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script type="text/javascript">
+      function clearNoNum(obj){
+        //先把非数字的都替换掉，除了数字和.
+        obj.value = obj.value.replace(/[^\d.]/g,"");
+        //必须保证第一个为数字而不是.
+        obj.value = obj.value.replace(/^\./g,"");
+        //保证只有出现一个.而没有多个.
+        obj.value = obj.value.replace(/\.{2,}/g,".");
+        //保证.只出现一次，而不能出现两次以上
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+      }
+    </script>
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
   </body>
 </html>
