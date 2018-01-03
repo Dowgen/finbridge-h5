@@ -73,13 +73,10 @@
           <input v-model="companyBackground" type="text" maxlength="24" placeholder="请填写24个字以内描述">
         </div>
       </div>-->
-
-      <div class="des-item" style="height: 2.4rem;line-height: 2.4rem;">
-        <div class="des-item-l">公司背景(选填)</div>
-      </div>
-      <div class="des-item" style="height: 1.85rem;line-height: 1.85rem;">
-        <div class="des-item-r">
-          <input v-model="companyBackground" type="text" maxlength="24" placeholder="请填写24个字以内描述">
+      <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;">
+        <div class="des-item-l" style="height: 2.6rem;">公司背景(选填)</div>
+        <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;">
+          <input v-model="companyBackground" type="text" placeholder="请填写24个字以内描述" maxlength="24">
         </div>
       </div>
     </div>
