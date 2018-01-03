@@ -46,8 +46,14 @@
         <div class="des-item-l">件均额度(选填)</div>
         <div class="des-item-r"><input v-model="perAmount" type="number" placeholder="元"></div>
       </div>
-      <div class="des-item">
+     <!-- <div class="des-item">
         <div class="des-item-l">产品特色(选填)</div>
+        <div class="des-item-r"><input v-model="productFeature" type="text" maxlength="20" placeholder="请填写10-20个字以内"></div>
+      </div>-->
+      <div class="des-item" style="height: 2.4rem;line-height: 2.4rem;">
+        <div class="des-item-l">产品特色(选填)</div>
+      </div>
+      <div class="des-item" style="height: 1.85rem;line-height: 1.85rem;">
         <div class="des-item-r"><input v-model="productFeature" type="text" maxlength="20" placeholder="请填写10-20个字以内"></div>
       </div>
       <div class="des-item">

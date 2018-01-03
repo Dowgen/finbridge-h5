@@ -69,6 +69,18 @@
           <input v-model="findAssetType" type="checkbox" :value="item.key" />{{item.label}} 
         </label>
       </div>
+      <div class="des-item" style="height: 2.4rem;line-height: 2.4rem;border-top: 0.06rem solid #E6E6E6;">
+        <div class="des-item-l">资产要求</div>
+      </div>
+      <div class="des-item" style="height: 1.85rem;line-height: 1.85rem;">
+        <div class="des-item-r"><input v-model="assetRequirements" type="text" placeholder="请填写50个字以内描述" maxlength="50"></div>
+      </div>
+      <div class="des-item" style="height: 2.4rem;line-height: 2.4rem;border-top: 0.06rem solid #E6E6E6;">
+        <div class="des-item-l">备注</div>
+      </div>
+      <div class="des-item" style="height: 1.85rem;line-height: 1.85rem;">
+        <div class="des-item-r"><input v-model="assetRequirements" type="text" placeholder="请填写30个字以内描述" maxlength="30"></div>
+      </div>
     </div>
     <div class="next" @click="nextWay">下一步</div>
 
@@ -99,7 +111,8 @@ export default {
       fundCostRegionTo:'',
       findAssetType:[],
       showPdType: false,
-      showLikeType: false
+      showLikeType: false,
+      assetRequirements:''
     }
   },
   watch: {
@@ -158,7 +171,7 @@ export default {
   }
 .assets{
   width: 100%;
-  height: 41rem;
+  height: 52rem;
   background: #EFEFF4;
   margin: 0 auto;
   padding-bottom:1.065rem;

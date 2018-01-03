@@ -397,6 +397,7 @@ export default {
               color:#F84F60;
               position: absolute;
               font-weight: bolder;
+              font-family:PingFangSC-Medium;
             }
             span:nth-of-type(1){
               left:0rem;
