@@ -40,6 +40,7 @@ export default {
   },
   data () {
     return {
+      code:'', //微信会在url里带code
       phoneNum:'',
       password:'',
       verifyCode:'',
@@ -51,12 +52,12 @@ export default {
   },
   mounted(){
     this.getOpenId();
+    this.code = Lib.M.GetQueryString('code')
   },
   methods: {
     //拿到code传给后台获取用户的微信openId
     getOpenId(){
-      let code = Lib.M.GetQueryString('code')
-      if(code!=null){
+      if(this.code!=null){
         Lib.M.ajax({
           url:'/wechat/getOpenId',
           data:{
@@ -102,7 +103,11 @@ export default {
         }else{
           /* 先验证短信，然后根据登录方式决定是注册还是更改密码 */
           if(localStorage.openId!=null && localStorage!='null'){
-            this.regist();
+            if(this.code!=null){
+              this.regist();
+            }else{
+              this.$vux.toast.text("请关注51资金资产公众号注册使用本系统", 'middle')
+            }
           }else{
             this.$vux.toast.text("请关注'51资金资产'公众号,通过公众号注册", 'middle')
           }
