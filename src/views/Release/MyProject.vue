@@ -324,7 +324,7 @@ export default {
     .btn{
       width:11.28rem;
       height: 2.815rem;
-      border-radius:22px;
+      border-radius:1.405rem;
       font-size: 1.065rem;
       display:flex;
       align-items:center;

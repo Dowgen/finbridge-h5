@@ -67,8 +67,17 @@
           <input v-model="AddressDetail" type="text" placeholder="请填写具体街道门牌号">
         </div>
       </div> -->
-      <div class="des-item">
+     <!-- <div class="des-item">
         <div class="des-item-l">公司背景(选填)</div>
+        <div class="des-item-r">
+          <input v-model="companyBackground" type="text" maxlength="24" placeholder="请填写24个字以内描述">
+        </div>
+      </div>-->
+
+      <div class="des-item" style="height: 2.4rem;line-height: 2.4rem;">
+        <div class="des-item-l">公司背景(选填)</div>
+      </div>
+      <div class="des-item" style="height: 1.85rem;line-height: 1.85rem;">
         <div class="des-item-r">
           <input v-model="companyBackground" type="text" maxlength="24" placeholder="请填写24个字以内描述">
         </div>

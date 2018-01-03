@@ -78,14 +78,14 @@ export default {
     top: 0;
     .header{
       width:100%;
-      height:4rem;
+      height:2.75rem;
       background:linear-gradient(to right, #4083FF, #38BCFD);
       margin: 0 auto;
       font-size: 1.065rem;
       color: #fff;
       text-align: center;
       position: relative;
-      line-height: 4rem;
+      line-height: 2.75rem;
       font-weight: 600;
       span{
         position: absolute;
