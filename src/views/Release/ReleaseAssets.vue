@@ -45,7 +45,7 @@
       <div class="des-item">
         <div class="des-item-l">件均额度(选填)</div>
         <div class="des-item-r">
-          <input v-model.number="perAmount" type="number" placeholder="">
+          <input v-model.number="perAmount" onkeyup="clearNoNum(this)" type="number" placeholder="">
           <span class="unit">元</span></div>
       </div>
      <!-- <div class="des-item">
@@ -68,28 +68,28 @@
       <div class="des-item">
         <div class="des-item-l">资金成本区间</div>
         <div class="des-item-r range">
-          <input v-model.number="fundCostRegionFrom" type="number" min="0" max="100"> &nbsp;-&nbsp; <input v-model.number="fundCostRegionTo" type="number" min="0" max="100">
+          <input v-model.number="fundCostRegionFrom" onkeyup="clearNoNum(this)" type="number" min="0" max="100"> &nbsp;-&nbsp; <input v-model.number="fundCostRegionTo" onkeyup="clearNoNum(this)" type="number" min="0" max="100">
           %
         </div>
       </div>
       <div class="des-item">
         <div class="des-item-l">日放款规模</div>
         <div class="des-item-r">
-          <input v-model.number="dailyPayAmount" type="number" maxlength="20" placeholder="">
+          <input v-model.number="dailyPayAmount" onkeyup="clearNoNum(this)" type="number" maxlength="20" placeholder="">
           <span class="unit">百万</span>
         </div>
       </div>
       <div class="des-item">
         <div class="des-item-l">总放款规模</div>
         <div class="des-item-r">
-          <input v-model.number="totalPayAmount" type="number" maxlength="20" placeholder="">
+          <input v-model.number="totalPayAmount" onkeyup="clearNoNum(this)" type="number" maxlength="20" placeholder="">
           <span class="unit">千万</span>
         </div>
       </div>
       <div class="des-item">
         <div class="des-item-l">坏账率(选填)</div>
         <div class="des-item-r">
-          <input v-model.number="debtRate" type="number" maxlength="5" placeholder="">
+          <input v-model.number="debtRate" onkeyup="clearNoNum(this)" type="number" maxlength="5" placeholder="">
           <span class="unit">%</span>
         </div>
       </div>

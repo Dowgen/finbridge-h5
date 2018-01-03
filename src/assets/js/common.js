@@ -85,14 +85,26 @@ function getToken(){
 //库
 var Rxports = {
 	/* wb add start */
+
     /* 域名 */
     domain: domain,
+
     /**    列表    **/
     eduList: pickerList.eduList,
     mariList: pickerList.mariList,
     cityList: pickerList.cityList,
-    /*workTypeList: pickerList.workTypeList,*/
-    /*adviceList: pickerList.adviceList,*/
+
+    /* input type=number */
+    clearNoNum:function(obj){
+        //先把非数字的都替换掉，除了数字和.
+        obj.value = obj.value.replace(/[^\d.]/g,"");
+        //必须保证第一个为数字而不是.
+        obj.value = obj.value.replace(/^\./g,"");
+        //保证只有出现一个.而没有多个.
+        obj.value = obj.value.replace(/\.{2,}/g,".");
+        //保证.只出现一次，而不能出现两次以上
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+    },
 
     /** 输入起始日期和有效天数，返回剩余天数 */
     getCountDownDay:function (beginDate,efDay){

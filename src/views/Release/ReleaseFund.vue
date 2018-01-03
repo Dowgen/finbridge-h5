@@ -40,13 +40,13 @@
       </div>
       <div class="des-item">
         <div class="des-item-l">资金规模</div>
-        <div class="des-item-r"><input v-model="fundAnmount" type="number" placeholder=""><span class="unit">千万</span></div>
+        <div class="des-item-r"><input v-model="fundAnmount" onkeyup="clearNoNum(this)"  type="number" placeholder=""><span class="unit">千万</span></div>
       </div>
       <div class="des-item">
         <div class="des-item-l">资金成本区间</div>
         <div class="des-item-r range">
-          <input v-model="fundCostRegionFrom" type="number" min="1" max="100"> &nbsp;-&nbsp; 
-          <input v-model="fundCostRegionTo" type="number" min="1" max="100">
+          <input v-model.number="fundCostRegionFrom" type="number" min="1" max="100"> &nbsp;-&nbsp; 
+          <input v-model.number="fundCostRegionTo" type="number" min="1" max="100">
           %
         </div>
       </div>
