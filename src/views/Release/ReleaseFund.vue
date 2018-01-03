@@ -139,6 +139,8 @@ export default {
           fundCostRegionFrom: parseInt(this.fundCostRegionFrom),
           fundCostRegionTo: parseInt(this.fundCostRegionTo),
           findAssetType:this.findAssetType.join(','),
+          findAssetRequire: this.assetRequirements,
+          remark:this.remarks
         }
         localStorage.addFundParams = JSON.stringify(addFundParams);
         this.$router.push({ path: 'Release2', query: { AorF: 'fund' }})
