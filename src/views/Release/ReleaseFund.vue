@@ -121,6 +121,9 @@ export default {
   mounted(){
     this.assetTypeList = JSON.parse(localStorage.assetTypeList);
     this.fundTypeList = JSON.parse(localStorage.fundTypeList);
+    $("[type='number']").attr('onKeypress','return event.charCode >= 48 && event.charCode <= 57');      
+    $("[type='number']").attr('oninput',"this.value = this.value.replace(/\D+/g, '')");      
+    $("[type='number']").attr('onblur','this.value = this.value.replace(/\D+/g, "")');      
   },
   methods:{
     nextWay(){
