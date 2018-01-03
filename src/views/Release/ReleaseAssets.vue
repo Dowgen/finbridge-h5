@@ -50,12 +50,11 @@
         <div class="des-item-l">产品特色(选填)</div>
         <div class="des-item-r"><input v-model="productFeature" type="text" maxlength="20" placeholder="请填写10-20个字以内"></div>
       </div>-->
-      <div class="des-item" style="height: 2.4rem;line-height: 2.4rem;">
-        <div class="des-item-l">产品特色(选填)</div>
+      <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;border-top: 0.06rem solid #E6E6E6;">
+        <div class="des-item-l" style="height: 2.6rem;">产品特色(选填)</div>
+        <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;"><input v-model="productFeature" type="text" placeholder="请填写10-20个字以内" maxlength="20"></div>
       </div>
-      <div class="des-item" style="height: 1.85rem;line-height: 1.85rem;">
-        <div class="des-item-r"><input v-model="productFeature" type="text" maxlength="20" placeholder="请填写10-20个字以内"></div>
-      </div>
+
       <div class="des-item">
         <div class="des-item-l">产品期限(天)</div>
         <div class="des-item-r"><input v-model="perPeriod" type="number" maxlength="10" placeholder="请填写贷款期限"></div>
