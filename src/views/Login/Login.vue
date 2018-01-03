@@ -96,7 +96,7 @@ export default {
       }
     },
     jumpTo(){
-      window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx31dde80f95ebb3c8&redirect_uri=https%3A%2F%2Ffinbridge.cn%2FRegist&response_type=code&scope=snsapi_base&state=JuheFinbridge#wechat_redirect'
+      window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx31dde80f95ebb3c8&redirect_uri=https%3A%2F%2Ffinbridge.cn%2F%23%2FRegist&response_type=code&scope=snsapi_base&state=JuheFinbridge#wechat_redirect'
     },
   }
 }
