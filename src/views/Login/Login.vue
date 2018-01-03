@@ -12,8 +12,8 @@
     </div>
     <Btn msg="登录" backgroundColor="#4083FF" @click.native="clickBtn"></Btn>
     <div class="footer">
-      <!-- <p @click="jumpTo" style="color: #4083FF;">亲，还没注册? 立即前往注册</p> -->
-      <router-link to="/Regist" style="color: #4083FF;">亲，还没注册? 立即前往注册</router-link>>
+      <p @click="jumpTo" style="color: #4083FF;">亲，还没注册? 立即前往注册</p>
+      <!-- <router-link to="/Regist" style="color: #4083FF;">亲，还没注册? 立即前往注册</router-link>> -->
     </div>
 
 
@@ -96,19 +96,7 @@ export default {
       }
     },
     jumpTo(){
-      Lib.M.ajax({
-        url : '/config/getConfigByParameter',
-        data: {
-          key: 'wechatShareReturnLink'
-        },
-        success:function(res){
-          if(res.code==200){
-            window.location.href = res.data[0].value;
-          }else{
-            self.$vux.toast.text(res.error, 'middle');
-          }
-        }
-      });
+      window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx31dde80f95ebb3c8&redirect_uri=https%3A%2F%2Ffinbridge.cn%2FRegist&response_type=code&scope=snsapi_base&state=JuheFinbridge#wechat_redirect'
     },
   }
 }
