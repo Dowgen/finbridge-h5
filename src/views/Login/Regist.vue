@@ -40,7 +40,7 @@ export default {
   },
   data () {
     return {
-      code:'', //微信会在url里带code
+      code:null, //微信会在url里带code
       phoneNum:'',
       password:'',
       verifyCode:'',

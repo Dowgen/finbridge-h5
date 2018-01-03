@@ -40,6 +40,9 @@ axios.interceptors.response.use(
 );
 //input字符限制
 $("[type='number']").attr('onKeypress',"return (/[\d]/.test(String.fromCharCode(event.keyCode)))");      
+$("[type='number']").attr('oninput',"this.value = this.value.replace(/\D+/g, '')");      
+$("[type='number']").attr('onblur','this.value = this.value.replace(/\D+/g, "")');      
+$("[type='number']").attr('onpropertychange','if(!/\D+/.test(this.value)){return;};this.value=this.value.replace(/\D+/g, "")');      
 
 /* 进页面的时候就判断一下设备是安卓还是ios 
 (function(){
