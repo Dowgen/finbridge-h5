@@ -12,7 +12,8 @@
     </div>
     <Btn msg="登录" backgroundColor="#4083FF" @click.native="clickBtn"></Btn>
     <div class="footer">
-      <router-link to="/Regist" style="color: #4083FF;">亲，还没注册? 立即前往注册</router-link>
+      <!-- <p @click="jumpTo" style="color: #4083FF;">亲，还没注册? 立即前往注册</p> -->
+      <router-link to="/Regist" style="color: #4083FF;">亲，还没注册? 立即前往注册</router-link>>
     </div>
 
 
@@ -34,7 +35,8 @@ export default {
     return {
       msg: '欢迎再次回来',
       phoneNum:'',
-      password:''
+      password:'',
+      wechatShareReturnLink:''
     }
   },
   mounted(){
@@ -92,7 +94,22 @@ export default {
       }else{
         return true
       }
-    }
+    },
+    jumpTo(){
+      Lib.M.ajax({
+        url : '/config/getConfigByParameter',
+        data: {
+          key: 'wechatShareReturnLink'
+        },
+        success:function(res){
+          if(res.code==200){
+            window.location.href = res.data[0].value;
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
   }
 }
 </script>

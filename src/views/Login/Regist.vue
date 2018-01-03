@@ -49,7 +49,32 @@ export default {
       countDownText:'发送验证码',
     }
   },
+  mounted(){
+    this.getOpenId();
+  },
   methods: {
+    //拿到code传给后台获取用户的微信openId
+    getOpenId(){
+      let code = Lib.M.GetQueryString('code')
+      if(code!=null){
+        Lib.M.ajax({
+          url:'/wechat/getOpenId',
+          data:{
+            'code':code
+          },
+          success:function (res) {
+            if(res.code==200){
+              localStorage.openId = res.data.openId;
+            }else{
+              self.$vux.toast.text(res.error, 'middle');
+            }
+          },
+          error:function(err){
+            console.error(err);
+          }
+        });
+      }
+    },
     /* 开始倒计时 */
     begin1(){
       if(Lib.M.isPhoneWrong(this.phoneNum)){
@@ -76,7 +101,7 @@ export default {
 
         }else{
           /* 先验证短信，然后根据登录方式决定是注册还是更改密码 */
-          if(localStorage.openId!=null){
+          if(localStorage.openId!=null && localStorage!='null'){
             this.regist();
           }else{
             this.$vux.toast.text("请关注'51资金资产'公众号,通过公众号注册", 'middle')

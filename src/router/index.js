@@ -15,6 +15,9 @@ const LoginRoutes = [
     path: '/Regist',
     component: _import('Login/Regist')
   },{
+    path: '/RegistForWX',
+    redirect: '/Regist'
+  },{
     path: '/ResetPsd',
     component: _import('Login/ResetPsd')
   }
@@ -95,6 +98,7 @@ const MyInfoRoutes = [
 ]
 
 export default new Router({
+  mode: 'history',
   routes: 
     LoginRoutes.concat(
       HomeRoutes,

@@ -21,7 +21,7 @@ axios.interceptors.response.use(
     },
     error => {
         if (error.response) {
-            vm.$vux.loading.hide();
+            /*vm.$vux.loading.hide();*/
             switch (error.response.status) {
                 case 303:
                     // 返回 303
@@ -58,9 +58,6 @@ $("[type='number']").attr('onKeypress',"return (/[\d]/.test(String.fromCharCode(
 
 /** 获取token  **/
 function getToken(){
-    vm.$vux.loading.show({
-        text: '请稍等'
-    });
     axios({
         method: 'post',
         url: domain + '/uaa/oauth/token',
@@ -76,7 +73,6 @@ function getToken(){
         },
         responseType:  'json'
     }).then(function(res){
-        vm.$vux.loading.hide();
         if(res.status == 200 ){
             localStorage.token = res.data.access_token;
         }else{
@@ -84,7 +80,6 @@ function getToken(){
         }
         window.location.reload();
     }).catch(function (error){
-        vm.$vux.loading.hide();
         vm.$vux.toast.text('获取token异常！请重试')
     });
 }
@@ -124,9 +119,9 @@ var Rxports = {
 	  * @param return
 	*/
 	ajax:function (opt){
-		vm.$vux.loading.show({
+		/*vm.$vux.loading.show({
             text: '请稍等'
-        });
+        });*/
 		var opts = opt || {};
 
 		if (!opts.url) {
@@ -151,7 +146,7 @@ var Rxports = {
 			timeout: opts.timeout || 0,
 			responseType: opts.dataType || 'json'
 		}).then(function(res){
-            vm.$vux.loading.hide();
+            /*vm.$vux.loading.hide();*/
 			if(res.status == 200 ){
 
 				if(opts.success){
@@ -170,7 +165,7 @@ var Rxports = {
 
 
         }).catch(function (error){
-            vm.$vux.loading.hide();
+            /*vm.$vux.loading.hide();*/
             if (opts.error) {
                 opts.error(error);
             }else{
