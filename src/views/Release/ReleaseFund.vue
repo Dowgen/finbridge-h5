@@ -70,11 +70,11 @@
         </label>
       </div>
       <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;border-top: 0.06rem solid #E6E6E6;">
-        <div class="des-item-l" style="height: 2.6rem;">资产要求</div>
+        <div class="des-item-l" style="height: 2.6rem;">资产要求(选填)</div>
         <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;"><input v-model="assetRequirements" type="text" placeholder="请填写50个字以内描述" maxlength="50"></div>
       </div>
       <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;border-top: 0.06rem solid #E6E6E6;">
-        <div class="des-item-l" style="height: 2.6rem;">备注</div>
+        <div class="des-item-l" style="height: 2.6rem;">备注(选填)</div>
         <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;"><input v-model="remarks" type="text" placeholder="请填写30个字以内描述" maxlength="30"></div>
       </div>
     </div>
@@ -108,7 +108,8 @@ export default {
       findAssetType:[],
       showPdType: false,
       showLikeType: false,
-      assetRequirements:''
+      assetRequirements:'',
+      remarks:''
     }
   },
   watch: {
