@@ -266,7 +266,7 @@ export default {
         this.$vux.confirm.show({
         content: '查看联系方式需要登录,是否确认登录?',
           onConfirm () {
-            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx31dde80f95ebb3c8&redirect_uri=https%3A%2F%2Ffinbridge.cn%2FRegist&response_type=code&scope=snsapi_base&state=JuheFinbridge#wechat_redirect';
+            self.$router.push('Login')
           }
         })
       }
