@@ -90,7 +90,7 @@ export default {
           if(res.code==200){
             self.$vux.toast.text('发送成功！', 'middle')
           }else{
-            self.$vux.toast.text(res.msg, 'middle')
+            self.$vux.toast.text(res.error, 'middle')
           }
         }
       });

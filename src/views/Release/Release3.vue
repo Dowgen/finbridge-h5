@@ -132,7 +132,7 @@ export default {
             localStorage.removeItem('addFundParams');
             self.$router.push('/MyProject')
           }else{
-            self.$vux.toast.text(res.msg, 'middle')
+            self.$vux.toast.text(res.error, 'middle')
           }
         }
       });

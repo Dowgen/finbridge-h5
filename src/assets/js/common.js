@@ -12,7 +12,8 @@ Vue.use(LoadingPlugin);
 var vm = new Vue({});
 
 //全局域名设置
-var domain = 'https://fb.moneyboom.cn';
+/*var domain = 'https://fb.moneyboom.cn';*/
+var domain = 'http://192.168.2.169:8060';
 
 // axios response 拦截器
 axios.interceptors.response.use(
@@ -59,7 +60,7 @@ function getToken(){
     axios({
         method: 'post',
         url: domain + '/uaa/oauth/token',
-        params: {
+        /*params: {
             username:'juhe',
             password:'Juhe2017!@#',
             grant_type:'password',
@@ -68,6 +69,16 @@ function getToken(){
         headers:  {
             Accept:'application/json',
             Authorization:'Basic anVoZV9jYXNobG9hbjpKdWhlMTIzNjc4IUAj'
+        },*/
+        headers: {
+          Accept:'application/json',
+          Authorization:'Basic Y2xpZW50OnNlY3JldA=='
+        },
+        params:{
+          username:'anil',
+          password:'password',
+          grant_type:'password',
+          scope:'read write'
         },
         responseType:  'json'
     }).then(function(res){

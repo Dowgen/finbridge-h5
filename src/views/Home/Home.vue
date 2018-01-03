@@ -167,7 +167,7 @@ export default {
     getToken(){
       var self = this;
       Lib.M.ajax({
-        /*url : 'https://fb.moneyboom.cn/uaa/oauth/token',
+        url : Lib.M.domain + '/uaa/oauth/token',
         headers: {
           Accept:'application/json',
           Authorization:'Basic Y2xpZW50OnNlY3JldA=='
@@ -177,9 +177,8 @@ export default {
           password:'password',
           grant_type:'password',
           scope:'read write'
-        },*/
-        url : Lib.M.domain + '/uaa/oauth/token',
-        headers: {
+        },
+       /* headers: {
           Accept:'application/json',
           Authorization:'Basic anVoZV9jYXNobG9hbjpKdWhlMTIzNjc4IUAj'
         },
@@ -188,7 +187,7 @@ export default {
           password:'Juhe2017!@#',
           grant_type:'password',
           scope:'read write'
-        },
+        },*/
         success:function(data){
           localStorage.token = data.access_token;
           /*self.getOpenId()*/
