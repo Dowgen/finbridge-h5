@@ -44,7 +44,9 @@
       </div>
       <div class="des-item">
         <div class="des-item-l">件均额度(选填)</div>
-        <div class="des-item-r"><input v-model="perAmount" type="number" placeholder=""><span class="unit">元</span></div>
+        <div class="des-item-r">
+          <input v-model.number="perAmount" type="number" placeholder="">
+          <span class="unit">元</span></div>
       </div>
      <!-- <div class="des-item">
         <div class="des-item-l">产品特色(选填)</div>
@@ -56,29 +58,40 @@
       </div>
 
       <div class="des-item">
-        <div class="des-item-l">产品期限(天)</div>
-        <div class="des-item-r"><input v-model="perPeriod" type="number" maxlength="10" placeholder="请填写贷款期限"></div>
+        <div class="des-item-l">产品期限</div>
+        <div class="des-item-r">
+          <input v-model="perPeriod" type="text" maxlength="10" placeholder="请填写贷款期限">
+        </div>
       </div>
     </div>
     <div class="assets-des2">
       <div class="des-item">
         <div class="des-item-l">资金成本区间</div>
         <div class="des-item-r range">
-          <input v-model="fundCostRegionFrom" type="number" min="0" max="100"> &nbsp;-&nbsp; <input v-model="fundCostRegionTo" type="number" min="0" max="100">
+          <input v-model.number="fundCostRegionFrom" type="number" min="0" max="100"> &nbsp;-&nbsp; <input v-model.number="fundCostRegionTo" type="number" min="0" max="100">
           %
         </div>
       </div>
       <div class="des-item">
-        <div class="des-item-l">日放款规模(选填)</div>
-        <div class="des-item-r"><input v-model="dailyPayAmount" type="number" maxlength="20" placeholder=""><span class="unit">百万</span></div>
+        <div class="des-item-l">日放款规模</div>
+        <div class="des-item-r">
+          <input v-model.number="dailyPayAmount" type="number" maxlength="20" placeholder="">
+          <span class="unit">百万</span>
+        </div>
       </div>
       <div class="des-item">
         <div class="des-item-l">总放款规模</div>
-        <div class="des-item-r"><input v-model="totalPayAmount" type="number" maxlength="20" placeholder=""><span class="unit">千万</span></div>
+        <div class="des-item-r">
+          <input v-model.number="totalPayAmount" type="number" maxlength="20" placeholder="">
+          <span class="unit">千万</span>
+        </div>
       </div>
       <div class="des-item">
         <div class="des-item-l">坏账率(选填)</div>
-        <div class="des-item-r"><input v-model="debtRate" type="number" maxlength="5" placeholder=""><span class="unit">%</span></div>
+        <div class="des-item-r">
+          <input v-model.number="debtRate" type="number" maxlength="5" placeholder="">
+          <span class="unit">%</span>
+        </div>
       </div>
       <div class="des-item">
       </div>
@@ -121,9 +134,19 @@ export default {
   mounted(){
     this.assetTypeList = JSON.parse(localStorage.assetTypeList);
     this.fundTypeList = JSON.parse(localStorage.fundTypeList);
-    $("[type='number']").attr('onKeypress','return event.charCode >= 48 && event.charCode <= 57');      
-    $("[type='number']").attr('oninput',"this.value = this.value.replace(/\D+/g, '')");      
-    $("[type='number']").attr('onblur','this.value = this.value.replace(/\D+/g, "")');      
+    if(localStorage.addAssetParams != null){
+      let a = JSON.parse(localStorage.addAssetParams);
+      this.projectName = a.projectName;
+      this.productType = a.productType;
+      this.perAmount = a.perAmount;
+      this.productFeature = a.productFeature;
+      this.perPeriod = a.perPeriod;
+      this.fundCostRegionFrom = a.fundCostRegionFrom;
+      this.fundCostRegionTo = a.fundCostRegionTo;
+      this.dailyPayAmount = a.dailyPayAmount;
+      this.totalPayAmount = a.totalPayAmount;
+      this.debtRate = a.debtRate
+    }
   },
   methods:{
     nextWay(){
@@ -144,7 +167,7 @@ export default {
           productType : parseInt(this.productType),
           perAmount : parseInt(this.perAmount),
           productFeature : this.productFeature,
-          perPeriod : parseInt(this.perPeriod),
+          perPeriod : this.perPeriod,
           fundCostRegionFrom : parseInt(this.fundCostRegionFrom),
           fundCostRegionTo : parseInt(this.fundCostRegionTo),
           dailyPayAmount : parseInt(this.dailyPayAmount),

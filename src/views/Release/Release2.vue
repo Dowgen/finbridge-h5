@@ -30,7 +30,7 @@
       <div class="des-item" style="border-bottom: 0.06rem solid #ECECEC;">
         <div class="des-item-l">运营时间(月)</div>
         <div class="des-item-r">
-          <input v-model="operationTime" type="number" placeholder="请详细填写*年*个月">
+          <input v-model="operationTime" type="number" placeholder=""><span class="unit">个月</span>
         </div>
       </div>
       <div class="des-item" style="position:relative">
@@ -238,7 +238,7 @@ export default {
   border:none;
   outline: none;
   text-align: right;
-  width: 90%;
+  /* width: 90%; */
   height: 100%;
 }
 .next{
@@ -332,5 +332,9 @@ export default {
   right:0;
   bottom:0;
   overflow: hidden;
+}
+.unit{
+  margin-left: 0.5rem;
+  color: #1A1A1A;
 }
 </style>

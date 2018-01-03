@@ -37,12 +37,7 @@ axios.interceptors.response.use(
         }
         return Promise.reject(error)   // 返回接口返回的错误信息
     }
-);
-//input字符限制
-$("[type='number']").attr('onKeypress','return event.charCode >= 48 && event.charCode <= 57');      
-$("[type='number']").attr('oninput',"this.value = this.value.replace(/\D+/g, '')");      
-$("[type='number']").attr('onblur','this.value = this.value.replace(/\D+/g, "")');      
-$("[type='number']").attr('onpropertychange','if(!/\D+/.test(this.value)){return;};this.value=this.value.replace(/\D+/g, "")');      
+);   
 
 /* 进页面的时候就判断一下设备是安卓还是ios 
 (function(){

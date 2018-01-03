@@ -71,7 +71,7 @@
       </div>
       <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;border-top: 0.06rem solid #E6E6E6;">
         <div class="des-item-l" style="height: 2.6rem;">资产要求(选填)</div>
-        <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;"><input v-model="assetRequirements" type="text" placeholder="请填写50个字以内描述" maxlength="50"></div>
+        <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;"><input v-model="findAssetRequire" type="text" placeholder="请填写50个字以内描述" maxlength="50"></div>
       </div>
       <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;border-top: 0.06rem solid #E6E6E6;">
         <div class="des-item-l" style="height: 2.6rem;">备注(选填)</div>
@@ -108,7 +108,7 @@ export default {
       findAssetType:[],
       showPdType: false,
       showLikeType: false,
-      assetRequirements:'',
+      findAssetRequire:'',
       remarks:''
     }
   },
@@ -121,9 +121,17 @@ export default {
   mounted(){
     this.assetTypeList = JSON.parse(localStorage.assetTypeList);
     this.fundTypeList = JSON.parse(localStorage.fundTypeList);
-    $("[type='number']").attr('onKeypress','return event.charCode >= 48 && event.charCode <= 57');      
-    $("[type='number']").attr('oninput',"this.value = this.value.replace(/\D+/g, '')");      
-    $("[type='number']").attr('onblur','this.value = this.value.replace(/\D+/g, "")');      
+    if(localStorage.addFundParams != null){
+      let a = localStorage.addFundParams;
+      this.projectName = a.projectName;
+      this.fundType = a.fundType;
+      this.fundAnmount = a.fundAnmount;
+      this.fundCostRegionFrom = a.fundCostRegionFrom;
+      this.fundCostRegionTo = a.fundCostRegionTo;
+      this.findAssetType = a.findAssetType.split(',');
+      this.findAssetRequire = a.findAssetRequire;
+      this.remark = a.remarks
+    }
   },
   methods:{
     nextWay(){
@@ -142,7 +150,7 @@ export default {
           fundCostRegionFrom: parseInt(this.fundCostRegionFrom),
           fundCostRegionTo: parseInt(this.fundCostRegionTo),
           findAssetType:this.findAssetType.join(','),
-          findAssetRequire: this.assetRequirements,
+          findAssetRequire: this.findAssetRequire,
           remark:this.remarks
         }
         localStorage.addFundParams = JSON.stringify(addFundParams);

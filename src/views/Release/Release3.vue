@@ -128,6 +128,8 @@ export default {
         success:function(res){
           if(res.code==200){
             self.$vux.toast.text(self.title+'提交成功！', 'middle')
+            localStorage.removeItem('addAssetParams');
+            localStorage.removeItem('addFundParams');
             self.$router.push('/MyProject')
           }else{
             self.$vux.toast.text(res.msg, 'middle')
