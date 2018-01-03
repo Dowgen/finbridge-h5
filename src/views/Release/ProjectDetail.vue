@@ -171,7 +171,7 @@ export default {
           //微信分享设置
           wx.onMenuShareTimeline({
             title: '51资金资产', 
-            link:  location.href, 
+            link:  'https://finbridge.cn', 
             imgUrl: 'https://finbridge.cn/logo.png', 
             success: function () { 
               vm.$vux.toast.show({
@@ -189,7 +189,7 @@ export default {
           wx.onMenuShareAppMessage({
             title: '51资金资产', 
             desc: '关注51资金资产公众号，获取更多信息', 
-            link:  location.href,
+            link:  'https://finbridge.cn',
             imgUrl: 'https://finbridge.cn/logo.png', 
             /*type: '', // 分享类型,music、video或link，不填默认为link*/
             /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/

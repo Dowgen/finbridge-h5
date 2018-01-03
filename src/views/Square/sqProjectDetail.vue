@@ -184,7 +184,7 @@ export default {
           wx.onMenuShareTimeline({
             title: '51资金资产', 
             /*link:  sessionStorage.wechatShareReturnLink,*/ 
-            link: location.href,
+            link: 'https://finbridge.cn',
             imgUrl: 'https://finbridge.cn/logo.png', 
             success: function () { 
               vm.$vux.toast.show({
@@ -202,7 +202,7 @@ export default {
             title: '51资金资产', 
             desc: '关注51资金资产公众号，获取更多信息', 
             /*link:  sessionStorage.wechatShareReturnLink,*/
-            link: location.href,
+            link: 'https://finbridge.cn',
             imgUrl: 'https://finbridge.cn/logo.png', 
             /*type: '', // 分享类型,music、video或link，不填默认为link*/
             /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
@@ -266,7 +266,7 @@ export default {
         this.$vux.confirm.show({
         content: '查看联系方式需要登录,是否确认登录?',
           onConfirm () {
-            self.$router.push('Login')
+            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx31dde80f95ebb3c8&redirect_uri=https%3A%2F%2Ffinbridge.cn%2FRegist&response_type=code&scope=snsapi_base&state=JuheFinbridge#wechat_redirect';
           }
         })
       }
