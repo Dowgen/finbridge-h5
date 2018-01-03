@@ -54,12 +54,7 @@ export default {
             self.$router.push('Login')
           }
         })*/
-
-        if(localStorage.openId!=null){
           self.$router.push('Login')
-        }else{
-          this.$vux.toast.text("查看完整信息,请关注'51资金资产'公众号", 'middle')
-        }
       }
     }
   }

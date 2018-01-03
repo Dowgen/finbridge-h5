@@ -40,7 +40,7 @@
       </div>
       <div class="des-item">
         <div class="des-item-l">资金规模</div>
-        <div class="des-item-r"><input v-model="fundAnmount" type="number" placeholder="千万元"></div>
+        <div class="des-item-r"><input v-model="fundAnmount" type="number" placeholder=""><span class="unit">千万</span></div>
       </div>
       <div class="des-item">
         <div class="des-item-l">资金成本区间</div>
@@ -130,7 +130,7 @@ export default {
           this.fundCostRegionFrom == '' ||
           this.fundCostRegionTo == '' ||
           this.findAssetType.length == 0 ){
-        this.$vux.toast.text('参数请填写完整', 'middle');
+        this.$vux.toast.text('内容填写有误，请按要求填写', 'middle');
       }else{
         let addFundParams = {
           projectName: this.projectName,
@@ -237,7 +237,7 @@ export default {
   border:none;
   outline: none;
   text-align: right;
-  width: 90%;
+  /* width: 90%; */
   height: 100%;
 }
 .range input{
@@ -249,6 +249,7 @@ export default {
 }
 .next{
   width: 100%;
+  max-width: 640px;
   height: 3.065rem;
   background: #4083FF;
   font-size: 1.065rem;
@@ -345,5 +346,9 @@ export default {
   height: 0.44rem;
   background: url("./img/choose_up.png") no-repeat center;
   background-size: 100% 100%;
+}
+.unit{
+  margin-left: 0.5rem;
+  color: #1A1A1A;
 }
 </style>

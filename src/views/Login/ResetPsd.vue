@@ -103,8 +103,7 @@ export default {
         data:{
           phone: self.phoneNum,
           password: sha1(self.password).toUpperCase(),
-          cerifyCode: self.verifyCode,
-          openId: 'a'
+          cerifyCode: self.verifyCode
         },
         success:function(res){
           if(res.code==200){

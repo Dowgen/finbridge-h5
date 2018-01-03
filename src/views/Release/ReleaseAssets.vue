@@ -44,7 +44,7 @@
       </div>
       <div class="des-item">
         <div class="des-item-l">件均额度(选填)</div>
-        <div class="des-item-r"><input v-model="perAmount" type="number" placeholder="元"></div>
+        <div class="des-item-r"><input v-model="perAmount" type="number" placeholder=""><span class="unit">元</span></div>
       </div>
      <!-- <div class="des-item">
         <div class="des-item-l">产品特色(选填)</div>
@@ -70,15 +70,15 @@
       </div>
       <div class="des-item">
         <div class="des-item-l">日放款规模(选填)</div>
-        <div class="des-item-r"><input v-model="dailyPayAmount" type="number" maxlength="20" placeholder="百万"></div>
+        <div class="des-item-r"><input v-model="dailyPayAmount" type="number" maxlength="20" placeholder=""><span class="unit">百万</span></div>
       </div>
       <div class="des-item">
         <div class="des-item-l">总放款规模</div>
-        <div class="des-item-r"><input v-model="totalPayAmount" type="number" maxlength="20" placeholder="千万"></div>
+        <div class="des-item-r"><input v-model="totalPayAmount" type="number" maxlength="20" placeholder=""><span class="unit">千万</span></div>
       </div>
       <div class="des-item">
         <div class="des-item-l">坏账率(选填)</div>
-        <div class="des-item-r"><input v-model="debtRate" type="number" maxlength="5" placeholder="%"></div>
+        <div class="des-item-r"><input v-model="debtRate" type="number" maxlength="5" placeholder=""><span class="unit">%</span></div>
       </div>
       <div class="des-item">
       </div>
@@ -134,7 +134,7 @@ export default {
           /*this.dailyPayAmount == '' || */
           this.totalPayAmount == '' 
          /* this.debtRate == ''*/ ){
-        this.$vux.toast.text('参数请填写完整', 'middle');
+        this.$vux.toast.text('内容填写有误，请按要求填写', 'middle');
       }else{
         let addAssetParams = {
           projectName : this.projectName,
@@ -242,7 +242,7 @@ export default {
   border:none;
   outline: none;
   text-align: right;
-  width: 90%;
+  /* width: 90%; */
   height: 100%;
 }
 .assets-des2{
@@ -260,6 +260,7 @@ export default {
 }
 .next{
   width: 100%;
+  max-width: 640px;
   height: 3.065rem;
   background: #4083FF;
   font-size: 1.065rem;
@@ -332,5 +333,9 @@ export default {
   max-height: 9999px;
   transition-timing-function: cubic-bezier(0.5, 0, 1, 0);
   transition-delay: 0s;
+}
+.unit{
+  margin-left: 0.5rem;
+  color: #1A1A1A;
 }
 </style>

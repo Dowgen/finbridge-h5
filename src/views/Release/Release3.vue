@@ -96,7 +96,7 @@ export default {
           this.contactPhone == '' 
           /*this.contactQQ == '' ||*/
           /*this.contactWechat == ''*/){
-        this.$vux.toast.text('参数请填写完整', 'middle');
+        this.$vux.toast.text('内容填写有误，请按要求填写', 'middle');
       }else{
         this.addFund();
         /*this.$router.push('/')*/
@@ -228,6 +228,7 @@ export default {
 }
 .next{
   width: 100%;
+  max-width: 640px;
   height: 3.065rem;
   background: #4083FF;
   font-size: 1.065rem;

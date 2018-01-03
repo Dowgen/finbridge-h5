@@ -123,7 +123,7 @@ export default {
     nextWay(){
       if(this.AorF=='fund'){
         if(this.companyName ==''){
-          this.$vux.toast.text('参数请填写完整', 'middle');
+          this.$vux.toast.text('内容填写有误，请按要求填写', 'middle');
         }else{
           let a = JSON.parse(localStorage.addFundParams);
           a.companyName = this.companyName;
@@ -135,7 +135,7 @@ export default {
           this.cityVal.length == 0 ||
           this.companyAddress  =='' ||
           this.fundOrigin.length == 0){
-          this.$vux.toast.text('参数请填写完整', 'middle');
+          this.$vux.toast.text('内容填写有误，请按要求填写', 'middle');
         }else{
           let b = {
             companyName: this.companyName,
@@ -243,6 +243,7 @@ export default {
 }
 .next{
   width: 100%;
+  max-width: 640px;
   height: 3.065rem;
   background: #4083FF;
   font-size: 1.065rem;
