@@ -98,7 +98,17 @@ export default {
           /*this.contactWechat == ''*/){
         this.$vux.toast.text('内容填写有误，请按要求填写', 'middle');
       }else{
-        this.addFund();
+        if(Lib.M.isPhoneWrong(this.phoneNum)){
+          this.$vux.toast.text('手机号码不合法！','middle');
+        }else{
+          if(localStorage.userId != undefined && 
+             localStorage.userId != 'undefined'){
+            this.addFund();
+          }else{
+            this.$vux.toast.text('登录已失效，请重新登录', 'middle');
+            this.$router.push('Login')
+          }
+        }
         /*this.$router.push('/')*/
       }
     },

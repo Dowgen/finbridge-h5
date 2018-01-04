@@ -41,7 +41,7 @@ export default {
     to(where){
       /*this.$vux.alert.show(localStorage.userId);*/
       let self = this;
-      if(localStorage.userId != undefined){
+      if(localStorage.userId != undefined && localStorage.userId != 'undefined'){
         if(where=='Project'){
           this.$router.push('MyProject')
         }else{
