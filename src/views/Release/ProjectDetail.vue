@@ -449,7 +449,7 @@ body{
   height: 1.22rem;
   color: #fff;
   position: relative;
-  margin-top: 1.75rem;
+  margin-top: 0.8rem;
 }
 .project .head p{
   font-size:1.065rem;
@@ -481,12 +481,14 @@ body{
 }
 .project .project-des .item{
   flex-grow: 1;
+  width: 0;
 }
 .project .project-des .item p:nth-of-type(1){
   font-size: 0.875rem;
+  border-right: 1px solid #fff;
 }
 .project .project-des .item p:nth-of-type(2){
-  border-right: 1px solid #fff;
+
   font-size: 0.815rem;
 }
 .project .project-main{
