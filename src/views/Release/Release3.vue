@@ -96,7 +96,7 @@ export default {
           this.contactPhone == '' 
           /*this.contactQQ == '' ||*/
           /*this.contactWechat == ''*/){
-        this.$vux.toast.text('内容填写有误，请按要求填写', 'middle');
+        this.$vux.toast.text('请填写完整', 'middle');
       }else{
         if(Lib.M.isPhoneWrong(this.contactPhone)){
           this.$vux.toast.text('手机号码不合法！','middle');

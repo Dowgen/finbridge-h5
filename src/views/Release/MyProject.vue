@@ -432,7 +432,7 @@ export default {
           }
           img{
             flex:1;
-            width:2.845rem;
+            width:3rem;
             height: 1.15rem;
           }
         }

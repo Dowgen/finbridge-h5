@@ -30,7 +30,7 @@
       <div class="des-item" style="border-bottom: 0.06rem solid #ECECEC;">
         <div class="des-item-l">运营时间(月)</div>
         <div class="des-item-r">
-          <input v-model="operationTime" onkeyup="clearNoNum(this)" type="number" placeholder=""><span class="unit">个月</span>
+          <input v-model="operationTime" onkeyup="clearNoNum(this)" type="number" placeholder="请输入数字"><span class="unit">个月</span>
         </div>
       </div>
       <div class="des-item" style="position:relative">
@@ -75,8 +75,8 @@
       </div>-->
       <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;">
         <div class="des-item-l" style="height: 2.6rem;">公司背景(选填)</div>
-        <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;">
-          <input v-model="companyBackground" type="text" placeholder="请填写24个字以内描述" maxlength="24">
+        <div class="des-item-r" style="margin-top: 2rem;height: 1.615rem;line-height: 1.615rem;">
+          <input v-model="companyBackground" type="text" placeholder="请填写公司背景">
         </div>
       </div>
     </div>
@@ -113,17 +113,35 @@ export default {
     }
   },
   mounted(){
-    this.assetTypeList = JSON.parse(localStorage.assetTypeList);
-    this.fundTypeList = JSON.parse(localStorage.fundTypeList);
+    this.getFundList();
     this.AorF = this.$route.query.AorF;
     if(this.AorF == 'fund') this.title='资金'
     else this.title = '资产'
   },
   methods:{
+    /* 获取资金资产类型列表2 */
+    getFundList(){
+      var self = this;
+      Lib.M.ajax({
+        /*url : '/info/findAssetAndFundConfig',*/
+        url : '/info/findAssetAndFundConfig',
+        data:{
+          key:'fundSource'
+        },
+        success:function(res){
+          if(res.code==200){
+            self.fundTypeList= res.data.fund;
+            self.assetTypeList =  res.data.asset;
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
     nextWay(){
       if(this.AorF=='fund'){
         if(this.companyName ==''){
-          this.$vux.toast.text('内容填写有误，请按要求填写', 'middle');
+          this.$vux.toast.text('请填写公司名称', 'middle');
         }else{
           let a = JSON.parse(localStorage.addFundParams);
           a.companyName = this.companyName;
@@ -135,7 +153,7 @@ export default {
           this.cityVal.length == 0 ||
           this.companyAddress  =='' ||
           this.fundOrigin.length == 0){
-          this.$vux.toast.text('内容填写有误，请按要求填写', 'middle');
+          this.$vux.toast.text('请填写完整', 'middle');
         }else{
           let b = {
             companyName: this.companyName,

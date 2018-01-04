@@ -24,7 +24,7 @@
       <div class="des-item" style="position:relative">
         <div class="des-item-l">产品类型</div>
         <div class="des-item-r pro-choose">
-          <input type="text" placeholder="请选择产品类型">
+          <input type="text" :value="getLabel(productType,'a')" placeholder="请选择产品类型">
           <span :class="showPdType?'upArrow':'downArrow'"></span>
         </div>
         <cell
@@ -45,7 +45,7 @@
       <div class="des-item">
         <div class="des-item-l">件均额度(选填)</div>
         <div class="des-item-r">
-          <input v-model.number="perAmount" onkeyup="clearNoNum(this)" type="number" placeholder="">
+          <input v-model.number="perAmount" onkeyup="clearNoNum(this)" type="number" placeholder="请输入数字">
           <span class="unit">元</span></div>
       </div>
      <!-- <div class="des-item">
@@ -54,7 +54,7 @@
       </div>-->
       <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;border-top: 0.06rem solid #E6E6E6;">
         <div class="des-item-l" style="height: 2.6rem;">产品特色(选填)</div>
-        <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;"><input v-model="productFeature" type="text" placeholder="请填写10-20个字以内" maxlength="20"></div>
+        <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;"><input v-model="productFeature" type="text" placeholder="请填写产品特色"></div>
       </div>
 
       <div class="des-item">
@@ -75,21 +75,21 @@
       <div class="des-item">
         <div class="des-item-l">日放款规模</div>
         <div class="des-item-r">
-          <input v-model.number="dailyPayAmount" onkeyup="clearNoNum(this)" type="number" maxlength="20" placeholder="">
+          <input v-model.number="dailyPayAmount" onkeyup="clearNoNum(this)" type="number" maxlength="20" placeholder="请输入数字">
           <span class="unit">百万</span>
         </div>
       </div>
       <div class="des-item">
         <div class="des-item-l">总放款规模</div>
         <div class="des-item-r">
-          <input v-model.number="totalPayAmount" onkeyup="clearNoNum(this)" type="number" maxlength="20" placeholder="">
+          <input v-model.number="totalPayAmount" onkeyup="clearNoNum(this)" type="number" maxlength="20" placeholder="请输入数字">
           <span class="unit">千万</span>
         </div>
       </div>
       <div class="des-item">
         <div class="des-item-l">坏账率(选填)</div>
         <div class="des-item-r">
-          <input v-model.number="debtRate" onkeyup="clearNoNum(this)" type="number" maxlength="5" placeholder="">
+          <input v-model.number="debtRate" onkeyup="clearNoNum(this)" type="number" maxlength="5" placeholder="请输入数字">
           <span class="unit">%</span>
         </div>
       </div>
@@ -160,7 +160,7 @@ export default {
           /*this.dailyPayAmount == '' || */
           this.totalPayAmount == '' 
          /* this.debtRate == ''*/ ){
-        this.$vux.toast.text('内容填写有误，请按要求填写', 'middle');
+        this.$vux.toast.text('内容请填写完整', 'middle');
       }else{
         let addAssetParams = {
           projectName : this.projectName,
@@ -176,6 +176,17 @@ export default {
         }
         localStorage.addAssetParams = JSON.stringify(addAssetParams);
         this.$router.push({ path: 'Release2', query: { AorF: 'assets' }})
+      }
+    },
+    //资金资产类型数字转化为文字
+    getLabel(key,type){
+      var f;
+      if(type=='fund')
+        f = JSON.parse(localStorage.fundTypeList);
+      else
+        f = JSON.parse(localStorage.assetTypeList);
+      for(let i in f){
+        if(f[i].key == key) return f[i].label
       }
     }
   }

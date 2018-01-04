@@ -20,7 +20,7 @@
       <div class="des-item" style="position:relative">
         <div class="des-item-l">资金类型</div>
         <div class="des-item-r pro-choose">
-          <input type="text" placeholder="请选择产品类型">
+          <input type="text" :value="getLabel(fundType,'fund')" placeholder="请选择产品类型">
           <span :class="showPdType?'upArrow':'downArrow'"></span>
         </div>
         <cell
@@ -40,7 +40,7 @@
       </div>
       <div class="des-item">
         <div class="des-item-l">资金规模</div>
-        <div class="des-item-r"><input v-model="fundAnmount" onkeyup="clearNoNum(this)"  type="number" placeholder=""><span class="unit">千万</span></div>
+        <div class="des-item-r"><input v-model="fundAnmount" onkeyup="clearNoNum(this)"  type="number" placeholder="请输入数字"><span class="unit">千万</span></div>
       </div>
       <div class="des-item">
         <div class="des-item-l">资金成本区间</div>
@@ -141,7 +141,7 @@ export default {
           this.fundCostRegionFrom == '' ||
           this.fundCostRegionTo == '' ||
           this.findAssetType.length == 0 ){
-        this.$vux.toast.text('内容填写有误，请按要求填写', 'middle');
+        this.$vux.toast.text('内容请填写完整', 'middle');
       }else{
         let addFundParams = {
           projectName: this.projectName,
@@ -155,6 +155,17 @@ export default {
         }
         localStorage.addFundParams = JSON.stringify(addFundParams);
         this.$router.push({ path: 'Release2', query: { AorF: 'fund' }})
+      }
+    },
+    //资金资产类型数字转化为文字
+    getLabel(key,type){
+      var f;
+      if(type=='fund')
+        f = JSON.parse(localStorage.fundTypeList);
+      else
+        f = JSON.parse(localStorage.assetTypeList);
+      for(let i in f){
+        if(f[i].key == key) return f[i].label
       }
     }
   }
