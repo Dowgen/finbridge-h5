@@ -87,7 +87,7 @@ body{
     background: #fff;
     max-width: 640px;
     position: relative; /*!important;  此处important为了覆盖vux设置的fixed */
-    min-height: 100%;
+    min-height: 40rem;
     margin:0 auto !important;
     /*padding-bottom: 3.065rem;*/
 }
