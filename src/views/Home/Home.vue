@@ -128,6 +128,8 @@ export default {
     linkTo(picLink){
       if(picLink !== '' && picLink !== null){
         window.location.href = picLink;
+
+
       }
     },
 

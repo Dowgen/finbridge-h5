@@ -465,7 +465,6 @@ body{
   border-right: 1px solid #fff;
 }
 .project .project-des .item p:nth-of-type(2){
-
   font-size: 0.815rem;
 }
 .project .project-main{
