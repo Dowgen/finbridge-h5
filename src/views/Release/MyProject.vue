@@ -2,7 +2,7 @@
   <div v-cloak>
     <myHead v-show="false" msg="发布项目" backgroundColor="#fff" hasBack="0"></myHead>
     <actionsheet v-model="show1" :menus="menus1" @on-click-menu="click"></actionsheet>
-    <div v-if="!hasProject" class="content1">
+    <div v-if="hasProject=='no'" class="content1">
       <button-tab class="button-tab">
         <button-tab-item selected @on-item-click="loseEfficacy=false">未失效</button-tab-item>
         <button-tab-item @on-item-click="loseEfficacy=true">已失效</button-tab-item>
@@ -14,7 +14,7 @@
         <span>+</span> 添加资金
       </div>
     </div>
-    <div v-if="hasProject" class="content2">
+    <div v-if="hasProject=='yes'" class="content2">
       <button-tab class="button-tab">
         <button-tab-item selected @on-item-click="loseEfficacy=false">未失效</button-tab-item>
         <button-tab-item @on-item-click="loseEfficacy=true">已失效</button-tab-item>
@@ -239,9 +239,9 @@ export default {
           let f = res.data.fund;
           if(res.code==200){
             if(a.length == 0 && f.length == 0){
-              self.hasProject = false;
+              self.hasProject = 'no';
             }else{
-              self.hasProject = true;
+              self.hasProject = 'yes';
               //区分未失效列表与已失效列表
               for(let i in a){
                 if(a[i].listStatus == 1 || a[i].listStatus == 2){
