@@ -318,7 +318,7 @@ export default {
     box-sizing:border-box;
     padding-top: 1.5rem;
     background:url('./img/empty_page.png') no-repeat center;
-    background-position:center 10rem;
+    background-position:center 7.5rem;
     background-size: 12.22rem 13.625rem;
     height:40rem;
     .btn{
@@ -337,7 +337,7 @@ export default {
       }
     }
     .addAs{
-      margin-top:25rem;
+      margin-top:22rem;
       background-color:#4083FF;
       color:#fff;
     }

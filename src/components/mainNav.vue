@@ -76,6 +76,7 @@ export default {
   align-items: center;
   /*border-top: solid .3rem #f2f2f2;*/
   z-index: 9;
+  border-top:solid 0.2rem #efeff4;
 }
 .nav img{
   width:1.47rem;

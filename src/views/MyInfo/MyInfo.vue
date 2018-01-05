@@ -140,7 +140,7 @@ export default {
 <style lang="less" scoped>
   .content{
     width: 100%;
-    height: 100%;
+    min-height: 40rem;
     position: absolute;
     left: 0;
     top: 0;
@@ -155,7 +155,7 @@ export default {
     }*/
     .myHead{
       width: 100%;
-      height:18.03rem;
+      height:14.03rem;
       background: url("./img/img-me-bg.png") no-repeat left top;
       background-size: 100% 100%;
       overflow: hidden;
@@ -213,7 +213,7 @@ export default {
       color: #fff;
       font-size: 1.125rem;
       position: absolute;
-      bottom: 4.5rem;
+      bottom: 8.5rem;
       left: 50%;
       margin-left: -9.845rem;
     }

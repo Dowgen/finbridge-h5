@@ -48,7 +48,7 @@
         @click.native="fundType = !fundType"></cell>
       </div>
       <div class="pro-type slide" :class="fundType?'animate':''">
-        <label v-for="item in fundTypeList">
+        <label v-for="item in fundSourceList">
           <input v-model="fundOrigin" type="checkbox" :value="item.key" />{{item.label}} 
         </label>
       </div>
@@ -104,7 +104,7 @@ export default {
       fundType: false,
       cityVal: [],
       cityList: Lib.M.cityList,
-      fundTypeList:[],
+      fundSourceList:[],
       companyName :'',  // 公司名
       operationTime :'',  // 运营时间(月)
       AddressDetail  :'',  // 公司地址
@@ -124,14 +124,13 @@ export default {
       var self = this;
       Lib.M.ajax({
         /*url : '/info/findAssetAndFundConfig',*/
-        url : '/info/findAssetAndFundConfig',
+        url : '/dict/getDict',
         data:{
-          key:'fundSource'
+          dictName:'fundSource'
         },
         success:function(res){
           if(res.code==200){
-            self.fundTypeList= res.data.fund;
-            self.assetTypeList =  res.data.asset;
+            self.fundSourceList= res.data;
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
