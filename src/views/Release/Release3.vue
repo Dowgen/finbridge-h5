@@ -248,7 +248,6 @@ export default {
   text-align: center;
   line-height: 3.065rem;
   position: fixed;
-  left: 0;
   bottom: 0;
 }
 .gender-choose p{
