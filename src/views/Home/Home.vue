@@ -21,11 +21,14 @@
            </p>
            <p>
              <span>{{RcmZc.fundCostRegionFrom}}-{{RcmZc.fundCostRegionTo}}%</span>
-             <span>{{RcmZc.totalPayAmount}}</span>
+             <span>
+                {{ String(parseInt(RcmZc.totalPayAmount)).length >= 5 ? RcmZc.totalPayAmount/10000 : RcmZc.totalPayAmount}} 
+                {{ String(parseInt(RcmZc.totalPayAmount)).length >= 5 ? '亿元' : '万元'}}
+             </span>
            </p>
            <p>
              <span>资金成本区间</span>
-             <span>总放款量/千万</span>
+             <span>总放款量</span>
            </p>
            <!-- <span class="middleLine"></span> -->
          </div>
@@ -37,11 +40,14 @@
            </p>
            <p>
              <span>{{RcmZj.fundCostRegionFrom}}-{{RcmZj.fundCostRegionTo}}%</span>
-             <span>{{RcmZj.fundAnmount}}</span>
+             <span>
+                {{ String(parseInt(RcmZj.fundAnmount)).length >= 5 ? RcmZj.fundAnmount/10000 : RcmZj.fundAnmount}} 
+                {{ String(parseInt(RcmZj.fundAnmount)).length >= 5 ? '亿元' : '万元'}}
+             </span>
            </p>
            <p>
              <span>资金成本区间</span>
-             <span>总放款量/千万</span>
+             <span>资金规模</span>
            </p>
            <!-- <span class="middleLine"></span> -->
          </div>
@@ -94,18 +100,18 @@ export default {
   data () {
     return {
       RcmZc:{
-        projectName:null,
-        productType:null,
-        fundCostRegionFrom:null,
-        fundCostRegionTo:null,
-        totalPayAmount:null
+        projectName:'',
+        productType:'',
+        fundCostRegionFrom:'',
+        fundCostRegionTo:'',
+        totalPayAmount:''
       },
       RcmZj:{
-        projectName:null,
-        fundType:null,
-        fundCostRegionFrom:null,
-        fundCostRegionTo:null,
-        fundAnmount:null
+        projectName:'',
+        fundType:'',
+        fundCostRegionFrom:'',
+        fundCostRegionTo:'',
+        fundAnmount:''
       },
       img_src:[],
       countDownDay1:'',

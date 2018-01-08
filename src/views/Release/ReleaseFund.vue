@@ -40,7 +40,14 @@
       </div>
       <div class="des-item">
         <div class="des-item-l">资金规模</div>
-        <div class="des-item-r"><input v-model="fundAnmount" onkeyup="clearNoNum(this)"  type="number" placeholder="请输入数字"><span class="unit">千万</span></div>
+          <div class="des-item-r"><input v-model="fundAnmount" onkeyup="clearNoNum(this)"  type="number" placeholder="请输入数字">
+          <span class="unit">
+            <select v-model="unitAnmount">
+              <option>万元</option>
+              <option>亿元</option>
+            </select>
+          </span>
+        </div>
       </div>
       <div class="des-item">
         <div class="des-item-l">资金成本区间</div>
@@ -103,6 +110,7 @@ export default {
       projectName:'',  //项目名称
       fundType:'',    //资金类型
       fundAnmount:'', //资金规模
+      unitAnmount: '万元', //总放款规模 数字单位
       fundCostRegionFrom:'',
       fundCostRegionTo:'',
       findAssetType:[],
@@ -146,7 +154,7 @@ export default {
         let addFundParams = {
           projectName: this.projectName,
           fundType:  parseInt(this.fundType),
-          fundAnmount: parseInt(this.fundAnmount),
+          fundAnmount: parseInt( this.unitAnmount =='亿元'? this.fundAnmount*10000 : this.fundAnmount),
           fundCostRegionFrom: parseInt(this.fundCostRegionFrom),
           fundCostRegionTo: parseInt(this.fundCostRegionTo),
           findAssetType:this.findAssetType.join(','),

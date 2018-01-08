@@ -154,7 +154,19 @@ html {
   color:white !important;
   background-color: #4083ff !important;
 }
-
+/* select样式 */
+select{
+  border:none;
+  /*很关键：将默认的select选择框样式清除*/
+  appearance:none;
+  -moz-appearance:none;
+  -webkit-appearance:none;
+  /*为箭头留出一点空间*/
+  padding-right: 1.2rem;
+  background: url("./choose_down.png") no-repeat scroll right center transparent;
+  background-size: 0.75rem 0.44rem;
+  font-size: 0.9rem;
+}
 /* placeholder颜色 */
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */

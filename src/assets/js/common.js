@@ -213,9 +213,7 @@ var Rxports = {
       } else {
         return false;
       }
-    },
-    /* 亿和万 单位互转 */
-    
+    }
 };
 
 //微信分享设置

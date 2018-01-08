@@ -76,14 +76,24 @@
         <div class="des-item-l">日放款规模</div>
         <div class="des-item-r">
           <input v-model.number="dailyPayAmount" onkeyup="clearNoNum(this)" type="number" maxlength="20" placeholder="请输入数字">
-          <span class="unit">百万</span>
+          <span class="unit">
+            <select v-model="unitDaily">
+              <option>万元</option>
+              <option>亿元</option>
+            </select>
+          </span>
         </div>
       </div>
       <div class="des-item">
         <div class="des-item-l">总放款规模</div>
         <div class="des-item-r">
           <input v-model.number="totalPayAmount" onkeyup="clearNoNum(this)" type="number" maxlength="20" placeholder="请输入数字">
-          <span class="unit">千万</span>
+          <span class="unit">
+            <select v-model="unitTotal">
+              <option>万元</option>
+              <option>亿元</option>
+            </select>
+          </span>
         </div>
       </div>
       <div class="des-item">
@@ -117,6 +127,8 @@ export default {
   data () {
     return {
       assetTypeList:[], //资产类型列表
+      unitDaily: '万元', //日放款规模 数字单位
+      unitTotal: '万元', //总放款规模 数字单位
       showPdType: false,
       projectName:'',
       productName:'',
@@ -170,8 +182,10 @@ export default {
           perPeriod : this.perPeriod,
           fundCostRegionFrom : parseInt(this.fundCostRegionFrom),
           fundCostRegionTo : parseInt(this.fundCostRegionTo),
-          dailyPayAmount : parseInt(this.dailyPayAmount),
-          totalPayAmount : parseInt(this.totalPayAmount),
+          dailyPayAmount : parseInt(
+            this.unitDaily=='亿元'? this.dailyPayAmount*10000 : this.dailyPayAmount),
+          totalPayAmount : parseInt(
+            this.unitTotal =='亿元'? this.totalPayAmount*10000 : this.totalPayAmount),
           debtRate : parseInt(this.debtRate)
         }
         localStorage.addAssetParams = JSON.stringify(addAssetParams);

@@ -20,7 +20,10 @@
             <p>单笔期限</p>
           </div>
           <div class="item">
-            <p>{{info.dailyPayAmount}}百万</p>
+            <p>
+              {{ String(parseInt(info.dailyPayAmount)).length >= 5 ? info.dailyPayAmount/10000 : info.dailyPayAmount}} 
+              {{ String(parseInt(info.dailyPayAmount)).length >= 5 ? '亿元' : '万元'}}
+            </p>
             <p style="border: none;">日放款量</p>
           </div>
         </div>
@@ -38,7 +41,10 @@
       <div class="main-item">
         <p>{{info.projectName}}</p>
         <p v-if="fundTypeList">{{getLabel(info.productType,'asset')}}</p><!---->
-        <p>{{info.totalPayAmount}}千万</p>
+        <p>
+           {{ String(parseInt(info.totalPayAmount)).length >= 5 ? info.totalPayAmount/10000 : info.totalPayAmount}} 
+              {{ String(parseInt(info.totalPayAmount)).length >= 5 ? '亿元' : '万元'}}
+        </p>
         <p>{{info.debtRate}}%</p>
         <p>{{info.projectName}}</p>
         <p>{{info.productFeature}}</p>
@@ -84,7 +90,10 @@
             <p v-if="fundTypeList">资金类型: {{getLabel(info.fundType,'fund')}}</p>
           </div>
           <div class="item">
-            <p>资金规模: {{info.fundAnmount}}千万</p>
+            <p>资金规模: 
+                {{ String(parseInt(info.fundAnmount)).length >= 5 ? info.fundAnmount/10000 : info.fundAnmount}} 
+                {{ String(parseInt(info.fundAnmount)).length >= 5 ? '亿元' : '万元'}}
+            </p>
           </div>
         </div>
       </div>
