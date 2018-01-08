@@ -388,7 +388,7 @@ export default {
         success:function(res){
           if(res.code==200){
             self.info = res.data[type2];
-            if(self.isLose == '0'){
+            if(self.isLose == '1'){
               self.getWxSig();
             }
           }else{
