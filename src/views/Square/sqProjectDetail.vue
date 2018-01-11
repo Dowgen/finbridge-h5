@@ -61,7 +61,7 @@
       <div class="footer-item">
         <p>{{info.companyName||'无'}}</p>
         <p>{{info.operationTime}}个月</p>
-        <p v-if="fundTypeList">{{getLabel(info.fundOrigin,'asset')}}</p>
+        <p v-if="fundTypeList">{{getLabel(info.fundOrigin,'fund')}}</p>
         <p>{{info.companyAddress}}</p>
         <p>{{info.companyBackground ||'无'}}</p>
       </div>
