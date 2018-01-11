@@ -79,7 +79,7 @@
     </div>
     <div class="footer-btn" style="display: flex;flex-direction: row">
       <div v-show="isLose == '0' && info.listStatus == 2" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
-      <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="shareTip">分享</div>
+      <div v-show="isLose == '1'&& info.listStatus != 3" class="btn-left" style="flex-grow: 1" @click="shareTip">分享</div>
       <div v-show="isLose == '1'" class="btn-right" style="flex-grow: 1" @click="click('delete')">
         <img src="./img/delete.png" alt="" class="delete">
         删除
@@ -135,7 +135,7 @@
     </div>
     <div class="footer-btn" style="display: flex;flex-direction: row">
       <div v-show="isLose == '0' && info.listStatus == 2" class="btn-left" style="flex-grow: 1" @click="click('offline')">下架</div>
-      <div v-show="isLose == '1'" class="btn-left" style="flex-grow: 1" @click="shareTip">分享</div>
+      <div v-show="isLose == '1'&&info.listStatus != 3" class="btn-left" style="flex-grow: 1" @click="shareTip">分享</div>
       <div v-show="isLose == '1'" class="btn-right" style="flex-grow: 1" @click="click('delete')">
         <img src="./img/delete.png" alt="" class="delete">
         删除

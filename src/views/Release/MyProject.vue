@@ -93,6 +93,9 @@
         <p>合规对接 量大稳定</p>
         <div>
         <div class="item" v-for="item in fundListLose.slice(0,showItem12)" @click="jumpTo(2,item.fundId,'1')">
+
+          <img class="img-unpassed" v-show="item.listStatus==3" src="./img/label_unpassed.png"/>
+
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -107,6 +110,8 @@
                 <i v-if="item.listStatus==2">|</i>
                 <span>{{getLabel(item.fundType,'fund')}}</span>
               </div>
+              
+              <img v-show="item.listStatus==4" src="./img/label_timeup.png"/>
             </div>
           </div>
         </div>
@@ -120,6 +125,9 @@
         <p>风控审核 多元供给</p>
         <div>
         <div class="item" v-for="item in assetListLose.slice(0,showItem11)" @click="jumpTo(1,item.assetId,'1')">
+
+          <img class="img-unpassed" v-show="item.listStatus==3" src="./img/label_unpassed.png"/>
+
           <div class="left">
             <p>{{item.fundCostRegionFrom}}<span>%</span> 
             - {{item.fundCostRegionTo}}<span>%</span></p>
@@ -134,6 +142,7 @@
                 <i v-if="item.listStatus==2">|</i>
                 <span>{{getLabel(item.productType,'asset')}}</span>
               </div>
+              <img v-show="item.listStatus==4" src="./img/label_timeup.png"/>
             </div>
           </div>
         </div>
@@ -302,6 +311,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .img-unpassed{
+    width: 4.53rem;
+    height: 3.7rem;
+    position: absolute;
+    right: 1.5rem;
+    bottom: 3rem;
+  }
   .item-add{
     position:fixed;
     width: 5rem;
