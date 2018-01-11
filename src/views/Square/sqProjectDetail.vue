@@ -31,23 +31,33 @@
     </div>
     <div class="project-main">
       <div class="main-item">
-        <p>项目名称</p>
-        <p>项目类型</p>
-        <p>总放款量</p>
-        <p>坏账率</p>
-        <p>产品名称</p>
-        <p>产品特色</p>
-      </div>
-      <div class="main-item">
-        <p>{{info.projectName}}</p>
-        <p v-if="fundTypeList">{{getLabel(info.productType,'asset')}}</p><!---->
-        <p>
+        <div>
+          <p>项目名称</p>
+          <p>{{info.projectName}}</p>
+        </div>
+        <div>
+          <p>项目类型</p>
+          <p v-if="fundTypeList">{{getLabel(info.productType,'asset')}}</p><!---->
+        </div>
+        <div>
+          <p>总放款量</p>
+          <p>
            {{ String(parseInt(info.totalPayAmount)).length >= 5 ? info.totalPayAmount/10000 : info.totalPayAmount}} 
               {{ String(parseInt(info.totalPayAmount)).length >= 5 ? '亿元' : '万元'}}
-        </p>
-        <p>{{info.debtRate}}%</p>
-        <p>{{info.projectName}}</p>
-        <p>{{info.productFeature}}</p>
+          </p>
+        </div>
+        <div>
+          <p>坏账率</p>
+          <p>{{info.debtRate}}%</p>
+        </div>
+        <div>
+          <p>产品名称</p>
+          <p>{{info.projectName}}</p>
+        </div>
+        <div>
+          <p>产品特色</p>
+          <p>{{info.productFeature}}</p>
+        </div>
       </div>
     </div>
     <div class="project-footer">
@@ -101,12 +111,22 @@
     </div>
     <div class="project-main">
       <div class="main-item">
-        <p>公司名称</p>
-        <p>青睐资产</p>
-      </div>
-      <div class="main-item">
-        <p>{{info.companyName}}</p>
-        <p v-if="fundTypeList">{{getLabel(info.findAssetType,'asset')}}</p>
+        <div>
+          <p>公司名称</p>
+          <p>{{info.companyName}}</p>
+        </div>
+        <div>
+          <p>青睐资产</p>
+          <p v-if="fundTypeList">{{getLabel(info.findAssetType,'asset')}}</p>
+        </div>
+        <div>
+          <p>资金需求</p>
+          <p>{{info.findAssetRequire}}</p>
+        </div>
+        <div>
+          <p>备注</p>
+          <p>{{info.remark}}</p>
+        </div>
       </div>
     </div>
     <div class="footer-btn" v-show="key == 1">
@@ -481,28 +501,30 @@ body{
   font-size: 0.815rem;
 }
 .project .project-main{
-  display: flex;
-  flex-direction: row;
   width: 100%;
   margin: 0 auto;
   background: #fff;
-}
-.project .project-main .main-item:nth-of-type(1){
-  flex: 1;
-  color: #BEBEBE;
-}
-.project .project-main .main-item:nth-of-type(2){
-  flex: 3;
-  color: #666666;
 }
 .project .project-main .main-item{
   font-size: 0.875rem;
   text-align: left;
   align-self:baseline;
-  margin:0 1rem;
+  margin:0.75rem 1rem;
+}
+.project .project-main .main-item>div{
+  display: flex;
 }
 .project .project-main .main-item p{
-  margin:1.5rem 0;
+  margin:0.75rem 0;
+}
+.project .project-main .main-item>div>p:nth-of-type(1){
+  color: #BEBEBE;
+  flex:1;
+}
+.project .project-main .main-item>div>p:nth-of-type(2){
+  color: #666666;
+  flex:3;
+  margin-left: 2rem;
 }
 .project .project-footer{
   width: 100%;
