@@ -122,7 +122,7 @@
       <div class="contactCard">
         <div class="name">
           <img src="./img/ic_card_person.png" alt="">
-          {{info.contactPerson}}先生
+          {{info.contactPerson}}
         </div>
         <div class="contactWays">
           <p>

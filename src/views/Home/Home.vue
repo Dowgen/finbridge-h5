@@ -41,8 +41,7 @@
            <p>
              <span>{{RcmZj.fundCostRegionFrom}}-{{RcmZj.fundCostRegionTo}}%</span>
              <span>
-                {{ String(parseInt(RcmZj.fundAnmount)).length >= 5 ? RcmZj.fundAnmount/10000 : RcmZj.fundAnmount}} 
-                {{ String(parseInt(RcmZj.fundAnmount)).length >= 5 ? '亿元' : '万元'}}
+                {{ getFundAmountType(RcmZj.fundAnmount)}} 
              </span>
            </p>
            <p>
@@ -134,11 +133,11 @@ export default {
     linkTo(picLink){
       if(picLink !== '' && picLink !== null){
         window.location.href = picLink;
-
-
       }
     },
-
+    getFundAmountType(key){
+      return Lib.M.getFundAmountType(key);
+    },
     /*//拿到code传给后台获取用户的微信openId
     getOpenId(){
       let code = Lib.M.GetQueryString('code')
