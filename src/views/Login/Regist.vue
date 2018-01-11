@@ -102,7 +102,7 @@ export default {
 
         }else{
           /* 先验证短信，然后根据登录方式决定是注册还是更改密码 */
-          if(localStorage.openId!=null && localStorage!='null'){
+          if(localStorage.openId!=null && localStorage.openId!='undefined'){
             if(this.code!=null){
               this.regist();
             }else{

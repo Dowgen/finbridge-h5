@@ -12,8 +12,12 @@ Vue.use(LoadingPlugin);
 var vm = new Vue({});
 
 //全局域名设置
-var domain = 'https://fb.moneyboom.cn';
-/*var domain = 'http://192.168.2.169:8060';*/
+/*var domain = 'https://fb.moneyboom.cn';*/
+var domain = 'http://192.168.2.169:8060';
+
+//localStorage清除
+localStorage.removeItem('addAssetParams');
+localStorage.removeItem('addFundParams');
 
 // axios response 拦截器
 axios.interceptors.response.use(
@@ -60,7 +64,7 @@ function getToken(){
     axios({
         method: 'post',
         url: domain + '/uaa/oauth/token',
-        headers:  {
+        /*headers:  {
             Accept:'application/json',
             Authorization:'Basic anVoZV9jYXNobG9hbjpKdWhlMTIzNjc4IUAj'
         },
@@ -69,8 +73,8 @@ function getToken(){
             password:'Juhe2017!@#',
             grant_type:'password',
             scope:'read write'
-        },
-        /*headers: {
+        },*/
+        headers: {
           Accept:'application/json',
           Authorization:'Basic Y2xpZW50OnNlY3JldA=='
         },
@@ -79,7 +83,7 @@ function getToken(){
           password:'password',
           grant_type:'password',
           scope:'read write'
-        },*/
+        },
         responseType:  'json'
     }).then(function(res){
         if(res.status == 200 ){
@@ -213,9 +217,29 @@ var Rxports = {
       } else {
         return false;
       }
-    }
+    },
+    /* 解析资金规模 */
+    //资金资产类型数字转化为文字
+    getFundAmountType:function (key){
+      var f = JSON.parse(localStorage.fundAmountList);
+      for(let i in f){
+        if(f[i].key == key) return f[i].label
+      }
+    },
 };
-
+//获得资金规模类型列表
+Rxports.ajax({
+    url:'/dict/getDict',
+    data:{
+      'dictName':'fundAmount'
+    },
+    success:function (res) {
+      localStorage.fundAmountList = JSON.stringify(res.data);
+    },
+    error:function(err){
+      console.error(err);
+    }
+});
 //微信分享设置
 Rxports.ajax({
     url : '/wechat/wxSig',

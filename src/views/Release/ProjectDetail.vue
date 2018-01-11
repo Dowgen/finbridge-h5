@@ -12,7 +12,7 @@
         <div class="project-des">
           <div class="item">
             <p>{{info.perAmount}}元</p>
-            <p>件均额度</p>
+            <p>单笔额度</p>
           </div>
           <div class="item">
             <p>{{info.perPeriod}}天</p>
@@ -102,10 +102,11 @@
             <p>资金类型: {{getLabel(info.fundType,'fund')}}</p>
           </div>
           <div class="item">
-            <p>资金规模: 
+            <!-- <p>资金规模: 
               {{ String(parseInt(info.fundAnmount)).length >= 5 ? info.fundAnmount/10000 : info.fundAnmount}} 
               {{ String(parseInt(info.fundAnmount)).length >= 5 ? '亿元' : '万元'}}
-            </p>
+            </p> -->
+            <p>资金规模:{{getFundAmountType(info.fundAnmount)}}</p>
           </div>
         </div>
       </div>
@@ -243,6 +244,9 @@ export default {
         }
       });
     },*/
+    getFundAmountType(key){
+      return Lib.M.getFundAmountType(key);
+    },
     shareSuccess(){
       this.$vux.toast.show({
         showPositionValue: false,

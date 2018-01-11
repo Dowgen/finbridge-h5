@@ -43,7 +43,7 @@
         </label>
       </div>
       <div class="des-item">
-        <div class="des-item-l">件均额度(选填)</div>
+        <div class="des-item-l">单笔额度(选填)</div>
         <div class="des-item-r">
           <input v-model.number="perAmount" onkeyup="clearNoNum(this)" type="number" placeholder="请输入数字">
           <span class="unit">元</span></div>

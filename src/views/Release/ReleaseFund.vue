@@ -17,7 +17,7 @@
         <div class="des-item-l">项目名称</div>
         <div class="des-item-r"><input v-model="projectName" type="text" placeholder="填写格式“****寻资产”" maxlength="9"></div>
       </div>
-      <div class="des-item" style="position:relative">
+      <div class="des-item">
         <div class="des-item-l">资金类型</div>
         <div class="des-item-r pro-choose">
           <input type="text" :value="getLabel(fundType,'fund')" placeholder="请选择产品类型">
@@ -40,11 +40,12 @@
       </div>
       <div class="des-item">
         <div class="des-item-l">资金规模</div>
-          <div class="des-item-r"><input v-model="fundAnmount" onkeyup="clearNoNum(this)"  type="number" placeholder="请输入数字">
+        <div class="des-item-r">
+          <!-- <input v-model="fundAnmount" onkeyup="clearNoNum(this)"  type="number" placeholder="请输入数字"> -->
           <span class="unit">
-            <select v-model="unitAnmount">
-              <option>万元</option>
-              <option>亿元</option>
+            <select v-model="fundAnmount">
+              <option disabled value="">请选择资金规模</option>
+              <option v-for="i in fundAmountList" :value="i.key">{{i.label}}</option>
             </select>
           </span>
         </div>
@@ -57,7 +58,7 @@
           %
         </div>
       </div>
-      <div class="des-item" style="position:relative">
+      <div class="des-item">
         <div class="des-item-l">青睐资产类型</div>
         <div class="des-item-r">
           <input type="text" placeholder="请选择产品类型">
@@ -76,14 +77,43 @@
           <input v-model="findAssetType" type="checkbox" :value="item.key" />{{item.label}} 
         </label>
       </div>
-      <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;border-top: 0.06rem solid #E6E6E6;">
-        <div class="des-item-l" style="height: 2.6rem;">资产要求(选填)</div>
-        <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;"><input v-model="findAssetRequire" type="text" placeholder="请填写50个字以内描述" maxlength="50"></div>
+
+      <div class="des-item section">
+        <div class="des-item-l">资产要求(选填)</div>
+        <div class="des-item-r">
+          <input :value="findAssetRequire==''?'':findAssetRequire.substr(0,10)+'...'"  placeholder="下拉填写" readonly="readonly" />
+          <span :class="showFindAssetRequire?'upArrow':'downArrow'"></span>
+        </div>
+        <cell
+        class="myCell"
+        title="Animated"
+        is-link
+        :border-intent="false"
+        :arrow-direction="showFindAssetRequire ? 'up' : 'down'"
+        @click.native="showFindAssetRequire = !showFindAssetRequire"></cell>
       </div>
-      <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;border-top: 0.06rem solid #E6E6E6;">
-        <div class="des-item-l" style="height: 2.6rem;">备注(选填)</div>
-        <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;"><input v-model="remarks" type="text" placeholder="请填写30个字以内描述" maxlength="30"></div>
+      <div class="slide" :class="showFindAssetRequire?'animate':''">
+        <textarea v-model="findAssetRequire" type="text" placeholder="请填写200个字以内描述" maxlength="200"></textarea>
       </div>
+
+      <div class="des-item section">
+        <div class="des-item-l">备注(选填)</div>
+        <div class="des-item-r">
+          <input :value="remarks==''?'':remarks.substr(0,10)+'...'" readonly="readonly" placeholder="下拉填写" />
+          <span :class="showRemarks?'upArrow':'downArrow'"></span>
+        </div>
+        <cell
+        class="myCell"
+        title="Animated"
+        is-link
+        :border-intent="false"
+        :arrow-direction="showRemarks ? 'up' : 'down'"
+        @click.native="showRemarks = !showRemarks"></cell>
+      </div>
+      <div class="slide" :class="showRemarks?'animate':''">
+        <textarea v-model="remarks" type="text" placeholder="请填写200个字以内描述" maxlength="200"></textarea>
+      </div>
+
     </div>
     <div class="next" @click="nextWay">下一步</div>
 
@@ -105,32 +135,36 @@ export default {
   },
   data () {
     return {
+      fundAmountList:[], //从后台获取的资金规模类型列表
       fundTypeList:[], //从后台获取的资金类型列表
       assetTypeList:[], //从后台获取的资产类型列表
       projectName:'',  //项目名称
       fundType:'',    //资金类型
       fundAnmount:'', //资金规模
-      unitAnmount: '万元', //总放款规模 数字单位
+      /*unitAnmount: '万元',*/ //总放款规模 数字单位
       fundCostRegionFrom:'',
       fundCostRegionTo:'',
       findAssetType:[],
       showPdType: false,
       showLikeType: false,
+      showFindAssetRequire: false,
+      showRemarks: false,
       findAssetRequire:'',
       remarks:''
     }
   },
   watch: {
     // 如果 `fundType` 发生改变，这个函数就会运行
-    fundType: function (newQuestion) {
-      console.log(this.fundType)
+    fundAnmount: function (newQuestion) {
+      console.log(this.fundAnmount)
     }
   },
   mounted(){
+    this.fundAmountList=JSON.parse(localStorage.fundAmountList);
     this.assetTypeList = JSON.parse(localStorage.assetTypeList);
     this.fundTypeList = JSON.parse(localStorage.fundTypeList);
     if(localStorage.addFundParams != null){
-      let a = localStorage.addFundParams;
+      let a = JSON.parse(localStorage.addFundParams);
       this.projectName = a.projectName;
       this.fundType = a.fundType;
       this.fundAnmount = a.fundAnmount;
@@ -140,6 +174,22 @@ export default {
       this.findAssetRequire = a.findAssetRequire;
       this.remark = a.remarks
     }
+
+    /* select颜色设置 */
+    var unSelected = "#c2c2c2";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
   },
   methods:{
     nextWay(){
@@ -154,7 +204,8 @@ export default {
         let addFundParams = {
           projectName: this.projectName,
           fundType:  parseInt(this.fundType),
-          fundAnmount: parseInt( this.unitAnmount =='亿元'? this.fundAnmount*10000 : this.fundAnmount),
+          fundAnmount: this.fundAnmount,
+          /*fundAnmount: parseInt( this.unitAnmount =='亿元'? this.fundAnmount*10000 : this.fundAnmount),*/
           fundCostRegionFrom: parseInt(this.fundCostRegionFrom),
           fundCostRegionTo: parseInt(this.fundCostRegionTo),
           findAssetType:this.findAssetType.join(','),
@@ -182,6 +233,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+textarea{
+  width: 90%;
+  height: 3rem;
+}
   ::-webkit-input-placeholder { /* WebKit browsers */
     font-size: 0.815rem;
     letter-spacing: 1px;
@@ -198,9 +253,14 @@ export default {
     font-size: 0.815rem;
     letter-spacing: 1px;
   }
+.section{
+  height: 4.215rem;
+  line-height: 4.215rem;
+  border-top: 0.06rem solid #E6E6E6;
+}
 .assets{
   width: 100%;
-  min-height: 41rem;
+  min-height: 46rem;
   background: #EFEFF4;
   margin: 0 auto;
   padding-bottom:1.065rem;
@@ -242,6 +302,7 @@ export default {
   margin-top: 0.625rem;
 }
 .des-item{
+  position: relative;
   display: flex;
   flex-direction: row;
   padding:0 2rem 0 1.2rem;

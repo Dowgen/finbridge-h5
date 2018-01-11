@@ -22,9 +22,18 @@
     </div>
     <div class="assets-des1" v-if="AorF=='assets'">
       <div class="des-item">
-        <div class="des-item-l">公司名称(选填)</div>
+        <div class="des-item-l">公司名称</div>
         <div class="des-item-r">
           <input type="text" v-model="companyName" placeholder="请输入公司名称">
+        </div>
+      </div>
+      <div class="des-item">
+        <div class="des-item-l">是否公开公司名称</div>
+        <div class="des-item-r">
+          <label>
+            <input v-model="isPublicCoName" type="radio" value="1"/>是
+            <input v-model="isPublicCoName" type="radio" value="0"/>否
+          </label>
         </div>
       </div>
       <div class="des-item" style="border-bottom: 0.06rem solid #ECECEC;">
@@ -76,8 +85,19 @@
       <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;">
         <div class="des-item-l" style="height: 2.6rem;">公司背景(选填)</div>
         <div class="des-item-r" style="margin-top: 2rem;height: 1.615rem;line-height: 1.615rem;">
-          <input v-model="companyBackground" type="text" placeholder="请填写公司背景">
+          <input :value="companyBackground==''?'':companyBackground.substr(0,10)+'...'" readonly="readonly" placeholder="下拉填写" />
+          <span :class="showCoBackGround?'upArrow':'downArrow'"></span>
+          <cell
+        class="myCell"
+        title="Animated"
+        is-link
+        :border-intent="false"
+        :arrow-direction="showCoBackGround ? 'up' : 'down'"
+        @click.native="showCoBackGround = !showCoBackGround"></cell>
         </div>
+      </div>
+      <div class="slide" :class="showCoBackGround?'animate':''">
+        <textarea v-model="companyBackground" type="text" placeholder="请填写200个字以内描述" maxlength="200"></textarea>
       </div>
     </div>
 
@@ -97,8 +117,15 @@ export default {
   components: {
     myHead,Cell,PopupPicker
   },
+  watch: {
+    // 如果 `fundType` 发生改变，这个函数就会运行
+    isPublicCoName: function (newQuestion) {
+      console.log(this.isPublicCoName)
+    }
+  },
   data () {
     return {
+      showCoBackGround:false,
       title:'',
       AorF:'',
       fundType: false,
@@ -106,6 +133,7 @@ export default {
       cityList: Lib.M.cityList,
       fundSourceList:[],
       companyName :'',  // 公司名
+      isPublicCoName:1, //是否公开公司名称 0否 1是
       operationTime :'',  // 运营时间(月)
       AddressDetail  :'',  // 公司地址
       companyBackground :'',  // 公司（团队股东）背景（选填）：
@@ -148,7 +176,9 @@ export default {
           this.$router.push({ path: 'Release3', query: { AorF: this.AorF }})
         }
       }else{
-        if( this.operationTime =='' ||
+        if( this.companyName =='' ||
+          this.isPublicCoName =='' ||
+          this.operationTime =='' ||
           this.cityVal.length == 0 ||
           this.companyAddress  =='' ||
           this.fundOrigin.length == 0){
@@ -156,6 +186,7 @@ export default {
         }else{
           let b = {
             companyName: this.companyName,
+            isPublicCoName: parseInt(this.isPublicCoName),
             operationTime: parseInt(this.operationTime),
             companyAddress: this.cityVal.join(',')/*+ ' ' + this.AddressDetail*/,
             companyBackground: this.companyBackground,
@@ -173,6 +204,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+textarea{
+  width: 90%;
+  height: 3rem;
+}
   ::-webkit-input-placeholder { /* WebKit browsers */
     font-size: 0.815rem;
     letter-spacing: 1px;
@@ -232,6 +267,7 @@ export default {
   margin-top: 0.625rem;
 }
 .des-item{
+  position: relative;
   display: flex;
   flex-direction: row;
   padding:0 2rem 0 1.2rem;
@@ -294,6 +330,31 @@ export default {
   line-height: 3rem;
   margin-right: 0.5rem;
 }
+
+.des-item-r input[type="radio"] {
+  display: inline-block;
+  width: 1.19rem;
+  height: 1.19rem;
+  border: 0.06rem solid #E6E6E6;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-right: 0.2rem;
+  outline: none;
+}
+.des-item-r input:checked{
+  background: url("./img/selected_one.png") no-repeat center;
+  background-size: 100% 100%;
+}
+.des-item-r label {
+  display: inline-block;
+  height: 3rem;
+  line-height: 3rem;
+  margin-right: 0.5rem;
+}
+.pro-choose span{
+  margin-left: 0.5rem;
+}
+
 .myCell{
   position: absolute;
   left:0;

@@ -4,22 +4,40 @@
       <div class="square-head">
         <button-tab class="button-tab">
           <button-tab-item selected @on-item-click="zj=true">资金方</button-tab-item>
-          <button-tab-item @on-item-click="zj=false" @click="sort(1,1,1)">资产方</button-tab-item>
+          <button-tab-item @on-item-click="zj=false" @click="sortAsset(1)">资产方</button-tab-item>
         </button-tab>
       </div>
       <div class="zj" v-show="zj">
         <div class="zj-head">
-         <div @click="sort(1,1,2),isActive='comprehension'" :class="isActive=='comprehension'?'active':''">综合排序</div>
-         <div @click="isActive='total',isAsc?sort(2,1,2):sort(2,2,2)" :class="isActive=='total'?'active':''">资金规模
+         <div @click="sortFund(1)" :class="isAsc_fund?'active':''">综合排序</div>
+         <!-- <div @click="isActive_fund='total',isAsc?sort(2,1,2):sort(2,2,2)" :class="isActive_fund=='total'?'active':''">资金规模
            <img v-show="!isAsc" src="./img/ic_arrow_down.png" alt="">
            <img v-show="isAsc" src="./img/arrow_up.png" alt="">
+         </div> -->
+         <div @click="chooseType('.type1')">资金规模
+            <img src="./img/arrow_type_nor.png" alt="" class="arrow-down">
          </div>
-         <div @click="chooseType">选择类型
-           <img src="./img/arrow_type_nor.png" alt="">
-           <!--<img v-show="key == 1" src="./img/arrow_type_sel.png" alt="">-->
+         <div @click="chooseType('.type2')">选择类型
+            <img src="./img/arrow_type_nor.png" alt="" class="arrow-down">
+            <!--<img v-show="key == 1" src="./img/arrow_type_sel.png" alt="">-->
          </div>
-       </div>
-        <div class="type">
+        </div>
+
+        <div class="type type1">
+          <span class="angle" style="right:10.5rem"><img src="./img/tri-angle.png" alt=""></span>
+          <div class="type-head">规模类型</div>
+          <div class="types">
+            <label v-for="item in fundAmountList">
+              <input v-model="fundAnmountType" type="checkbox" :value="item.key" />{{item.label}}
+            </label>
+          </div>
+          <div class="btn">
+            <span class="confirm" @click="confirmFund">确定</span>
+            <span class="cancel" @click="cancel">取消</span>
+          </div>
+        </div>
+
+        <div class="type type2">
           <span class="angle"><img src="./img/tri-angle.png" alt=""></span>
           <div class="type-head">产品类型</div>
           <div class="types">
@@ -28,15 +46,17 @@
             </label>
           </div>
           <div class="btn">
-            <span class="confirm" @click="confirm(1,1,2)">确定</span>
-            <span class="cancel" @click="cancel()">取消</span>
+            <span class="confirm" @click="confirmFund">确定</span>
+            <span class="cancel" @click="cancel">取消</span>
           </div>
         </div>
         <div class="con">
           <div @click="jumpToDetai(2,item.fundId)" class="con-item" v-for="(item,index) in items">
+            <img v-show="item.isAuth==1" src="./img/label_auth.png" class="label-auth">
             <div class="item-title">
               <span></span>
               <span>{{item.projectName}}</span>
+              <img v-show="item.isRecommend==1" src="./img/label_recommend.png">
             </div>
             <div class="item-main">
               <div class="left">
@@ -61,17 +81,17 @@
       </div>
       <div class="zj" v-show="!zj">
         <div class="zj-head">
-          <div @click="sort(1,1,1),isActive='comprehension'" :class="isActive=='comprehension'?'active':''">综合排序</div>
-          <div @click="isActive='total',isAsc?sort(2,1,1):sort(2,2,1)" :class="isActive=='total'?'active':''">总放款规模
+          <div @click="sortAsset(1), isActive='comprehension'" :class="isActive=='comprehension'?'active':''">综合排序</div>
+          <div @click="sortAsset(2), isActive='total'" :class="isActive=='total'?'active':''">总放款规模
             <img v-show="!isAsc" src="./img/ic_arrow_down.png" alt="">
             <img v-show="isAsc" src="./img/arrow_up.png" alt="">
           </div>
-          <div @click="chooseType">选择类型
+          <div @click="chooseType('.type3')">选择类型
             <img  src="./img/arrow_type_nor.png" alt="">
            <!-- <img v-show="key == 1" src="./img/arrow_type_sel.png" alt="">-->
           </div>
         </div>
-        <div class="type">
+        <div class="type type3">
           <span class="angle"><img src="./img/tri-angle.png" alt=""></span>
           <div class="type-head">产品类型</div>
           <div class="types">
@@ -80,15 +100,17 @@
             </label>
           </div>
           <div class="btn">
-            <span class="confirm" @click="confirm(1,1,1)">确定</span>
+            <span class="confirm" @click="confirmAsset(1)">确定</span>
             <span class="cancel" @click="cancel">取消</span>
           </div>
         </div>
         <div class="con">
           <div @click="jumpToDetai(1,oItem.assetId)" class="con-item" v-for="oItem in oItems">
+          <img v-show="oItem.isAuth==1" src="./img/label_auth.png" class="label-auth">
             <div class="item-title">
               <span></span>
               <span>{{oItem.projectName}}</span>
+              <img v-show="oItem.isRecommend==1" src="./img/label_recommend.png">
             </div>
             <div class="item-main">
               <div class="left">
@@ -134,11 +156,15 @@ export default {
   data () {
     return {
       isActive: 'comprehension',
+      /*isActive_fund: 'active',*/
       isAsc:true,
+      isAsc_fund:true,
       zj:true,
       key:2,
       items:[],
       oItems:[],
+      fundAmountList:[],
+      fundAnmountType:[],
       validPeriod:'',
       img_src:'',
       countDownDay:'',
@@ -151,7 +177,6 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    console.log(to)
     if(from.path =='/sqProjectDetail'){
       to.meta.keepAlive = true;
     }else /*if(to.path =='/Square')*/{
@@ -160,19 +185,25 @@ export default {
     next();
   },
   mounted(){
-    this.getConfigByParameter();
-    this.sort(1,1,2);
-    this.sort(1,1,1);
+    this.fundAmountList = JSON.parse(localStorage.fundAmountList);
+    this.getValidPeriod();
+    this.sortFund();
+    this.sortAsset(1);
     this.getFundList();
 
   },
   methods: {
-    chooseType(){
-      $('.type').css('display','block');
+    chooseType(which){
+      $(which).css('display','block');
+      $(which).siblings(".type").css('display','none');
     },
-    confirm(chooseType,sortType,AorF){
+    confirmAsset(chooseType){
       $('.type').css('display','none');
-      this.sort(chooseType,sortType,AorF);
+      this.sortAsset(chooseType);
+    },
+    confirmFund(){
+      $('.type').css('display','none');
+      this.sortFund();
     },
     cancel(){
       $('.type').css('display','none');
@@ -184,7 +215,8 @@ export default {
         }
       })
     },
-    getConfigByParameter(){
+    // 获得资金资产统一的失效天数
+    getValidPeriod(){
       var self = this;
       Lib.M.ajax({
         url:'/config/getConfigByParameter',
@@ -201,27 +233,42 @@ export default {
         }
       });
     },
-    sort(chooseType,sortType,AorF){
+    sortAsset(chooseType){
       var self = this;
-      var url = AorF == 1?'/asset/sortAsset':'/fund/sortFund';
-      if(self.isAsc){
-        self.isAsc = false
-      }else {
-        self.isAsc = true
-      }
+      var url = '/asset/sortAsset';
+      if(chooseType==2) self.isAsc = !self.isAsc;
+
       Lib.M.ajax({
         url:url,
         data:{
           'chooseType':chooseType == 1?'comprehensive':'total',
-          'sortType':sortType == 1?'asc':'desc',
-          'type':AorF == 1?self.assetType.toString():self.fundType.toString(),
+          'sortType': self.isAsc ? 'asc':'desc',
+          'type': self.assetType.toString(),
         },
         success:function (res) {
-         if(AorF==1){
-           self.oItems = res.data;
-         }else{
+          self.oItems = res.data;
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
+    sortFund(isSort){
+      var self = this;
+      var url = '/fund/sortFund';
+      console.log(isSort==1)
+      console.log(self.isAsc_fund)
+      if(isSort==1) self.isAsc_fund = !self.isAsc_fund;
+
+      Lib.M.ajax({
+        url:url,
+        data:{
+          'fundAnmountType': self.fundAnmountType.toString(),
+          'sortType': self.isAsc_fund ?'asc':'desc',
+          'fundType': self.fundType.toString(),
+        },
+        success:function (res) {
            self.items = res.data;
-         }
         },
         error:function(err){
           console.error(err);
@@ -316,6 +363,13 @@ export default {
             top: 0.4rem;
             right:0.65rem;
           }
+          .arrow-down{
+            width: 0.315rem;
+            height: 0.25rem;
+            position: absolute;
+            top: 0.6rem;
+            right: 1.2rem;
+          }
         }
         div:nth-of-type(3){
           position: relative;
@@ -331,13 +385,16 @@ export default {
       .con{
         .con-item{
           height: 7.5rem;
-          background: #fff;
+          background-color: #fff;
           margin-top: 0.8rem;
           padding: 0 1rem;
+          position: relative;
           .item-title{
+            display:flex;
+            align-items:center;
             text-align: left;
             line-height: 2.315rem;
-            font-size: 0.815rem;
+            font-size: 0.875rem;
             color: #333333 ;
             border-bottom:0.06rem dashed #EAEAEA;
             position: relative;
@@ -352,6 +409,11 @@ export default {
             }
             span:nth-of-type(2){
               margin-left: 0.5rem;
+            }
+            img{
+              width:2.25rem;
+              height:1rem;
+              margin-left:0.625rem;
             }
           }
           .item-main{
@@ -378,9 +440,7 @@ export default {
               height: 3rem;
               border-left: 0.06rem solid #E6E7EB;
               margin-top: 1.47rem;
-              /*margin-left: 1.5rem;*/
               div{
-                /*width: 13.5rem;*/
                 font-size: 0.75rem;
                 overflow: hidden;
                 position: relative;
@@ -417,7 +477,7 @@ export default {
         }
 
       }
-      .type{
+      .type,.type1,.type2{
         height: 33rem;
         background: #fff;
         text-align: left;
@@ -494,8 +554,14 @@ export default {
       }
 
     }
-
-
+    .label-auth{
+      width:6.22rem;
+      height:5.5rem;
+      position:absolute;
+      right:1%;
+      bottom:5%;
+    }
+    
   }
 
 </style>
