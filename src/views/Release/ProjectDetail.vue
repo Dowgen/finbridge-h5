@@ -39,7 +39,7 @@
       </div>
       <div class="main-item">
         <p>{{info.projectName}}</p>
-        <p>{{info.productType}}</p>
+        <p>{{getLabel(info.productType,'asset')}}</p>
         <p>
            {{ String(parseInt(info.totalPayAmount)).length >= 5 ? info.totalPayAmount/10000 : info.totalPayAmount}} 
               {{ String(parseInt(info.totalPayAmount)).length >= 5 ? '亿元' : '万元'}}
