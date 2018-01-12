@@ -495,7 +495,7 @@ body{
   height: 1.22rem;
   color: #fff;
   position: relative;
-  margin-top: 0.8rem;
+  margin-top: 1.3rem;
 }
 .head p{
   font-size:1.065rem;
@@ -511,7 +511,7 @@ body{
 }
 .con .p1{
   font-size: 0.94rem;
-  margin:1.25rem 0 2.4rem 0;
+  margin:1rem 0 1.6rem 0;
 }
 .con .p2{
   font-size: 1.44rem;
