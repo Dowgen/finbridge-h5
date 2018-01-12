@@ -16,7 +16,7 @@
             <p>单笔额度</p>
           </div>
           <div class="item">
-            <p>{{info.perPeriod}}天</p>
+            <p>{{info.perPeriod}}</p>
             <p>单笔期限</p>
           </div>
           <div class="item">
