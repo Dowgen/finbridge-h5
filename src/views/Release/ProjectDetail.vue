@@ -15,7 +15,7 @@
             <p>单笔额度</p>
           </div>
           <div class="item">
-            <p>{{info.perPeriod}}天</p>
+            <p>{{info.perPeriod}}</p>
             <p>单笔期限</p>
           </div>
           <div class="item">
@@ -30,50 +30,71 @@
     </div>
     <div class="project-main">
       <div class="main-item">
-        <p>项目名称</p>
-        <p>项目类型</p>
-        <p>总放款量</p>
-        <p>坏账率</p>
-        <p>产品名称</p>
-        <p>产品特色</p>
-      </div>
-      <div class="main-item">
-        <p>{{info.projectName}}</p>
-        <p>{{getLabel(info.productType,'asset')}}</p>
-        <p>
+        <div>
+          <p>项目名称</p>
+          <p>{{info.projectName}}</p>
+        </div>
+        <div>
+          <p>项目类型</p>
+          <p>{{getLabel(info.productType,'asset')}}</p><!---->
+        </div>
+        <div>
+          <p>总放款量</p>
+          <p>
            {{ String(parseInt(info.totalPayAmount)).length >= 5 ? info.totalPayAmount/10000 : info.totalPayAmount}} 
               {{ String(parseInt(info.totalPayAmount)).length >= 5 ? '亿元' : '万元'}}
-        </p>
-        <p>{{info.debtRate}}%</p>
-        <p>{{info.productName || '无'}}</p>
-        <p style="line-height: 24px">{{info.productFeature}}</p>
+          </p>
+        </div>
+        <div>
+          <p>坏账率</p>
+          <p>{{info.debtRate}}%</p>
+        </div>
+        <div>
+          <p>产品名称</p>
+          <p>{{info.projectName}}</p>
+        </div>
+        <div>
+          <p>产品特色</p>
+          <p>{{info.productFeature}}</p>
+        </div>
       </div>
     </div>
-    <div class="project-footer">
-      <div class="footer-item">
-        <p>公司名称</p>
-        <p>运营时间</p>
-        <p>资金来源</p>
-        <p>公司地址</p>
-        <p>公司背景</p>
-      </div>
-      <div class="footer-item">
-        <p>{{info.companyName || '无'}}</p>
-        <p>{{info.operationTime}}个月</p>
-        <p>{{getLabel(info.fundOrigin,'assest')}}</p>
-        <p>{{info.companyAddress}}</p>
-        <p>{{info.companyBackground || '无'}}</p>
+
+    <div class="project-main project-footer">
+      <div class="main-item">
+        <div>
+          <p>公司名称</p>
+          <p>{{info.companyName || '无'}}</p>
+        </div>
+        <div>
+          <p>运营时间</p>
+          <p>{{info.operationTime}}个月</p>
+        </div>
+        <div>
+          <p>资金来源</p>
+          <p>{{getLabel(info.fundOrigin,'assest')}}</p>
+        </div>
+        <div>
+          <p>公司地址</p>
+          <p>{{info.companyAddress}}</p>
+        </div>
+        <div>
+          <p>公司背景</p>
+          <p>{{info.companyBackground || '无'}}</p>
+        </div>
       </div>
     </div>
-    <div class="project-footer">
-      <div class="footer-item">
-        <p>手机号码</p>
-        <p>微信号</p>
+    <div class="project-main project-footer">
+      <div class="main-item">
+        <div>
+          <p>手机号码</p>
+          <p>{{info.contactPhone}}</p>
+        </div>
+        <div>
+          <p>微信号</p>
+          <p>{{info.contactWechat}}</p>
+        </div>
         <!-- <p>QQ号</p> -->
-      </div>
-      <div class="footer-item">
-        <p>{{info.contactPhone}}</p>
-        <p>{{info.contactWechat}}</p>
         <!-- <p>{{info.contactQQ}}</p> -->
       </div>
     </div>
@@ -113,23 +134,35 @@
     </div>
     <div class="project-main">
       <div class="main-item">
-        <p>公司名称</p>
-        <p>青睐资产</p>
-      </div>
-      <div class="main-item">
-        <p>{{info.companyName}}</p>
-        <p>{{getLabel(info.findAssetType,'assest')}}</p>
+        <div>
+          <p>公司名称</p>
+          <p>{{info.companyName}}</p>
+        </div>
+        <div>
+          <p>青睐资产</p>
+          <p>{{getLabel(info.findAssetType,'asset')}}</p>
+        </div>
+        <div>
+          <p>资金需求</p>
+          <p>{{info.findAssetRequire}}</p>
+        </div>
+        <div>
+          <p>备注</p>
+          <p>{{info.remark}}</p>
+        </div>
       </div>
     </div>
-    <div class="project-footer">
-      <div class="footer-item">
-        <p>手机号码</p>
-        <p>微信号</p>
+    <div class="project-main project-footer">
+      <div class="main-item">
+        <div>
+          <p>手机号码</p>
+          <p>{{info.contactPhone}}</p>
+        </div>
+        <div>
+          <p>微信号</p>
+          <p>{{info.contactWechat}}</p>
+        </div>
         <!-- <p>QQ号</p> -->
-      </div>
-      <div class="footer-item">
-        <p>{{info.contactPhone}}</p>
-        <p>{{info.contactWechat}}</p>
         <!-- <p>{{info.contactQQ}}</p> -->
       </div>
     </div>
@@ -450,111 +483,87 @@ body{
   box-sizing:border-box;
   padding-bottom: 3.065rem;
 }
-.project .project-head{
+.project-head{
   width: 100%;
   height: 14.69rem;
   background: url("./img/bg_details.png") no-repeat center;
   background-size: 100% 100%;
   overflow: hidden;
 }
-.project .head{
+.head{
   width: 100%;
   height: 1.22rem;
   color: #fff;
   position: relative;
   margin-top: 0.8rem;
 }
-.project .head p{
+.head p{
   font-size:1.065rem;
   text-align: center;
 }
-.project .head span{
+.head span{
   position: absolute;
   left: 1.655rem;
 }
-.project .con p{
+.con p{
   font-family:PingFangSC-Regular;
   color: #fff;
 }
-.project .con .p1{
+.con .p1{
   font-size: 0.94rem;
   margin:1.25rem 0 2.4rem 0;
 }
-.project .con .p2{
+.con .p2{
   font-size: 1.44rem;
   margin-bottom: 0.6rem;
 }
-.project .con .p3{
+.con .p3{
   font-size: 0.815rem;
 }
-.project .project-des{
+.project-des{
   display: flex;
   flex-direction: row;
   margin-top: 1.5rem;
 }
-.project .project-des .item{
+.project-des .item{
   flex-grow: 1;
   width: 0;
 }
-.project .project-des .item p:nth-of-type(1){
+.project-des .item p:nth-of-type(1){
   font-size: 0.875rem;
   border-right: 1px solid #fff;
 }
-.project .project-des .item p:nth-of-type(2){
-
+.project-des .item p:nth-of-type(2){
   font-size: 0.815rem;
 }
-.project .project-main{
+.project-main{
   width: 100%;
   margin: 0 auto;
-  display: flex;
   background: #fff;
 }
-.project .project-main .main-item:nth-of-type(1){
-  flex: 1;
-  color: #BEBEBE;
-}
-.project .project-main .main-item:nth-of-type(2){
-  flex: 4;
-  color: #666666;
-}
-.project .project-main .main-item{
+.project-main .main-item{
   font-size: 0.875rem;
   text-align: left;
   align-self:baseline;
-  margin:0 1rem;
+  padding:0.75rem 1rem;
 }
-.project .project-main .main-item p{
-  margin:1.5rem 0;
-  font-size: 0.875rem;
-  height: 0.8rem;
-}
-.project .project-footer{
-  width: 100%;
-  margin: 0 auto;
+.project-main .main-item>div{
   display: flex;
-  flex-direction: row;
- /* height: 5.03rem;*/
-  background: #fff;
+}
+.project-main .main-item p{
+  margin:0.75rem 0;
+}
+.project-main .main-item>div>p:nth-of-type(1){
+  color: #BEBEBE;
+  flex:1;
+}
+.project-main .main-item>div>p:nth-of-type(2){
+  color: #666666;
+  flex:3;
+  margin-left: 2rem;
+}
+.project-footer{
   margin-top: 0.625rem;
-}
-.project .project-footer .footer-item:nth-of-type(1){
-  flex: 1;
-  color: #BEBEBE;
-}
-.project .project-footer .footer-item:nth-of-type(2){
-  flex: 4;
-  color: #666666;
-}
-.project .footer-item{
-  font-size: 0.875rem;
-  text-align: left;
-  align-self:baseline;
-  margin:0 1rem;
-}
-.project .project-footer .footer-item p{
-  margin:1.5rem 0;
-  height: 0.8rem;
 }
 .footer-btn{
   position: fixed;
