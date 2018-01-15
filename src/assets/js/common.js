@@ -12,7 +12,7 @@ Vue.use(LoadingPlugin);
 var vm = new Vue({});
 
 //全局域名设置
-var domain = 'https://fb.moneyboom.cn';
+var domain = 'https://api.moneyboom.cn';
 /*var domain = 'http://192.168.2.169:8060';*/
 
 //localStorage清除
