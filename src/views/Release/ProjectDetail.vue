@@ -214,8 +214,8 @@ export default {
           //微信分享设置
           wx.onMenuShareTimeline({
             title: '51资金资产', 
-            link:  'https://finbridge.cn', 
-            imgUrl: 'https://finbridge.cn/logo.png', 
+            link:  Lib.M.webDomain, 
+            imgUrl: Lib.M.webDomain+ '/logo.png', 
             success: function () { 
               vm.$vux.toast.show({
                   showPositionValue: false,
@@ -232,8 +232,8 @@ export default {
           wx.onMenuShareAppMessage({
             title: '51资金资产', 
             desc: '关注51资金资产公众号，获取更多信息', 
-            link:  'https://finbridge.cn',
-            imgUrl: 'https://finbridge.cn/logo.png', 
+            link:  Lib.M.webDomain,
+            imgUrl: Lib.M.webDomain+'/logo.png', 
             /*type: '', // 分享类型,music、video或link，不填默认为link*/
             /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
             success: function () { 
@@ -375,10 +375,10 @@ export default {
             //微信分享设置
             wx.onMenuShareTimeline({
               title: self.info.projectName, 
-              link: 'https://finbridge.cn' + '/#/sqProjectDetail?AorF=' + self.AorF
+              link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
                 + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId) 
                 +'&fromShare=y', 
-              imgUrl: 'https://finbridge.cn/logo.png', 
+              imgUrl: Lib.M.webDomain+'/logo.png', 
               success: function () { 
                 if(self.isLose=='1') self.share();
               },
@@ -390,10 +390,10 @@ export default {
             wx.onMenuShareAppMessage({
               title: self.info.projectName, 
               desc: '关注51资金资产公众号，获取更多信息', 
-              link: 'https://finbridge.cn' + '/#/sqProjectDetail?AorF=' + self.AorF
+              link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
                 + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId)
                 +'&fromShare=y',
-              imgUrl: 'https://finbridge.cn/logo.png', 
+              imgUrl: Lib.M.webDomain+'/logo.png', 
               /*type: '', // 分享类型,music、video或link，不填默认为link*/
               /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
               success: function () { 

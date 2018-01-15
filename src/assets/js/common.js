@@ -12,8 +12,9 @@ Vue.use(LoadingPlugin);
 var vm = new Vue({});
 
 //全局域名设置
-var domain = 'https://api.moneyboom.cn';
-/*var domain = 'http://192.168.2.169:8060';*/
+var webDomain = 'https://moneyboom.cn';
+var apiDomain = 'https://api.moneyboom.cn';
+/*var apiDomain = 'http://192.168.2.169:8060';*/
 
 //localStorage清除
 localStorage.removeItem('addAssetParams');
@@ -63,7 +64,7 @@ axios.interceptors.response.use(
 function getToken(){
     axios({
         method: 'post',
-        url: domain + '/uaa/oauth/token',
+        url: apiDomain + '/uaa/oauth/token',
         headers:  {
             Accept:'application/json',
             Authorization:'Basic anVoZV9jYXNobG9hbjpKdWhlMTIzNjc4IUAj'
@@ -102,7 +103,8 @@ var Rxports = {
 	/* wb add start */
 
     /* 域名 */
-    domain: domain,
+    webDomain: webDomain,
+    apiDomain: apiDomain,
 
     /**    列表    **/
     eduList: pickerList.eduList,
@@ -167,7 +169,7 @@ var Rxports = {
             },
 			// `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
   			// 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
-			baseURL: domain + '/finbridge-base',
+			baseURL: apiDomain + '/finbridge-base',
 			timeout: opts.timeout || 0,
 			responseType: opts.dataType || 'json'
 		}).then(function(res){
@@ -259,8 +261,8 @@ Rxports.ajax({
           //微信分享设置
           wx.onMenuShareTimeline({
             title: '51资金资产', 
-            link:  'https://finbridge.cn', 
-            imgUrl: 'https://finbridge.cn/logo.png', 
+            link:  Lib.M.webDomain, 
+            imgUrl: Lib.M.webDomain+'/logo.png', 
             success: function () { 
               vm.$vux.toast.show({
                   showPositionValue: false,
@@ -277,8 +279,8 @@ Rxports.ajax({
           wx.onMenuShareAppMessage({
             title: '51资金资产', 
             desc: '关注51资金资产公众号，获取更多信息', 
-            link:  'https://finbridge.cn',
-            imgUrl: 'https://finbridge.cn/logo.png', 
+            link:  Lib.M.webDomain,
+            imgUrl: Lib.M.webDomain+'/logo.png', 
             /*type: '', // 分享类型,music、video或link，不填默认为link*/
             /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
             success: function () { 

@@ -222,8 +222,8 @@ export default {
           wx.onMenuShareTimeline({
             title: '51资金资产', 
             /*link:  sessionStorage.wechatShareReturnLink,*/ 
-            link: 'https://finbridge.cn',
-            imgUrl: 'https://finbridge.cn/logo.png', 
+            link: Lib.M.webDomain,
+            imgUrl: Lib.M.webDomain+'/logo.png', 
             success: function () { 
               vm.$vux.toast.show({
                   showPositionValue: false,
@@ -240,8 +240,8 @@ export default {
             title: '51资金资产', 
             desc: '关注51资金资产公众号，获取更多信息', 
             /*link:  sessionStorage.wechatShareReturnLink,*/
-            link: 'https://finbridge.cn',
-            imgUrl: 'https://finbridge.cn/logo.png', 
+            link: Lib.M.webDomain,
+            imgUrl: Lib.M.webDomain+'/logo.png', 
             /*type: '', // 分享类型,music、video或link，不填默认为link*/
             /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
             success: function () { 
@@ -271,7 +271,7 @@ export default {
   },
   methods:{
     jumpTo(){
-      window.location.href = 'https://finbridge.cn';
+      window.location.href = Lib.M.webDomain;
     },
     /*getReturnLink(){
       Lib.M.ajax({
@@ -375,7 +375,7 @@ export default {
             wx.onMenuShareTimeline({
               title: self.info.projectName, 
               link:  location.href + params, 
-              imgUrl: 'https://finbridge.cn/logo.png', 
+              imgUrl: Lib.M.webDomain+'/logo.png', 
               success: function () { 
                 self.shareSuccess();
               },
@@ -388,7 +388,7 @@ export default {
               title: self.info.projectName, 
               desc: '关注51资金资产公众号，获取更多信息', 
               link:  location.href + params,
-              imgUrl: 'https://finbridge.cn/logo.png', 
+              imgUrl: Lib.M.webDomain+'/logo.png', 
               /*type: '', // 分享类型,music、video或link，不填默认为link*/
               /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
               success: function () { 

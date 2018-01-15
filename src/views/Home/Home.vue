@@ -174,7 +174,7 @@ export default {
     getToken(){
       var self = this;
       Lib.M.ajax({
-        url : Lib.M.domain + '/uaa/oauth/token',
+        url : Lib.M.apiDomain + '/uaa/oauth/token',
         /*headers: {
           Accept:'application/json',
           Authorization:'Basic Y2xpZW50OnNlY3JldA=='
