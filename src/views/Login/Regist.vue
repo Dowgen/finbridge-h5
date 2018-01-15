@@ -51,12 +51,13 @@ export default {
     }
   },
   mounted(){
-    this.getOpenId();
     this.code = Lib.M.GetQueryString('code')
+    this.getOpenId();
   },
   methods: {
     //拿到code传给后台获取用户的微信openId
     getOpenId(){
+      console.log(this.code);
       if(this.code!=null){
         Lib.M.ajax({
           url:'/wechat/getOpenId',
