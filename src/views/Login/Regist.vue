@@ -57,12 +57,12 @@ export default {
   methods: {
     //拿到code传给后台获取用户的微信openId
     getOpenId(){
-      console.log(this.code);
+      var self = this;
       if(this.code!=null){
         Lib.M.ajax({
           url:'/wechat/getOpenId',
           data:{
-            'code':code
+            'code':self.code
           },
           success:function (res) {
             if(res.code==200){
