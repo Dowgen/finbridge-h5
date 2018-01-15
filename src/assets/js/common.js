@@ -261,8 +261,8 @@ Rxports.ajax({
           //微信分享设置
           wx.onMenuShareTimeline({
             title: '51资金资产', 
-            link:  Lib.M.webDomain, 
-            imgUrl: Lib.M.webDomain+'/logo.png', 
+            link:  Rxports.webDomain, 
+            imgUrl: Rxports.webDomain+'/logo.png', 
             success: function () { 
               vm.$vux.toast.show({
                   showPositionValue: false,
@@ -279,8 +279,8 @@ Rxports.ajax({
           wx.onMenuShareAppMessage({
             title: '51资金资产', 
             desc: '关注51资金资产公众号，获取更多信息', 
-            link:  Lib.M.webDomain,
-            imgUrl: Lib.M.webDomain+'/logo.png', 
+            link:  Rxports.webDomain,
+            imgUrl: Rxports.webDomain+'/logo.png', 
             /*type: '', // 分享类型,music、video或link，不填默认为link*/
             /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
             success: function () { 
