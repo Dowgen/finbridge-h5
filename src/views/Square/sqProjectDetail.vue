@@ -294,7 +294,7 @@ export default {
             if(res.data=='yes')  
               $('.alert').css('display','block')
             else   
-              self.$vux.toast.text('您需要先通过微信分享此项目才可以查看联系信息', 'middle');
+              self.$vux.alert.show('您需要先通过微信分享此项目才可以查看联系信息', 'middle');
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
