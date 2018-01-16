@@ -273,6 +273,51 @@ export default {
     jumpTo(){
       window.location.href = Lib.M.webDomain;
     },
+    shareSuccess(){
+      this.$vux.toast.show({
+        showPositionValue: false,
+        text: '分享成功',
+        type: 'success',
+        position: 'middle'
+      })
+    },
+    shareOrNot(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/user/findUserShareMap',
+        data: {
+          userId:localStorage.userId,
+          projectId: self.$route.query.proId
+        },
+        success:function(res){
+          if(res.code==200){
+            if(res.data=='yes')  
+              $('.alert').css('display','block')
+            else   
+              self.$vux.toast.text('您需要先通过微信分享此项目才可以查看联系信息', 'middle');
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
+    shareProject(){
+      var self = this;
+      Lib.M.ajax({
+        url : '/user/addUserShareMap',
+        data: {
+          userId:localStorage.userId,
+          projectId: self.$route.query.proId
+        },
+        success:function(res){
+          if(res.code==200){
+            self.shareSuccess();
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
     /*getReturnLink(){
       Lib.M.ajax({
         url : '/config/getConfigByParameter',
@@ -291,18 +336,10 @@ export default {
     getFundAmountType(key){
       return Lib.M.getFundAmountType(key);
     },
-    shareSuccess(){
-      this.$vux.toast.show({
-        showPositionValue: false,
-        text: '分享成功',
-        type: 'success',
-        position: 'middle'
-      })
-    },
     contactCard(){
       var self = this;
       if(localStorage.userId != undefined){
-        $('.alert').css('display','block')
+        self.shareOrNot();
       }else{
         this.$vux.confirm.show({
         content: '查看联系方式需要登录,是否确认登录?',
@@ -377,7 +414,7 @@ export default {
               link:  location.href + params, 
               imgUrl: Lib.M.webDomain+'/logo.png', 
               success: function () { 
-                self.shareSuccess();
+                self.shareProject();
               },
               cancel: function () { 
                   // 用户取消分享后执行的回调函数
@@ -392,7 +429,7 @@ export default {
               /*type: '', // 分享类型,music、video或link，不填默认为link*/
               /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
               success: function () { 
-                self.shareSuccess();
+                self.shareProject();
               },
               cancel: function () { 
                   // 用户取消分享后执行的回调函数
