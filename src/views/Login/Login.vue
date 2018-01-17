@@ -173,8 +173,8 @@ export default {
     letter-spacing: 2px;
   }
   .hello .input .psd{
-    font-size: 0.7rem;
-    letter-spacing: 10px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
   }
   .hello .input .miss-psd{
     font-size:0.815rem;
@@ -188,7 +188,7 @@ export default {
     font-size:0.815rem;
     position: absolute;
     left: 0;
-    bottom: 1.28rem;
+    bottom: 5rem;
     text-align: center;
   }
 </style>

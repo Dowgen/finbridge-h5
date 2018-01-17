@@ -246,8 +246,8 @@ export default {
   }
   .hello .input .psd{
     border-bottom: 0.06rem solid #9C9C9C;
-    font-size: 0.7rem;
-    letter-spacing: 10px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
   }
   .hello .input .yzm{
     width:9.69rem;
@@ -265,6 +265,6 @@ export default {
     font-size:0.815rem;
     text-align: center;
     position: absolute;
-    bottom: 1.065rem;
+    bottom: 5rem;
   }
 </style>
