@@ -166,40 +166,33 @@ var Rxports = {
                 /*'authKey':localStorage.authKey,
                 'sessionId':localStorage.sessionId,
                 'phone':localStorage.phoneNum*/
-            },
+      },
 			// `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
-  			// 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
+  		// 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
 			baseURL: apiDomain + '/finbridge-base',
 			timeout: opts.timeout || 0,
 			responseType: opts.dataType || 'json'
 		}).then(function(res){
             /*vm.$vux.loading.hide();*/
 			if(res.status == 200 ){
-
 				if(opts.success){
 					opts.success(res.data,res);
 				}
-
 			}else{
-
 				if (opts.error) {
 					opts.error(res.error);
 				}else{
-                    console.error('then:'+res.error);
-                }
-
-            }
-
-
-        }).catch(function (error){
-            /*vm.$vux.loading.hide();*/
-            if (opts.error) {
-                opts.error(error);
-            }else{
-				console.error('catch:'+error);
-			}
+          console.error('then:'+res.error);
+        }
+      }
+    }).catch(function (error){
+        /*vm.$vux.loading.hide();*/
+        if (opts.error) {
+            opts.error(error);
+        }else{
+				  console.error('catch:'+error);
+			  }
 		});
-
 	},
 	/**
 	  * 获取url传过来的参数

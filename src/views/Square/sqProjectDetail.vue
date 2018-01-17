@@ -202,7 +202,7 @@ export default {
       wechatShareReturnLink:''
     }
   },
-  /*beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to, from, next) {
     //微信分享设置
     Lib.M.ajax({
       url : '/wechat/wxSig',
@@ -221,38 +221,48 @@ export default {
           //微信分享设置
           wx.onMenuShareTimeline({
             title: '51资金资产', 
+            /*link:  sessionStorage.wechatShareReturnLink,*/ 
             link: Lib.M.webDomain,
             imgUrl: Lib.M.webDomain+'/logo.png', 
             success: function () { 
-              vm.$vux.toast.show({
+              self.$vux.toast.show({
                   showPositionValue: false,
                   text: '分享成功',
                   type: 'success',
                   position: 'middle'
               })
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
             }
           });
           wx.onMenuShareAppMessage({
             title: '51资金资产', 
             desc: '关注51资金资产公众号，获取更多信息', 
+            /*link:  sessionStorage.wechatShareReturnLink,*/
             link: Lib.M.webDomain,
             imgUrl: Lib.M.webDomain+'/logo.png', 
+            /*type: '', // 分享类型,music、video或link，不填默认为link*/
+            /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
             success: function () { 
-              vm.$vux.toast.show({
+              self.$vux.toast.show({
                   showPositionValue: false,
                   text: '分享成功',
                   type: 'success',
                   position: 'middle'
               })
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
             }
           });
           next();
         }else{
-          vm.$vux.toast.text(res.error, 'middle');
+          self.$vux.toast.text(res.error, 'middle');
         }
       }
     });
-  },*/
+  },
   mounted(){
     if(localStorage.userId!= undefined) this.hide = 0
     this.getFundList();
