@@ -267,7 +267,6 @@ export default {
     if(localStorage.userId!= undefined) this.hide = 0
     this.getFundList();
     this.getDetail();
-    alert('mounted');
     /*this.getReturnLink();*/
   },
   methods:{
@@ -392,7 +391,6 @@ export default {
     },
     //获取微信签名
     getWxSig(){
-      alert('getWxSig')
       var self = this;
       Lib.M.ajax({
         url : '/wechat/wxSig',
@@ -445,7 +443,6 @@ export default {
     },
     //根据id查询详情
     getDetail(){
-      alert('getDetail')
       var self = this;
       var url = '',type2='', data={};
       if(this.$route.query.AorF == 1){
