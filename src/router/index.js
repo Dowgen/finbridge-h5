@@ -31,10 +31,7 @@ const HomeRoutes = [
   },
   {
     path: '/Home',
-    component: _import('Home/Home'),
-    meta: {
-        keepAlive: true // 需要被缓存
-    }
+    component: _import('Home/Home')
   },
   {
     path: '/NewsDetail',
@@ -61,10 +58,7 @@ const squareRoutes = [
 const ReleaseRoutes = [
   {
     path: '/MyProject',
-    component: _import('Release/MyProject'),
-    meta: {
-        keepAlive: true // 需要被缓存
-    }
+    component: _import('Release/MyProject')
   },{
     path: '/ReleaseAssets',
     component: _import('Release/ReleaseAssets')

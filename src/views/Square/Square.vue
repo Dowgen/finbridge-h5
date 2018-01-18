@@ -176,12 +176,22 @@ export default {
 
     }
   },
-  beforeRouteEnter(to, from, next) {
+  /*beforeRouteEnter(to, from, next) {
     if(from.path =='/sqProjectDetail'){
       to.meta.keepAlive = true;
-    }else /*if(to.path =='/Square')*/{
+    }else{
       to.meta.keepAlive = false;
     }
+    next();
+  },*/
+  beforeRouteLeave(to, from, next) {
+    if(to.path =='/sqProjectDetail'){
+      from.meta.keepAlive = true;
+    }else{
+      from.meta.keepAlive = false;
+      /*this.$destroy();*/
+    }
+    console.log(from.meta.keepAlive);
     next();
   },
   mounted(){
@@ -256,8 +266,6 @@ export default {
     sortFund(isSort){
       var self = this;
       var url = '/fund/sortFund';
-      console.log(isSort==1)
-      console.log(self.isAsc_fund)
       if(isSort==1) self.isAsc_fund = !self.isAsc_fund;
 
       Lib.M.ajax({
