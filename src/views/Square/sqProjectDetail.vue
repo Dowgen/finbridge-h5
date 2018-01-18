@@ -399,13 +399,15 @@ export default {
           if(res.code==200){
             let wxSig = res.data;
             //分享链接设置
-            let url,shareUrl = '';
+            let url = location.href;
+            let shareUrl = '';
             if(self.$route.query.fromShare=='y'){
               url = url.substr(0, url.indexOf('?')) +url.substr(url.indexOf('#'),url.length)
             }else{
               url = location.href + '&fromShare=y';
             }
             shareUrl = url;
+            alert(shareUrl);
             
             wx.config({
               debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
