@@ -391,12 +391,14 @@ export default {
     },
     //获取微信签名
     getWxSig(){
+      alert('调用getWxSig')
       var self = this;
       Lib.M.ajax({
         url : '/wechat/wxSig',
         data:{url: location.href.split('#')[0]},
         success:function(res){
           if(res.code==200){
+            alert('getWxsig成功返回')
             let wxSig = res.data;
             let params = '&fromShare=y';
             if(self.$route.query.fromShare=='y') params = '';
@@ -438,13 +440,18 @@ export default {
               }
             });
           }else{
+            alert('getWxsig返回失败')
             self.$vux.toast.text(res.error, 'middle');
           }
+        },
+        error:function(err){
+          alert('getWxsig返回失败')
         }
       });
     },
     //根据id查询详情
     getDetail(){
+      alert('调用getDetail')
       var self = this;
       var url = '',type2='', data={};
       if(this.$route.query.AorF == 1){
@@ -467,11 +474,15 @@ export default {
         data: data,
         success:function(res){
           if(res.code==200){
+            alert('getDetail成功返回');
             self.info = res.data[type2];
             self.getWxSig();
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
+        },
+        error:function(err){
+          alert('getDetail返回失败')
         }
       });
     },
