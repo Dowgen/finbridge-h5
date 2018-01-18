@@ -12,7 +12,7 @@ Vue.use(LoadingPlugin);
 var vm = new Vue({});
 
 //全局域名设置
-var webDomain = 'https://moneyboom.cn';
+var webDomain = 'https://finbridge.cn';
 var apiDomain = 'https://api.moneyboom.cn';
 /*var apiDomain = 'http://192.168.2.169:8060';*/
 
