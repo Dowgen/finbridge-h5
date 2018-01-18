@@ -196,15 +196,6 @@ export default {
       },
     }
   },
-  beforeRouteEnter(to, from, next) {
-    console.log(from.path =='/ProjectDetail')
-    if(from.path =='/ProjectDetail'){
-      to.meta.keepAlive = true;
-    }else /*if(to.path =='/Square')*/{
-      to.meta.keepAlive = false;
-    }
-    next();
-  },
   mounted(){
     this.getMyProject();
     this.getFundList();

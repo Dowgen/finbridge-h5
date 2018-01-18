@@ -185,13 +185,12 @@ export default {
     next();
   },*/
   beforeRouteLeave(to, from, next) {
-    if(to.path =='/sqProjectDetail'){
+    /*if(to.path =='/sqProjectDetail'){
       from.meta.keepAlive = true;
     }else{
       from.meta.keepAlive = false;
-      /*this.$destroy();*/
-    }
-    console.log(from.meta.keepAlive);
+    }*/
+    from.meta.keepAlive = true;
     next();
   },
   mounted(){
