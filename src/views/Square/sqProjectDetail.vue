@@ -391,17 +391,21 @@ export default {
     },
     //获取微信签名
     getWxSig(){
-      alert('调用getWxSig')
       var self = this;
       Lib.M.ajax({
         url : '/wechat/wxSig',
         data:{url: location.href.split('#')[0]},
         success:function(res){
           if(res.code==200){
-            alert('getWxsig成功返回')
             let wxSig = res.data;
-            let params = '&fromShare=y';
-            if(self.$route.query.fromShare=='y') params = '';
+            //分享链接设置
+            let url = '';
+            if(self.$route.query.fromShare=='y'){
+              url = url.substr(0, url.indexOf('?')) +url.substr(url.indexOf('#'),url.length)
+            }else{
+              url = location.href + '&fromShare=y';
+            }
+            
             wx.config({
               debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
               appId: wxSig.appid, // 必填，公众号的唯一标识
@@ -440,18 +444,15 @@ export default {
               }
             });
           }else{
-            alert('getWxsig返回失败')
             self.$vux.toast.text(res.error, 'middle');
           }
         },
         error:function(err){
-          alert('getWxsig返回失败')
         }
       });
     },
     //根据id查询详情
     getDetail(){
-      alert('调用getDetail')
       var self = this;
       var url = '',type2='', data={};
       if(this.$route.query.AorF == 1){
@@ -474,7 +475,6 @@ export default {
         data: data,
         success:function(res){
           if(res.code==200){
-            alert('getDetail成功返回');
             self.info = res.data[type2];
             self.getWxSig();
           }else{
@@ -482,7 +482,6 @@ export default {
           }
         },
         error:function(err){
-          alert('getDetail返回失败')
         }
       });
     },
