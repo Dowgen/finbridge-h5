@@ -84,13 +84,13 @@
         </div>
       </div>
     </div>
-    <div class="footer-btn" v-show="key == 1">
+    <div class="footer-btn"> <!-- v-show="key == 1" -->
       <div v-show="$route.query.fromShare == 'y'" class="btn-left" @click="jumpTo" style="color:#4083ff;">我要发布</div>
       <div class="btn-right" @click="contactCard">
         立即合作
       </div>
     </div>
-    <div class="footer-btn" v-show="key == 2">查看联系方式</div>
+    <!-- <div class="footer-btn" v-show="key == 2">查看联系方式</div> -->
     </div>
 
     <div v-if="$route.query.AorF==2">
@@ -137,13 +137,13 @@
         </div>
       </div>
     </div>
-    <div class="footer-btn" v-show="key == 1">
+    <div class="footer-btn"> <!-- v-show="key == 1" -->
       <div v-show="$route.query.fromShare == 'y'" class="btn-left" @click="jumpTo" style="color:#4083ff;">我要发布</div>
       <div class="btn-right" @click="contactCard">
         立即合作
       </div>
     </div>
-    <div class="footer-btn" v-show="key == 2">查看联系方式</div>
+    <!-- <div class="footer-btn" v-show="key == 2">查看联系方式</div> -->
     </div>
 
     <div class="alert">
@@ -194,7 +194,7 @@ export default {
   },
   data () {
     return {
-      key:1,
+      /*key:1,*/
       info:{},
       hide:1,
       fundTypeList:[],
@@ -399,9 +399,10 @@ export default {
           if(res.code==200){
             let wxSig = res.data;
             let params = '&fromShare=y';
+            alert(self.$route.query.fromShare);
             if(self.$route.query.fromShare=='y') params = '';
             wx.config({
-              debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+              debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
               appId: wxSig.appid, // 必填，公众号的唯一标识
               timestamp: wxSig.timestamp, // 必填，生成签名的时间戳
               nonceStr:  wxSig.noncestr, // 必填，生成签名的随机串
