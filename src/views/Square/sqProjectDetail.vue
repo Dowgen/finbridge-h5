@@ -399,7 +399,6 @@ export default {
           if(res.code==200){
             let wxSig = res.data;
             let params = '&fromShare=y';
-            alert(self.$route.query.fromShare);
             if(self.$route.query.fromShare=='y') params = '';
             wx.config({
               debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -409,6 +408,8 @@ export default {
               signature: wxSig.signature,   // 必填，签名，见附录1
               jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             });
+            alert(self.$route.query.fromShare);
+            alert(location.href + params);
             //微信分享设置
             wx.onMenuShareTimeline({
               title: self.info.projectName, 
