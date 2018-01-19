@@ -206,8 +206,10 @@ export default {
       wechatShareReturnLink:''
     }
   },
-  mounted(){
+  created(){
     this.loading = true;
+  },
+  mounted(){
     this.AorF = this.$route.query.AorF;
 
     if(localStorage.userId!= undefined) this.hide = 0
@@ -353,36 +355,38 @@ export default {
               jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             });
             //微信分享设置
-            wx.onMenuShareTimeline({
-              title: self.info.projectName, 
-              link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
-                + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId)
-                + '&fromShare=y',
-              imgUrl: Lib.M.webDomain+'/logo.png', 
-              success: function () { 
-                self.shareProject();
-              },
-              cancel: function () { 
-                  // 用户取消分享后执行的回调函数
-              }
-            });
+            wx.ready(function(){         
+              wx.onMenuShareTimeline({
+                title: self.info.projectName, 
+                link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
+                  + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId)
+                  + '&fromShare=y',
+                imgUrl: Lib.M.webDomain+'/logo.png', 
+                success: function () { 
+                  self.shareProject();
+                },
+                cancel: function () { 
+                    // 用户取消分享后执行的回调函数
+                }
+              });
 
-            wx.onMenuShareAppMessage({
-              title: self.info.projectName, 
-              desc: '关注51资金资产公众号，获取更多信息', 
-              link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
-                + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId)
-                + '&fromShare=y',
-              imgUrl: Lib.M.webDomain+'/logo.png', 
-              /*type: '', // 分享类型,music、video或link，不填默认为link*/
-              /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
-              success: function () { 
-                self.shareProject();
-                alert(link);
-              },
-              cancel: function () { 
-                  // 用户取消分享后执行的回调函数
-              }
+              wx.onMenuShareAppMessage({
+                title: self.info.projectName, 
+                desc: '关注51资金资产公众号，获取更多信息', 
+                link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
+                  + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId)
+                  + '&fromShare=y',
+                imgUrl: Lib.M.webDomain+'/logo.png', 
+                /*type: '', // 分享类型,music、video或link，不填默认为link*/
+                /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
+                success: function () { 
+                  self.shareProject();
+                  alert(link);
+                },
+                cancel: function () { 
+                    // 用户取消分享后执行的回调函数
+                }
+              });
             });
           }else{
             self.$vux.toast.text(res.error, 'middle');
