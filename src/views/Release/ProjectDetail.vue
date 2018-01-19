@@ -317,7 +317,7 @@ export default {
               title: self.info.projectName, 
               link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
                 + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId) 
-                +'&fromShare=y', 
+                + '&fromShare=y', 
               imgUrl: Lib.M.webDomain+'/logo.png', 
               success: function () { 
                 if(self.isLose=='1') self.share();
@@ -332,7 +332,7 @@ export default {
               desc: '关注51资金资产公众号，获取更多信息', 
               link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
                 + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId)
-                +'&fromShare=y',
+                + '&fromShare=y',
               imgUrl: Lib.M.webDomain+'/logo.png', 
               /*type: '', // 分享类型,music、video或link，不填默认为link*/
               /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/

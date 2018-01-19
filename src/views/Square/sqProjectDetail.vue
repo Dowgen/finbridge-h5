@@ -194,6 +194,7 @@ export default {
   },
   data () {
     return {
+      AorF:null,
       key:1,
       info:{},
       hide:1,
@@ -202,13 +203,9 @@ export default {
       wechatShareReturnLink:''
     }
   },
-  created(){
-    //微信分享的bug
-    if(this.$route.query.fromShare=='y'){
-
-    }
-  },
   mounted(){
+    this.AorF = this.$route.query.AorF;
+
     if(localStorage.userId!= undefined) this.hide = 0
     this.getFundList();
     this.getDetail();
@@ -356,7 +353,9 @@ export default {
             //微信分享设置
             wx.onMenuShareTimeline({
               title: self.info.projectName, 
-              link:  location.href + params, 
+              link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
+                + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId)
+                +  params, 
               imgUrl: Lib.M.webDomain+'/logo.png', 
               success: function () { 
                 self.shareProject();
@@ -369,7 +368,9 @@ export default {
             wx.onMenuShareAppMessage({
               title: self.info.projectName, 
               desc: '关注51资金资产公众号，获取更多信息', 
-              link:  location.href + params,
+              link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
+                + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId)
+                +  params,
               imgUrl: Lib.M.webDomain+'/logo.png', 
               /*type: '', // 分享类型,music、video或link，不填默认为link*/
               /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
