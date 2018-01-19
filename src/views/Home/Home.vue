@@ -132,8 +132,8 @@ export default {
     next();
   },*/
   mounted(){
-    let self = this;
-    self.getToken();
+    this.getToken();
+    this.getWxSig();
   },
   methods: {
     linkTo(picLink){
