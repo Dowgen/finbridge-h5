@@ -344,7 +344,7 @@ export default {
       var self = this;
       Lib.M.ajax({
         url : '/wechat/wxSig',
-        data:{url: encodeURIComponent(_url)},
+        data:{url: _url},
         success:function(res){
           if(res.code==200){
             let wxSig = res.data;
