@@ -24,7 +24,7 @@ router.beforeEach((to, from, next) => {
   console.log(to);
   //判断ios还是安卓
   if(localStorage.isAndroid == 'true'){
-    var _url = window.location.origin + to.fullPath;
+    var _url = window.location.origin +'#'+ to.fullPath;
   }else{
     var _url = window.location.href.split('#')[0];
   }

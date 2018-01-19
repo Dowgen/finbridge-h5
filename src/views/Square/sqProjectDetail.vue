@@ -337,7 +337,7 @@ export default {
     //获取微信签名
     getWxSig(){
       if(localStorage.isAndroid == 'true'){
-        var _url = window.location.origin + this.$route.fullPath;
+        var _url = window.location.origin +'#'+ this.$route.fullPath;
       }else{
         var _url = window.location.href.split('#')[0];
       }
