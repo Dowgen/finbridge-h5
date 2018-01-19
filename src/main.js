@@ -15,13 +15,23 @@ var vm = new Vue({
   components: { App }
 })
 
+let u = navigator.userAgent, app = navigator.appVersion;
+localStorage.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
+localStorage.isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+
 //微信分享设置
 router.beforeEach((to, from, next) => {
-  console.warn(to.path);
+  console.log(to);
+  //判断ios还是安卓
+  if(localStorage.isAndroid){
+    let _url = window.location.origin + to.fullPath;
+  }else{
+    let _url = window.location.href.split('#')[0];
+  }
   if (to.path !='/sqProjectDetail' && to.path !='/ProjectDetail') {
     Lib.M.ajax({
       url : '/wechat/wxSig',
-      data:{url: location.href.split('#')[0]},
+      data:{url: encodeURIComponent(_url)},
       success:function(res){
         if(res.code==200){
           let wxSig = res.data;

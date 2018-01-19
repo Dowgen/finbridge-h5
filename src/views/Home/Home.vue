@@ -321,9 +321,14 @@ export default {
     //获取微信签名
     getWxSig(){
       var self = this;
+      if(localStorage.isAndroid){
+        let _url = window.location.origin + to.fullPath;
+      }else{
+        let _url = window.location.href.split('#')[0];
+      }
       Lib.M.ajax({
         url : '/wechat/wxSig',
-        data:{url: location.href.split('#')[0]},
+        data:{url: encodeURIComponent(_url)},
         success:function(res){
           if(res.code==200){
             let wxSig = res.data;
