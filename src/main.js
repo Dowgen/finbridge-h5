@@ -22,17 +22,11 @@ localStorage.isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
 
 router.beforeEach((to, from, next) => {
   console.log(to);
-  //判断ios还是安卓
-  if(localStorage.isAndroid == 'true'){
-    var _url = window.location.origin +'#'+ to.fullPath;
-  }else{
-    var _url = window.location.href.split('#')[0];
-  }
   alert(to.fullPath);
   if (to.path !='/sqProjectDetail' && to.path !='/ProjectDetail') {
     Lib.M.ajax({
       url : '/wechat/wxSig',
-      data:{url: _url},
+      data:{url: window.location.href.split('#')[0]},
       success:function(res){
         if(res.code==200){
           let wxSig = res.data;
