@@ -21,8 +21,6 @@ localStorage.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
 localStorage.isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
 
 router.beforeEach((to, from, next) => {
-  console.log(to);
-  alert(to.fullPath);
   if (to.path !='/sqProjectDetail' && to.path !='/ProjectDetail') {
     Lib.M.ajax({
       url : '/wechat/wxSig',
