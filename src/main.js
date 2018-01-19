@@ -53,7 +53,7 @@ router.beforeEach((to, from, next) => {
             //微信分享设置
             wx.onMenuShareTimeline({
               title: '项目详情', 
-              link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + to.query.AorF
+              link: Lib.M.webDomain + '?from=singlemessage' + '/#/sqProjectDetail?AorF=' + to.query.AorF
                 + '&proId=' + to.query.proId
                 + '&fromShare=y',
               imgUrl: Lib.M.webDomain+'/logo.png', 
@@ -68,7 +68,7 @@ router.beforeEach((to, from, next) => {
             wx.onMenuShareAppMessage({
               title: '项目详情', 
               desc: '关注51资金资产公众号，获取更多信息', 
-              link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + to.query.AorF
+              link: Lib.M.webDomain + '?from=singlemessage' + '/#/sqProjectDetail?AorF=' + to.query.AorF
                 + '&proId=' + to.query.proId
                 + '&fromShare=y',
               imgUrl: Lib.M.webDomain+'/logo.png', 
