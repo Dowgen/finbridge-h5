@@ -178,22 +178,25 @@
         </div>
       </div>
     </div>
+
+    <loading :show="loading" :text="loadText"></loading>
   </div>
 </template>
 
 <script>
 import Lib from '@/assets/js/Lib'
-import { Toast} from 'vux'
+import { Toast,Loading } from 'vux'
 import $ from "jquery"
 
 export default {
   name: 'ProjectDetail',
   components: {
-    Toast,
-
+    Toast,Loading
   },
   data () {
     return {
+      loading: false,
+      loadText: '请稍等',
       AorF:null,
       key:1,
       info:{},
@@ -355,7 +358,7 @@ export default {
               title: self.info.projectName, 
               link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
                 + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId)
-                +  params, 
+                + '&fromShare=y',
               imgUrl: Lib.M.webDomain+'/logo.png', 
               success: function () { 
                 self.shareProject();
@@ -370,7 +373,7 @@ export default {
               desc: '关注51资金资产公众号，获取更多信息', 
               link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
                 + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId)
-                +  params,
+                + '&fromShare=y',
               imgUrl: Lib.M.webDomain+'/logo.png', 
               /*type: '', // 分享类型,music、video或link，不填默认为link*/
               /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
@@ -384,12 +387,14 @@ export default {
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
+          self.loading = false;
         }
       });
     },
     //根据id查询详情
     getDetail(){
       var self = this;
+      self.loading = true
       var url = '',type2='', data={};
       if(this.$route.query.AorF == 1){
         type2='asset';
