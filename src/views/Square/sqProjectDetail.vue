@@ -261,7 +261,7 @@ export default {
   },*/
   created(){
     //微信分享的bug
-    if(self.$route.query.fromShare=='y'){
+    if(this.$route.query.fromShare=='y'){
 
     }
   },

@@ -18,7 +18,6 @@ var vm = new Vue({
 //微信分享设置
 router.beforeEach((to, from, next) => {
     console.log(to)
-    console.log(to.query)
     if (to.path !='/sqProjectDetail' && to.path !='ProjectDetail') {
         Lib.M.ajax({
           url : '/wechat/wxSig',
