@@ -320,12 +320,12 @@ export default {
     },
     //获取微信签名
     getWxSig(){
-      var self = this;
-      if(localStorage.isAndroid){
-        let _url = window.location.origin + to.fullPath;
+      if(localStorage.isAndroid == 'true'){
+        var _url = window.location.origin + this.$route.fullPath;
       }else{
-        let _url = window.location.href.split('#')[0];
+        var _url = window.location.href.split('#')[0];
       }
+      var self = this;
       Lib.M.ajax({
         url : '/wechat/wxSig',
         data:{url: encodeURIComponent(_url)},
