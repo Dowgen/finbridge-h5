@@ -315,7 +315,7 @@ export default {
             //微信分享设置
             wx.onMenuShareTimeline({
               title: self.info.projectName, 
-              link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
+              link: Lib.M.webDomain + '?from=singlemessage' + '/#/sqProjectDetail?AorF=' + self.AorF
                 + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId) 
                 + '&fromShare=y', 
               imgUrl: Lib.M.webDomain+'/logo.png', 
@@ -330,7 +330,7 @@ export default {
             wx.onMenuShareAppMessage({
               title: self.info.projectName, 
               desc: '关注51资金资产公众号，获取更多信息', 
-              link: Lib.M.webDomain + '/#/sqProjectDetail?AorF=' + self.AorF
+              link: Lib.M.webDomain + '?from=singlemessage' + '/#/sqProjectDetail?AorF=' + self.AorF
                 + '&proId=' + (self.AorF==1?self.info.assetId:self.info.fundId)
                 + '&fromShare=y',
               imgUrl: Lib.M.webDomain+'/logo.png', 
