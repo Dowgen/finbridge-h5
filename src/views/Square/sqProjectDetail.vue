@@ -220,6 +220,7 @@ export default {
       window.location.href = Lib.M.webDomain;
     },
     shareSuccess(){
+      this.loading = false;
       this.$vux.toast.show({
         showPositionValue: false,
         text: '分享成功',
@@ -388,7 +389,7 @@ export default {
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
-          self.loading = false;
+          
         }
       });
     },
