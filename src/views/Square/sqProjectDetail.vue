@@ -207,6 +207,7 @@ export default {
     }
   },
   mounted(){
+    this.loading = true;
     this.AorF = this.$route.query.AorF;
 
     if(localStorage.userId!= undefined) this.hide = 0
@@ -394,7 +395,6 @@ export default {
     //根据id查询详情
     getDetail(){
       var self = this;
-      self.loading = true
       var url = '',type2='', data={};
       if(this.$route.query.AorF == 1){
         type2='asset';
