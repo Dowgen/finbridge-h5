@@ -28,6 +28,7 @@ router.beforeEach((to, from, next) => {
   }else{
     var _url = window.location.href.split('#')[0];
   }
+  alert(to.fullPath);
   if (to.path !='/sqProjectDetail' && to.path !='/ProjectDetail') {
     Lib.M.ajax({
       url : '/wechat/wxSig',
