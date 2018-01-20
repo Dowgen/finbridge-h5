@@ -125,7 +125,6 @@
         <p>风控审核 多元供给</p>
         <div>
         <div class="item" v-for="item in assetListLose.slice(0,showItem11)" @click="jumpTo(1,item.assetId,'1')">
-
           <img class="img-unpassed" v-show="item.listStatus==3" src="./img/label_unpassed.png"/>
 
           <div class="left">
@@ -195,6 +194,15 @@ export default {
         addAssets: '添加资产'
       },
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    /*if(to.path =='/sqProjectDetail'){
+      from.meta.keepAlive = true;
+    }else{
+      from.meta.keepAlive = false;
+    }*/
+    from.meta.keepAlive = true;
+    next();
   },
   mounted(){
     this.getMyProject();
@@ -313,7 +321,7 @@ export default {
     height: 3.7rem;
     position: absolute;
     right: 1.5rem;
-    bottom: 3rem;
+    bottom: 1rem;
   }
   .item-add{
     position:fixed;
@@ -398,6 +406,7 @@ export default {
       margin-bottom: 1rem;
     }
     .item{
+      position:relative;
       padding:1.065rem 0;
       display:flex;
       justify-content:space-between;
