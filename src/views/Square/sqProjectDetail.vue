@@ -365,6 +365,8 @@ export default {
                 success: function () { 
                   if(localStorage.userId != undefined){
                     self.shareProject();
+                  }else{
+                    self.shareSuccess();
                   }
                 },
                 cancel: function () { 
@@ -384,6 +386,8 @@ export default {
                 success: function () { 
                   if(localStorage.userId != undefined){
                     self.shareProject();
+                  }else{
+                    self.shareSuccess();
                   }
                   alert(link);
                 },
