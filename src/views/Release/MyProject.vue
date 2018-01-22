@@ -4,8 +4,8 @@
     <actionsheet v-model="show1" :menus="menus1" @on-click-menu="click"></actionsheet>
     <div v-if="hasProject=='no'" class="content1">
       <button-tab class="button-tab">
-        <button-tab-item selected @on-item-click="loseEfficacy='false'">未失效</button-tab-item>
-        <button-tab-item @on-item-click="loseEfficacy='true'">已失效</button-tab-item>
+        <button-tab-item :selected="loseEfficacy=='0'" @on-item-click="loseEfficacy='0'">未失效</button-tab-item>
+        <button-tab-item :selected="loseEfficacy=='1'" @on-item-click="loseEfficacy='1'">已失效</button-tab-item>
       </button-tab>
       <div class="btn addAs" @click="click('addAssets')">
         <span>+</span> 添加资产
@@ -16,10 +16,10 @@
     </div>
     <div v-if="hasProject=='yes'" class="content2">
       <button-tab class="button-tab">
-        <button-tab-item selected @on-item-click="loseEfficacy='false'">未失效</button-tab-item>
-        <button-tab-item @on-item-click="loseEfficacy='true'">已失效</button-tab-item>
+        <button-tab-item :selected="loseEfficacy=='0'" @on-item-click="loseEfficacy='0'">未失效</button-tab-item>
+        <button-tab-item :selected="loseEfficacy=='1'" @on-item-click="loseEfficacy='1'">已失效</button-tab-item>
       </button-tab>
-      <div class="using" v-show="loseEfficacy=='false'">
+      <div class="using" v-show="loseEfficacy=='0'">
       <div class="fund-item-con">
         <!-- <div @click="show1=true" class="item_add"><img src="./img/item_add.png"></div> -->
         <!-- <popover placement="bottom">
@@ -87,7 +87,7 @@
       </div>
       </div>
 
-      <div class="useless" v-show="loseEfficacy=='true'">
+      <div class="useless" v-show="loseEfficacy=='1'">
       <div class="fund-item-con">
         <h3>资金</h3>
         <p>合规对接 量大稳定</p>
@@ -181,7 +181,7 @@ export default {
       showItem02:3,//未失效，资金
       showItem12:3,//已失效，资金
       hasProject:null,
-      loseEfficacy:'false',
+      loseEfficacy:'0',
       validPeriod:null,
       assetList:[],
       fundList:[],
@@ -208,6 +208,7 @@ export default {
   mounted(){
     if(sessionStorage.loseEfficacy != null){
       this.loseEfficacy = sessionStorage.loseEfficacy;
+      console.log(this.loseEfficacy)
     }
 
     this.getMyProject();
@@ -325,7 +326,7 @@ export default {
     width: 4.53rem;
     height: 3.7rem;
     position: absolute;
-    right: 1.5rem;
+    right: 0;
     bottom: 1rem;
   }
   .item-add{
