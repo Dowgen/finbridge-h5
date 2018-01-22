@@ -4,8 +4,8 @@
     <actionsheet v-model="show1" :menus="menus1" @on-click-menu="click"></actionsheet>
     <div v-if="hasProject=='no'" class="content1">
       <button-tab class="button-tab">
-        <button-tab-item selected @on-item-click="loseEfficacy=false">未失效</button-tab-item>
-        <button-tab-item @on-item-click="loseEfficacy=true">已失效</button-tab-item>
+        <button-tab-item selected @on-item-click="loseEfficacy='false'">未失效</button-tab-item>
+        <button-tab-item @on-item-click="loseEfficacy='true'">已失效</button-tab-item>
       </button-tab>
       <div class="btn addAs" @click="click('addAssets')">
         <span>+</span> 添加资产
@@ -16,10 +16,10 @@
     </div>
     <div v-if="hasProject=='yes'" class="content2">
       <button-tab class="button-tab">
-        <button-tab-item selected @on-item-click="loseEfficacy=false">未失效</button-tab-item>
-        <button-tab-item @on-item-click="loseEfficacy=true">已失效</button-tab-item>
+        <button-tab-item selected @on-item-click="loseEfficacy='false'">未失效</button-tab-item>
+        <button-tab-item @on-item-click="loseEfficacy='true'">已失效</button-tab-item>
       </button-tab>
-      <div class="using" v-show="!loseEfficacy">
+      <div class="using" v-show="loseEfficacy=='false'">
       <div class="fund-item-con">
         <!-- <div @click="show1=true" class="item_add"><img src="./img/item_add.png"></div> -->
         <!-- <popover placement="bottom">
@@ -87,7 +87,7 @@
       </div>
       </div>
 
-      <div class="useless" v-show="loseEfficacy">
+      <div class="useless" v-show="loseEfficacy=='true'">
       <div class="fund-item-con">
         <h3>资金</h3>
         <p>合规对接 量大稳定</p>
@@ -181,7 +181,7 @@ export default {
       showItem02:3,//未失效，资金
       showItem12:3,//已失效，资金
       hasProject:null,
-      loseEfficacy:false,
+      loseEfficacy:'false',
       validPeriod:null,
       assetList:[],
       fundList:[],
@@ -201,10 +201,15 @@ export default {
     }else{
       from.meta.keepAlive = false;
     }*/
-    from.meta.keepAlive = true;
+    console.log(this.loseEfficacy);
+    sessionStorage.loseEfficacy = this.loseEfficacy;
     next();
   },
   mounted(){
+    if(sessionStorage.loseEfficacy != null){
+      this.loseEfficacy = sessionStorage.loseEfficacy;
+    }
+
     this.getMyProject();
     this.getFundList();
     this.getConfigByParameter();

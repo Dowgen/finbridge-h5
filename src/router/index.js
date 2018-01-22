@@ -59,9 +59,9 @@ const ReleaseRoutes = [
   {
     path: '/MyProject',
     component: _import('Release/MyProject'),
-    meta: {
+    /*meta: {
         keepAlive: true // 需要被缓存
-    }
+    }*/
   },{
     path: '/ReleaseAssets',
     component: _import('Release/ReleaseAssets')
