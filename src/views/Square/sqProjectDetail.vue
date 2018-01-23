@@ -286,7 +286,7 @@ export default {
     },
     contactCard(){
       var self = this;
-      if(localStorage.userId != undefined){
+      if(localStorage.userId != undefined && localStorage.userId != 'undefined'){
         self.shareOrNot();
       }else{
         this.$vux.confirm.show({
@@ -363,7 +363,7 @@ export default {
                   + '&fromShare=y',
                 imgUrl: Lib.M.webDomain+'/logo.png', 
                 success: function () { 
-                  if(localStorage.userId != undefined){
+                  if(localStorage.userId != undefined && localStorage.userId != 'undefined'){
                     self.shareProject();
                   }else{
                     self.shareSuccess();
@@ -384,7 +384,7 @@ export default {
                 /*type: '', // 分享类型,music、video或link，不填默认为link*/
                 /*dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空*/
                 success: function () { 
-                  if(localStorage.userId != undefined){
+                  if(localStorage.userId != undefined && localStorage.userId != 'undefined'){
                     self.shareProject();
                   }else{
                     self.shareSuccess();
