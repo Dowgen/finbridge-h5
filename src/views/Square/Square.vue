@@ -163,7 +163,7 @@ export default {
     return {
       isActive: 'comprehension',
       /*isActive_fund: 'active',*/
-      isAsc_asset_time:true,
+      isAsc_asset_time:false,
       isAsc_asset_total:true,
       isAsc_fund:true,
       zj:true,
