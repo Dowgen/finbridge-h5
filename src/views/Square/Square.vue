@@ -9,7 +9,10 @@
       </div>
       <div class="zj" v-show="zj">
         <div class="zj-head">
-         <div @click="sortFund(1)" :class="isAsc_fund?'active':''">综合排序</div>
+         <div @click="sortFund(1)" :class="isAsc_fund?'active':''">时间排序
+          <img v-show="!isAsc_fund" src="./img/ic_arrow_down.png" alt="">
+          <img v-show="isAsc_fund" src="./img/arrow_up.png" alt="">
+         </div>
          <!-- <div @click="isActive_fund='total',isAsc?sort(2,1,2):sort(2,2,2)" :class="isActive_fund=='total'?'active':''">资金规模
            <img v-show="!isAsc" src="./img/ic_arrow_down.png" alt="">
            <img v-show="isAsc" src="./img/arrow_up.png" alt="">
@@ -81,10 +84,13 @@
       </div>
       <div class="zj" v-show="!zj">
         <div class="zj-head">
-          <div @click="sortAsset(1), isActive='comprehension'" :class="isActive=='comprehension'?'active':''">综合排序</div>
+          <div @click="sortAsset(1), isActive='comprehension'" :class="isActive=='comprehension'?'active':''">时间排序
+            <img v-show="!isAsc_asset_time" src="./img/ic_arrow_down.png" alt="">
+            <img v-show="isAsc_asset_time" src="./img/arrow_up.png" alt="">
+          </div>
           <div @click="sortAsset(2), isActive='total'" :class="isActive=='total'?'active':''">总放款规模
-            <img v-show="!isAsc" src="./img/ic_arrow_down.png" alt="">
-            <img v-show="isAsc" src="./img/arrow_up.png" alt="">
+            <img v-show="!isAsc_asset_total" src="./img/ic_arrow_down.png" alt="">
+            <img v-show="isAsc_asset_total" src="./img/arrow_up.png" alt="">
           </div>
           <div @click="chooseType('.type3')">选择类型
             <img  src="./img/arrow_type_nor.png" alt="">
@@ -157,7 +163,8 @@ export default {
     return {
       isActive: 'comprehension',
       /*isActive_fund: 'active',*/
-      isAsc:true,
+      isAsc_asset_time:true,
+      isAsc_asset_total:true,
       isAsc_fund:true,
       zj:true,
       key:2,
@@ -245,13 +252,20 @@ export default {
     sortAsset(chooseType){
       var self = this;
       var url = '/asset/sortAsset';
-      if(chooseType==2) self.isAsc = !self.isAsc;
+      var sortType = '';
+      if(chooseType==1) {
+        self.isAsc_asset_time = !self.isAsc_asset_time;
+        sortType = self.isAsc_asset_time ? 'asc':'desc';
+      }else if(chooseType==2){
+        self.isAsc_asset_total = !self.isAsc_asset_total;
+        sortType = self.isAsc_asset_total ? 'asc':'desc';
+      }
 
       Lib.M.ajax({
         url:url,
         data:{
           'chooseType':chooseType == 1?'comprehensive':'total',
-          'sortType': self.isAsc ? 'asc':'desc',
+          'sortType': sortType,
           'type': self.assetType.toString(),
         },
         success:function (res) {
@@ -360,6 +374,16 @@ export default {
         margin-top: 0.8rem;
         div{
           flex: 1;
+        }
+        div:nth-of-type(1){
+          position: relative;
+          img{
+            width: 0.315rem;
+            height: 0.565rem;
+            position: absolute;
+            top: 0.4rem;
+            right:1.15rem;
+          }
         }
         div:nth-of-type(2){
           position: relative;
