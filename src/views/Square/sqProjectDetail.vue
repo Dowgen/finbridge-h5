@@ -55,7 +55,7 @@
           <p>{{info.projectName}}</p>
         </div>
         <div>
-          <p>产品特色</p>
+          <p>产品概况</p>
           <p>{{info.productFeature}}</p>
         </div>
       </div>

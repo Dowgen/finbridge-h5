@@ -97,7 +97,7 @@
         </div>
       </div>
       <div class="slide" :class="showCoBackGround?'animate':''">
-        <textarea v-model="companyBackground" type="text" placeholder="请填写200个字以内描述" maxlength="200"></textarea>
+        <textarea v-model="companyBackground" type="text" placeholder="请填写200个字以内描述，至少50字" maxlength="200" minlength="50"></textarea>
       </div>
     </div>
 

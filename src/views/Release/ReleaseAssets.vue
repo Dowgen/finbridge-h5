@@ -52,9 +52,26 @@
         <div class="des-item-l">产品特色(选填)</div>
         <div class="des-item-r"><input v-model="productFeature" type="text" maxlength="20" placeholder="请填写10-20个字以内"></div>
       </div>-->
-      <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;border-top: 0.06rem solid #E6E6E6;">
-        <div class="des-item-l" style="height: 2.6rem;">产品特色(选填)</div>
-        <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;"><input v-model="productFeature" type="text" placeholder="请填写产品特色"></div>
+      <!--<div class="des-item" style="height: 4.215rem;line-height: 4.215rem;border-top: 0.06rem solid #E6E6E6;">
+        <div class="des-item-l" style="height: 2.6rem;">产品概况</div>
+        <div class="des-item-r" style="margin-top: 2.5rem;height: 1.615rem;line-height: 1.615rem;"><input v-model="productFeature" type="text" placeholder="请填写产品概况不少于50字" maxlength="50"></div>
+      </div>-->
+      <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;">
+        <div class="des-item-l" style="height: 2.6rem;">产品概况</div>
+        <div class="des-item-r" style="margin-top: 2rem;height: 1.615rem;line-height: 1.615rem;">
+          <input :value="productFeature==''?'':productFeature.substr(0,10)+'...'" readonly="readonly" placeholder="下拉填写" />
+          <span :class="showCoBackGround?'upArrow':'downArrow'"></span>
+          <cell
+            class="myCell"
+            title="Animated"
+            is-link
+            :border-intent="false"
+            :arrow-direction="showCoBackGround ? 'up' : 'down'"
+            @click.native="showCoBackGround = !showCoBackGround"></cell>
+        </div>
+      </div>
+      <div class="slide" :class="showCoBackGround?'animate':''">
+        <textarea v-model="productFeature" type="text" placeholder="请填写200个字以内描述,至少50字" maxlength="200" minlength="50" style="width: 90%;outline: none;"></textarea>
       </div>
 
       <div class="des-item">
@@ -140,7 +157,10 @@ export default {
       fundCostRegionTo:'',
       dailyPayAmount:'',
       totalPayAmount:'',
-      debtRate :''
+      debtRate :'',
+      /*productFeature :'',  // 公司（团队股东）背景（选填）：*/
+      showCoBackGround:false,
+
     }
   },
   mounted(){
@@ -165,7 +185,7 @@ export default {
       if( this.projectName == '' ||
           this.productType == '' ||
           /*this.perAmount == '' ||*/
-          /*this.productFeature == '' ||*/
+          this.productFeature == '' ||
           this.perPeriod == '' || 
           this.fundCostRegionFrom == '' || 
           this.fundCostRegionTo == '' ||
@@ -209,6 +229,28 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .myCell{
+    position: absolute;
+    left:0;
+    top:0;
+    right:0;
+    bottom: 0;
+    opacity: 0;
+  }
+  .downArrow{
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.44rem;
+    background: url("./img/choose_down.png") no-repeat center;
+    background-size: 100% 100%;
+  }
+  .upArrow{
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.44rem;
+    background: url("./img/choose_up.png") no-repeat center;
+    background-size: 100% 100%;
+  }
   ::-webkit-input-placeholder { /* WebKit browsers */
     font-size: 0.815rem;
     letter-spacing: 1px;
@@ -268,6 +310,7 @@ export default {
   margin-top: 0.625rem;
 }
 .des-item{
+  position: relative;
   display: flex;
   flex-direction: row;
   padding:0 2rem 0 1.2rem;
