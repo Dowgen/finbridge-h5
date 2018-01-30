@@ -194,22 +194,26 @@ export default {
          /* this.debtRate == ''*/ ){
         this.$vux.toast.text('内容请填写完整', 'middle');
       }else{
-        let addAssetParams = {
-          projectName : this.projectName,
-          productType : parseInt(this.productType),
-          perAmount : parseInt(this.perAmount),
-          productFeature : this.productFeature,
-          perPeriod : this.perPeriod,
-          fundCostRegionFrom : parseInt(this.fundCostRegionFrom),
-          fundCostRegionTo : parseInt(this.fundCostRegionTo),
-          dailyPayAmount : parseInt(
-            this.unitDaily=='亿元'? this.dailyPayAmount*10000 : this.dailyPayAmount),
-          totalPayAmount : parseInt(
-            this.unitTotal =='亿元'? this.totalPayAmount*10000 : this.totalPayAmount),
-          debtRate : parseInt(this.debtRate)
+        if(this.productFeature.length < 50 ){
+          this.$vux.toast.text('产品概况需超过50字', 'middle');
+        }else{
+          let addAssetParams = {
+            projectName : this.projectName,
+            productType : parseInt(this.productType),
+            perAmount : parseInt(this.perAmount),
+            productFeature : this.productFeature,
+            perPeriod : this.perPeriod,
+            fundCostRegionFrom : parseInt(this.fundCostRegionFrom),
+            fundCostRegionTo : parseInt(this.fundCostRegionTo),
+            dailyPayAmount : parseInt(
+              this.unitDaily=='亿元'? this.dailyPayAmount*10000 : this.dailyPayAmount),
+            totalPayAmount : parseInt(
+              this.unitTotal =='亿元'? this.totalPayAmount*10000 : this.totalPayAmount),
+            debtRate : parseInt(this.debtRate)
+          }
+          localStorage.addAssetParams = JSON.stringify(addAssetParams);
+          this.$router.push({ path: 'Release2', query: { AorF: 'assets' }})
         }
-        localStorage.addAssetParams = JSON.stringify(addAssetParams);
-        this.$router.push({ path: 'Release2', query: { AorF: 'assets' }})
       }
     },
     //资金资产类型数字转化为文字
