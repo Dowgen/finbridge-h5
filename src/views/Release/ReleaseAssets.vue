@@ -71,7 +71,7 @@
         </div>
       </div>
       <div class="slide" :class="showCoBackGround?'animate':''">
-        <textarea v-model="productFeature" type="text" placeholder="请填写200个字以内描述,至少50字" maxlength="200" minlength="50" style="width: 90%;outline: none;"></textarea>
+        <textarea v-model="productFeature" type="text" placeholder="请填写200个字以内描述,至少50字" maxlength="200" minlength="50"></textarea>
       </div>
 
       <div class="des-item">
@@ -229,6 +229,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+textarea{
+  width: 90%;
+  outline: none;
+  height: 3rem;
+}
   .myCell{
     position: absolute;
     left:0;
