@@ -2,7 +2,6 @@
   <div>
     <div class="content" v-cloak>
       <swiper loop auto height="12.44rem" dots-position="center">
-
         <swiper-item :key="pic.picUrl" v-for="pic in img_src">
           <img :src="pic.picUrl" @click="linkTo(pic.linkUrl)">
         </swiper-item>
@@ -75,8 +74,17 @@
         </div>
         <div class="lookMore"  @click="newsDetail">查看更多({{lookCount}})</div>
       </div>
+      <div class="suspend" @click="showErweima">
+        <img src="./img/half-erwaima.png" alt="">
+      </div>
+      <div class="alert-erweima">
+        <img src="./img/alert-erweima.png" alt="">
+        <img src="./img/close.png" alt="" @click="closeErweima">
+      </div>
+
     </div>
     <main-nav which="home"></main-nav>
+
   </div>
 </template>
 
@@ -90,6 +98,8 @@ import { Swiper, SwiperItem, } from 'vux'
 import MainNav from '@/components/mainNav'
 
 import hotsItem2 from '@/components/hotsItem2'
+
+import $ from "jquery"
 
 export default {
   name: 'Home',	
@@ -134,8 +144,16 @@ export default {
   mounted(){
     this.getToken();
     this.getWxSig();
+    this.showErweima();
+    this.closeErweima();
   },
   methods: {
+    showErweima(){
+      $('.alert-erweima').css('display','block')
+    },
+    closeErweima(){
+      $('.alert-erweima').css('display','none')
+    },
     linkTo(picLink){
       if(picLink !== '' && picLink !== null){
         window.location.href = picLink;
@@ -339,7 +357,43 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
   .content{
+    .alert-erweima{
+      display: none;
+      width: 100%;
+      height: 100%;
+      max-width: 640px;
+      max-height: 40rem;
+      background: rgba(0,0,0,0.8);
+      position: fixed;
+      left: 0;
+      top: 0;
+      img{
+        display: block;
+        margin: 0 auto;
+      }
+      img:nth-of-type(1){
+        width:15.68rem;
+        height:20.63rem;
+        margin:8rem auto 3rem auto;
+      }
+      img:nth-of-type(2){
+        width:3.32rem;
+        height:3.32rem;
+      }
+    }
+    .suspend{
+      width: 2.5rem;
+      height: 4.78rem;
+      position: fixed;
+      right: 0;
+      bottom: 6rem;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
     width: 100%;
     background: #EFEFF4;
     padding-bottom:3.8rem;

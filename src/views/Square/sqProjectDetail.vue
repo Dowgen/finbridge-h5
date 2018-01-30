@@ -179,6 +179,14 @@
       </div>
     </div>
 
+    <div class="suspend" @click="showErweima" v-show="$route.query.fromShare == 'y'">
+      <img src="./img/half-erwaima.png" alt="">
+    </div>
+    <div class="alert-erweima" v-show="$route.query.fromShare == 'y'">
+      <img src="./img/alert-erweima.png" alt="">
+      <img src="./img/close.png" alt="" @click="closeErweima">
+    </div>
+
     <loading :show="loading" :text="loadText"></loading>
   </div>
 </template>
@@ -215,9 +223,17 @@ export default {
     if(localStorage.userId!= undefined) this.hide = 0
     this.getFundList();
     this.getDetail();
+    this.showErweima();
+    this.closeErweima();
     /*this.getReturnLink();*/
   },
   methods:{
+    showErweima(){
+      $('.alert-erweima').css('display','block')
+    },
+    closeErweima(){
+      $('.alert-erweima').css('display','none')
+    },
     jumpTo(){
       window.location.href = Lib.M.webDomain;
     },
@@ -446,6 +462,41 @@ export default {
 <style scoped>
 body{
   padding-bottom:0 !important;
+}
+.alert-erweima{
+  display: none;
+  width: 100%;
+  height: 100%;
+  max-width: 640px;
+  min-height: 40rem;
+  background: rgba(0,0,0,0.8);
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+.alert-erweima img{
+  display: block;
+  margin: 0 auto;
+}
+.alert-erweima img:nth-of-type(1){
+  width:15.68rem;
+  height:20.63rem;
+  margin:8rem auto 3rem auto;
+}
+.alert-erweima img:nth-of-type(2){
+  width:3.32rem;
+  height:3.32rem;
+}
+.suspend{
+  width: 2.5rem;
+  height: 4.78rem;
+  position: fixed;
+  right: 0;
+  bottom: 6rem;
+}
+.suspend img{
+  width: 100%;
+  height: 100%;
 }
 .project{
   box-sizing:border-box;
