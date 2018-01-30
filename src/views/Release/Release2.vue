@@ -83,7 +83,7 @@
         </div>
       </div>-->
       <div class="des-item" style="height: 4.215rem;line-height: 4.215rem;">
-        <div class="des-item-l" style="height: 2.6rem;">公司背景(选填)</div>
+        <div class="des-item-l" style="height: 2.6rem;">公司背景</div>
         <div class="des-item-r" style="margin-top: 2rem;height: 1.615rem;line-height: 1.615rem;">
           <input :value="companyBackground==''?'':companyBackground.substr(0,10)+'...'" readonly="readonly" placeholder="下拉填写" />
           <span :class="showCoBackGround?'upArrow':'downArrow'"></span>
@@ -181,20 +181,25 @@ export default {
           this.operationTime =='' ||
           this.cityVal.length == 0 ||
           this.companyAddress  =='' ||
+          this.companyBackground  =='' ||
           this.fundOrigin.length == 0){
           this.$vux.toast.text('请填写完整', 'middle');
         }else{
-          let b = {
-            companyName: this.companyName,
-            isPublicCoName: parseInt(this.isPublicCoName),
-            operationTime: parseInt(this.operationTime),
-            companyAddress: this.cityVal.join(',')/*+ ' ' + this.AddressDetail*/,
-            companyBackground: this.companyBackground,
-            fundOrigin: this.fundOrigin.join(',')
-          };
-          localStorage.addAssetParams = 
-            JSON.stringify(Object.assign(JSON.parse(localStorage.addAssetParams), b));
-          this.$router.push({ path: 'Release3', query: { AorF: this.AorF }})
+          if(this.companyBackground.length < 50 ){
+            this.$vux.toast.text('公司背景需超过50字', 'middle');
+          }else{
+            let b = {
+              companyName: this.companyName,
+              isPublicCoName: parseInt(this.isPublicCoName),
+              operationTime: parseInt(this.operationTime),
+              companyAddress: this.cityVal.join(',')/*+ ' ' + this.AddressDetail*/,
+              companyBackground: this.companyBackground,
+              fundOrigin: this.fundOrigin.join(',')
+            };
+            localStorage.addAssetParams = 
+              JSON.stringify(Object.assign(JSON.parse(localStorage.addAssetParams), b));
+            this.$router.push({ path: 'Release3', query: { AorF: this.AorF }})
+          }
         }
       }
     }
