@@ -376,7 +376,7 @@ export default {
       img:nth-of-type(1){
         width:15.68rem;
         height:20.63rem;
-        margin:8rem auto 3rem auto;
+        margin:5.5rem auto 3rem auto;
       }
       img:nth-of-type(2){
         width:3.32rem;
