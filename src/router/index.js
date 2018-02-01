@@ -2,7 +2,19 @@ import Vue from 'vue'
 import Router from 'vue-router'
 /*const _import = file => () => import('@/views/' + file)*/
 const _import = file => resolve => require(['@/views/' + file], resolve);
-
+const login = r => require.ensure([], () => r(require('@/views/Login/Login')), 'login')
+const regist = r => require.ensure([], () => r(require('@/views/Login/Regist')), 'regist')
+const resetPsd = r => require.ensure([], () => r(require('@/views/Login/ResetPsd')), 'resetPsd')
+const Home = r => require.ensure([], () => r(require('@/views/Home/Home')), 'Home')
+const NewsDetail = r => require.ensure([], () => r(require('@/views/Home/NewsDetail')), 'NewsDetail')
+const Square = r => require.ensure([], () => r(require('@/views/Square/Square')), 'Square')
+const sqProjectDetail = r => require.ensure([], () => r(require('@/views/Square/sqProjectDetail')), 'sqProjectDetail')
+const MyProject = r => require.ensure([], () => r(require('@/views/Release/MyProject')), 'MyProject')
+const ReleaseAssets = r => require.ensure([], () => r(require('@/views/Release/ReleaseAssets')), 'ReleaseAssets')
+const ReleaseFund = r => require.ensure([], () => r(require('@/views/Release/ReleaseFund')), 'ReleaseFund')
+const Release2 = r => require.ensure([], () => r(require('@/views/Release/Release2')), 'Release2')
+const Release3 = r => require.ensure([], () => r(require('@/views/Release/Release3')), 'Release3')
+const ProjectDetail = r => require.ensure([], () => r(require('@/views/Release/ProjectDetail')), 'ProjectDetail')
 
 Vue.use(Router)
 
@@ -10,16 +22,16 @@ Vue.use(Router)
 const LoginRoutes = [
   {
     path: '/Login',
-    component: _import('Login/Login')
+    component: login
   },{
     path: '/Regist',
-    component: _import('Login/Regist')
+    component: regist
   },{
     path: '/RegistForWX',
     redirect: '/Regist'
   },{
     path: '/ResetPsd',
-    component: _import('Login/ResetPsd')
+    component: resetPsd
   }
 ]
 
@@ -31,11 +43,11 @@ const HomeRoutes = [
   },
   {
     path: '/Home',
-    component: _import('Home/Home')
+    component: Home
   },
   {
     path: '/NewsDetail',
-    component: _import('Home/NewsDetail')
+    component: NewsDetail
   },
 
 ]
@@ -44,36 +56,36 @@ const HomeRoutes = [
 const squareRoutes = [
   {
     path: '/Square',
-    component: _import('Square/Square'),
+    component: Square,
     meta: {
         keepAlive: true // 需要被缓存
     }
   },
   {
     path: '/sqProjectDetail',
-    component: _import('Square/sqProjectDetail')
+    component:sqProjectDetail
   }
 ]
 //挂牌模块
 const ReleaseRoutes = [
   {
     path: '/MyProject',
-    component: _import('Release/MyProject')
+    component: MyProject
   },{
     path: '/ReleaseAssets',
-    component: _import('Release/ReleaseAssets')
+    component: ReleaseAssets
   },{
     path: '/ReleaseFund',
-    component: _import('Release/ReleaseFund')
+    component: ReleaseFund
   },{
     path: '/Release2',
-    component: _import('Release/Release2')
+    component: Release2
   },{
     path: '/Release3',
-    component: _import('Release/Release3')
+    component: Release3
   },{
     path: '/ProjectDetail',
-    component: _import('Release/ProjectDetail')
+    component: ProjectDetail
   }
 ]
 //个人信息模块
