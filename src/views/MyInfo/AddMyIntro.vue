@@ -1,10 +1,10 @@
 <template>
   <div class="content">
-    <myHead msg="昵称" backgroundColor="#fff"></myHead>
-    <div class="fill_nick_name">
-      <span>昵称</span>
-      <input type="text" placeholder="请输入昵称名" v-model="nickName" maxlength=6 @keyup.enter="KeyDown">
-      <span class="delete" @click="deleteName()" v-show="nickName!=''"><img src="./img/close.png" alt=""></span>
+    <myHead msg="编辑简介" backgroundColor="#fff"></myHead>
+    <div class="advices">
+      <textarea maxlength="200" placeholder="介绍一下自己吧"  autofocus v-model="words">
+      </textarea>
+      <div class="wordsLimit">0/60</div>
     </div>
     <div class="btn" >确定</div> <!--@click="ensure"-->
   </div>
@@ -14,19 +14,18 @@
 
 import Lib from '@/assets/js/Lib'
 
-import { Loading, XButton, Confirm, Swiper, SwiperItem, } from 'vux'
-
+import { Loading, XButton, Confirm,  } from 'vux'
 
 import myHead from '@/components/myHead'
 
 export default {
   name: 'Home', 
   components: {
-    Loading, XButton, Confirm, Swiper, SwiperItem,myHead
+    Loading, XButton, Confirm,myHead,
   },
   data () {
     return {
-      nickName:'',
+      words:'',
     }
   },
   computed:{
@@ -49,9 +48,6 @@ export default {
         }
       })
     },*/
-    deleteName(){
-      this.nickName = '';
-    }
   }
 }
 </script>
@@ -65,57 +61,20 @@ export default {
     left: 0;
     top: 0;
     :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-      color: #BFBFBF;
-      font-size: 1rem;
+      color: #B5B5B5;
+      font-size: 0.94rem;
     }
-
     ::-moz-placeholder { /* Mozilla Firefox 19+ */
-      color: #BFBFBF;
-      font-size: 1rem;
+      color: #B5B5B5;
+      font-size: 0.94rem;
     }
-
     input:-ms-input-placeholder{
-      color: #BFBFBF;
-      font-size: 1rem;
+      color: #B5B5B5;
+      font-size: 0.94rem;
     }
-
     input::-webkit-input-placeholder{
-      color: #BFBFBF;
-      font-size: 1rem;
-    }
-    .fill_nick_name{
-      height:3.44rem;
-      line-height: 3.44rem;
-      text-align: left;
-      background: #fff;
-      margin-top: 1.565rem;
-      padding:0 1rem;
-      position: relative;
-      font-size: 1rem;
-      color: #666666;
-      input{
-        width: 70%;
-        height: 3.44rem;
-        text-align: right;
-        border:none;
-        outline: none;
-        /* font-family: "PingFang-SC-Regular" !important; */
-        color: #333333;
-        font-size: 0.94rem;
-        margin-left:2rem;
-      }
-    }
-    .delete{
-      position: absolute;
-      right: 1rem;
-      top: 1.4rem;
-      z-index: 99;
-      img{
-        display: block;
-        width: 0.67rem;
-        height: 0.625rem;
-
-      }
+      color: #B5B5B5;
+      font-size: 0.94rem;
     }
     .btn{
       width: 92%;
@@ -135,6 +94,33 @@ export default {
       height: 3.125rem;
       border-radius: 0.25rem;
     }
+    .advices{
+      height:12.5rem;
+      background:rgba(255,255,255,1);
+      margin: 0.675rem auto 0;
+      position: relative;
+      overflow: hidden;
+      padding: 0 1.375rem;
+      textarea{
+        width: 100%;
+        height: 12.25rem;
+        resize: none;
+        border:0;
+        outline: none;
+        font-size: 0.94rem;
+        line-height: 2rem;
+        /*  font-family:PingFangSC-Light; */
+
+      }
+      .wordsLimit{
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        font-size: 1rem;
+        color: rgba(181,181,181,1);
+      }
+    }
+
   }
   
 </style>

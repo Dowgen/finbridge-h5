@@ -83,6 +83,10 @@ const MyInfoRoutes = [
     component: _import('MyInfo/MyInfo')
   },
   {
+    path: '/MyInfo2',
+    component: _import('MyInfo/MyInfo2')
+  },
+  {
     path: '/AboutUs',
     component: _import('MyInfo/AboutUs')
   },
@@ -94,7 +98,26 @@ const MyInfoRoutes = [
     path: '/AddNick',
     component: _import('MyInfo/AddNick')
   },
-
+  {
+    path: '/productList',
+    component: _import('MyInfo/productList')
+  },
+  {
+    path: '/editInfo',
+    component: _import('MyInfo/editInfo')
+  },
+  {
+    path: '/AddMyIntro',
+    component: _import('MyInfo/AddMyIntro')
+  },
+  {
+    path: '/fans',
+    component: _import('MyInfo/fans')
+  },
+  {
+    path: '/attention',
+    component: _import('MyInfo/attention')
+  },
 ]
 
 export default new Router({

@@ -187,6 +187,11 @@
       <img src="./img/close.png" alt="" @click="closeErweima">
     </div>
 
+    <!--进入主页-->
+    <div class="enter-home" @click="enterMyInfo2">
+      <img src="./img/ic_enter.png" alt="">
+    </div>
+    
     <loading :show="loading" :text="loadText"></loading>
   </div>
 </template>
@@ -228,6 +233,9 @@ export default {
     /*this.getReturnLink();*/
   },
   methods:{
+    enterMyInfo2(){
+      this.$router.push('./MyInfo2')
+    },
     showErweima(){
       $('.alert-erweima').css('display','block')
     },
@@ -687,6 +695,17 @@ body{
   bottom: 0;
 }
 .foot-close img{
+  width: 100%;
+  height: 100%;
+}
+.enter-home{
+  position: fixed;
+  top: 6.5rem;
+  right: 0;
+  width: 5.655rem;
+  height: 2.065rem;
+}
+.enter-home img{
   width: 100%;
   height: 100%;
 }
