@@ -9,9 +9,9 @@
       </div>
       <div class="zj" v-show="zj">
         <div class="zj-head">
-         <div @click="sortFund(1)" :class="isAsc_fund?'active':''">时间排序
-          <img v-show="!isAsc_fund" src="./img/ic_arrow_down.png" alt="">
-          <img v-show="isAsc_fund" src="./img/arrow_up.png" alt="">
+         <div @click="sortFund(1)" :class="isAsc_fund_time?'active':''">时间排序
+          <img v-show="!isAsc_fund_time" src="./img/ic_arrow_down.png" alt="">
+          <img v-show="isAsc_fund_time" src="./img/arrow_up.png" alt="">
          </div>
          <!-- <div @click="isActive_fund='total',isAsc?sort(2,1,2):sort(2,2,2)" :class="isActive_fund=='total'?'active':''">资金规模
            <img v-show="!isAsc" src="./img/ic_arrow_down.png" alt="">
@@ -163,9 +163,9 @@ export default {
     return {
       isActive: 'comprehension',
       /*isActive_fund: 'active',*/
-      isAsc_asset_time:false,
+      isAsc_asset_time:true,
       isAsc_asset_total:true,
-      isAsc_fund:true,
+      isAsc_fund_time:false,
       zj:true,
       key:2,
       items:[],
@@ -279,13 +279,13 @@ export default {
     sortFund(isSort){
       var self = this;
       var url = '/fund/sortFund';
-      if(isSort==1) self.isAsc_fund = !self.isAsc_fund;
+      if(isSort==1) self.isAsc_fund_time = !self.isAsc_fund_time;
 
       Lib.M.ajax({
         url:url,
         data:{
           'fundAnmountType': self.fundAnmountType.toString(),
-          'sortType': self.isAsc_fund ?'asc':'desc',
+          'sortType': self.isAsc_fund_time ?'asc':'desc',
           'fundType': self.fundType.toString(),
         },
         success:function (res) {
