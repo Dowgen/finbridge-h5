@@ -15,27 +15,24 @@
         </div>
         <div class="intro-item">
           <div class="intro-item-l">所在地</div>
-          <div class="intro-item-r">
-            浙江 杭州
-            <span><img src="./img/arrow.png" alt=""></span>
-          </div>
-        </div>
-        <div class="intro-item">
-          <div class="intro-item-l">类型</div>
-          <div class="intro-item-r">
-            资金方
-            <span><img src="./img/arrow.png" alt=""></span>
-          </div>
-        </div>
-        <!--<div class="intro-item">
-          <div class="intro-item-l">所在地</div>
           <div class="intro-item-r" style="position:relative">
             <input class="inputer" placeholder="省份，城市" v-model="cityVal" readonly="readonly"/>
             <div class="sel">
               <popup-picker :data="cityList" :columns="3" v-model="cityVal" ref="cityPicker" ></popup-picker>
             </div>
           </div>
-        </div>-->
+        </div>
+        <div class="intro-item">
+          <div class="intro-item-l">类型</div>
+          <div class="intro-item-r" style="position:relative">
+            <input class="inputer" placeholder="资金资产类型" v-model="AFType" readonly="readonly"/>
+            <div class="sel">
+              <popup-picker :data="AFList" :columns="1" v-model="AFType" ref="AFTypePicker" ></popup-picker>
+            </div>
+          </div>
+        </div>
+
+
       </div>
       <div class="myIntro" style="margin-top: 0.6rem;">
         <div class="intro-item self-intro" @click="AddMyIntro">
@@ -67,7 +64,8 @@ import $ from 'jquery'
 export default {
   name: 'Home', 
   components: {
-    MainNav, Loading, XButton, Confirm,myHead
+    MainNav, Loading, XButton, Confirm,myHead, PopupPicker,Cell
+
   },
   data () {
     return {
@@ -75,6 +73,10 @@ export default {
       img_id: '',
       noAvatar:true,
       intro:'',
+      cityVal: [],
+      cityList: Lib.M.cityList,
+      AFType:[],
+      AFList: Lib.M.AFList,
 
 
     }
@@ -91,7 +93,8 @@ export default {
     },
     AddMyIntro(){
       this.$router.push('./AddMyIntro')
-    }
+    },
+
 
   }
 }
@@ -135,15 +138,16 @@ export default {
         border-bottom: 0.06rem solid #E6E7EB;
         padding:0 1.1rem;
         div{
-          width: 0;
           text-align: left;
           font-size: 0.875rem;
         }
         .intro-item-l{
+          width: 0;
           flex: 1;
           color: #999999;
         }
         .intro-item-r{
+          position: relative;
           flex: 3;
           color: #333333;
           span{
@@ -152,6 +156,25 @@ export default {
               width: 0.44rem;
               height: 0.75rem;
             }
+          }
+          .inputer{
+            outline: none;
+            border: none;
+            font-size: 0.94rem;
+            height: 2.75rem;
+            text-align: left;
+            margin-right: 1rem;
+          }
+          .sel{
+            background: url('./img/arrow.png') no-repeat;
+            background-size: 0.44rem 0.75rem;
+            background-position: 100% center;
+            width: 100%;
+            position:absolute;
+            top:0;
+            right:0;
+            bottom:0;
+            overflow: hidden;
           }
         }
       }

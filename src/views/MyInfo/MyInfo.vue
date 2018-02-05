@@ -55,15 +55,6 @@
           <img src="./img/ic_edit.png" alt="">
           修改资料
         </div>
-        <!--<div class="intro-item">
-          <div class="intro-item-l">所在地</div>
-          <div class="intro-item-r" style="position:relative">
-            <input class="inputer" placeholder="省份，城市" v-model="cityVal" readonly="readonly"/>
-            <div class="sel">
-              <popup-picker :data="cityList" :columns="3" v-model="cityVal" ref="cityPicker" ></popup-picker>
-            </div>
-          </div>
-        </div>-->
       </div>
       <div class="productList">
         <div class="intro-title">
@@ -303,32 +294,6 @@ export default {
         .intro-item-r{
           flex: 3;
           color: #333333;
-         /* input{
-            border:none;
-            outline: none;
-            text-align: right;
-            !* width: 90%; *!
-            height: 100%;
-          }
-          .inputer{
-            outline: none;
-            border: none;
-            font-size: 0.94rem;
-            height: 2.75rem;
-            text-align: left;
-            margin-right: 1rem;
-          }
-          .sel{
-            background: url('./img/choose_down.png') no-repeat;
-            background-size: 0.69rem 0.375rem;
-            background-position: 100% center;
-            width: 100%;
-            position:absolute;
-            top:0;
-            right:0;
-            bottom:0;
-            overflow: hidden;
-          }*/
         }
       }
       .self-intro{

@@ -110,6 +110,7 @@ var Rxports = {
     eduList: pickerList.eduList,
     mariList: pickerList.mariList,
     cityList: pickerList.cityList,
+    AFList: pickerList.AFList,
 
     /* input type=number */
     clearNoNum:function(obj){

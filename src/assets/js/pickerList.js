@@ -66,6 +66,16 @@ var adviceList = [{
     parent:0,
 }];*/
 
+var AFList = [{
+  name: '资金方',
+  value: '资金方',
+  parent:0
+},{
+  name: '资产方',
+  value: '资产方',
+  parent:0
+}];
+
 var cityList = [{
     name: '北京',
     value: '北京',
@@ -1656,4 +1666,4 @@ var cityList = [{
     parent:'上海'
 }]
 
-export {mariList, eduList, workTypeList, cityList,adviceList};
+export {mariList, eduList, workTypeList, cityList,adviceList,AFList};

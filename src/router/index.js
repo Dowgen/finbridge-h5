@@ -15,6 +15,16 @@ const ReleaseFund = r => require.ensure([], () => r(require('@/views/Release/Rel
 const Release2 = r => require.ensure([], () => r(require('@/views/Release/Release2')), 'Release2')
 const Release3 = r => require.ensure([], () => r(require('@/views/Release/Release3')), 'Release3')
 const ProjectDetail = r => require.ensure([], () => r(require('@/views/Release/ProjectDetail')), 'ProjectDetail')
+const MyInfo = r => require.ensure([], () => r(require('@/views/MyInfo/MyInfo')), 'MyInfo')
+const MyInfo2 = r => require.ensure([], () => r(require('@/views/MyInfo/MyInfo2')), 'MyInfo2')
+const AboutUs = r => require.ensure([], () => r(require('@/views/MyInfo/AboutUs')), 'AboutUs')
+const AboutMe = r => require.ensure([], () => r(require('@/views/MyInfo/AboutMe')), 'AboutMe')
+const AddNick = r => require.ensure([], () => r(require('@/views/MyInfo/AddNick')), 'AddNick')
+const productList = r => require.ensure([], () => r(require('@/views/MyInfo/productList')), 'productList')
+const editInfo = r => require.ensure([], () => r(require('@/views/MyInfo/editInfo')), 'editInfo')
+const AddMyIntro = r => require.ensure([], () => r(require('@/views/MyInfo/AddMyIntro')), 'AddMyIntro')
+const fans = r => require.ensure([], () => r(require('@/views/MyInfo/fans')), 'fans')
+const attention = r => require.ensure([], () => r(require('@/views/MyInfo/attention')), 'attention')
 
 Vue.use(Router)
 
@@ -92,43 +102,43 @@ const ReleaseRoutes = [
 const MyInfoRoutes = [
   {
     path: '/MyInfo',
-    component: _import('MyInfo/MyInfo')
+    component: MyInfo
   },
   {
     path: '/MyInfo2',
-    component: _import('MyInfo/MyInfo2')
+    component: MyInfo2
   },
   {
     path: '/AboutUs',
-    component: _import('MyInfo/AboutUs')
+    component: AboutUs
   },
   {
     path: '/AboutMe',
-    component: _import('MyInfo/AboutMe')
+    component: AboutMe
   },
   {
     path: '/AddNick',
-    component: _import('MyInfo/AddNick')
+    component: AddNick
   },
   {
     path: '/productList',
-    component: _import('MyInfo/productList')
+    component: productList
   },
   {
     path: '/editInfo',
-    component: _import('MyInfo/editInfo')
+    component: editInfo
   },
   {
     path: '/AddMyIntro',
-    component: _import('MyInfo/AddMyIntro')
+    component: AddMyIntro
   },
   {
     path: '/fans',
-    component: _import('MyInfo/fans')
+    component: fans
   },
   {
     path: '/attention',
-    component: _import('MyInfo/attention')
+    component: attention
   },
 ]
 
