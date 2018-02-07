@@ -190,18 +190,30 @@ export default {
         type:'post',
         url: "/public/userListingProject",
         data:{
-          'userId':'68f23f6b9ebb4dbd91f91b7ee21ba22a',/*self.localUserInfo.userId */
+          'userId':'3e070a6749a043b182c11b95fac867c8',/*self.localUserInfo.userId */
         },
         success:function (res) {
           console.log(res.data);
           if(self.AorF = 'fund'){
             self.fundList = res.data.fund
-            self.lookFCount = res.data.fund.length - 3;
+
+            if(res.data.fund.length - 3 < 0){
+              self.lookFCount = 0;
+            }else {
+              self.lookFCount = res.data.fund.length - 3;
+            }
+
             console.log(self.lookFCount);
           }
           if(self.AorF = 'asset'){
             self.assetsList = res.data.asset
-            self.lookACount = res.data.asset.length - 3;
+
+            if(res.data.asset.length - 3 < 0){
+              self.lookACount = 0;
+            }else {
+              self.lookACount = res.data.asset.length - 3;
+            }
+
             console.log(self.lookACount);
           }
 
