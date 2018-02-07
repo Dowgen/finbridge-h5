@@ -11,21 +11,21 @@
             <img src="./img/avatar.png" alt="">
           </div>
           <div class="intro">
-            <p>金毛豆丁酱</p>
-            <p>简介：高冷慢热型の肥金毛</p>
+            <p>{{userInfoDetail.name}}</p>
+            <p>简介：{{userInfoDetail.introduction}}</p>
           </div>
         </div>
         <div class="someNum">
-          <div class="projectNum" @click="toProductList">
-            <p>216</p>
+          <div class="projectNum" @click="toProductList('all')">
+            <p>{{fundList.length + assetsList.length}}</p>
             <p>项目</p>
           </div>
           <div class="attentionNum" @click="toAttention">
-            <p>26</p>
+            <p>{{myData.follow}}</p>
             <p>关注</p>
           </div>
           <div class="fansNum" @click="toFans">
-            <p>16</p>
+            <p>{{myData.followed}}</p>
             <p>粉丝</p>
           </div>
         </div>
@@ -37,19 +37,19 @@
         </div>
         <div class="intro-item">
           <div class="intro-item-l">昵称</div>
-          <div class="intro-item-r">金毛豆丁酱</div>
+          <div class="intro-item-r">{{userInfoDetail.name}}</div>
         </div>
         <div class="intro-item">
           <div class="intro-item-l">所在地</div>
-          <div class="intro-item-r">浙江 杭州</div>
+          <div class="intro-item-r">{{userInfoDetail.address}}</div>
         </div>
         <div class="intro-item">
           <div class="intro-item-l">类型</div>
-          <div class="intro-item-r">资金方</div>
+          <div class="intro-item-r">{{userInfoDetail.type}}</div>
         </div>
         <div class="intro-item self-intro">
           <div class="intro-item-l">个人简介</div>
-          <div class="intro-item-r">一只高冷慢热型喜欢流行音乐泡韩剧撸美剧のa肥金毛</div>
+          <div class="intro-item-r">{{userInfoDetail.introduction}}</div>
         </div>
         <div class="revise-info" @click="editInfo">
           <img src="./img/ic_edit.png" alt="">
@@ -60,40 +60,44 @@
         <div class="intro-title">
           <span></span>
           <span>项目列表</span>
-          <span><img src="./img/button_fund.png" alt=""></span>
-          <!--<span><img src="./img/button_asset.png" alt=""></span>-->
+          <span v-if="AorF=='fund'" @click="AorF ='asset'"><img src="./img/button_fund.png" alt=""></span>
+          <span v-if="AorF=='asset'" @click="AorF ='fund'"><img src="./img/button_asset.png" alt=""></span>
         </div>
-       <div>
-         <div class="product-item">
-           <div class="product-item-l">
-             <p>7<span>%</span> - 12<span>%</span></p>
-             <p>资金成本区间</p>
-           </div>
-           <div class="product-item-r">
-             <p>中腾堡SJT-BL-171131</p>
-             <p>
-               <span>3天</span>
-               <span>车抵贷</span>
-             </p>
+
+        <div v-if="AorF=='fund'">
+           <div class="product-item" v-for="(item,index) in fundList" v-if="index < 3">
+             <div class="product-item-l">
+               <p>{{item.fundCostRegionFrom}}<span>%</span> - {{item.fundCostRegionTo}}<span>%</span></p>
+               <p>资金成本区间</p>
+             </div>
+             <div class="product-item-r">
+               <p>{{item.projectName}}</p>
+               <p>
+                 <span>{{validPeriod - (parseInt((new Date() - new Date(item.listTime.replace(/-/g,'/'))) / 86400000))}}天</span>
+                 <span>{{getLabel(item.fundType,'fund')}}</span>
+               </p>
+             </div>
            </div>
          </div>
-         <div class="product-item">
-           <div class="product-item-l">
-             <p>7<span>%</span> - 12<span>%</span></p>
-             <p>资金成本区间</p>
-           </div>
-           <div class="product-item-r">
-             <p>中腾堡SJT-BL-171131</p>
-             <p>
-               <span>3天</span>
-               <span>车抵贷</span>
-             </p>
-           </div>
-         </div>
-       </div>
-        <div class="look-more"  @click="toProductList">
-          查看更多(26)
+
+        <div v-if="AorF=='asset'">
+          <div class="product-item" v-for="(oItem,index) in assetsList" v-if="index < 3">
+            <div class="product-item-l">
+              <p>{{oItem.fundCostRegionFrom}}<span>%</span> - {{oItem.fundCostRegionTo}}<span>%</span></p>
+              <p>资金成本区间</p>
+            </div>
+            <div class="product-item-r">
+              <p>{{oItem.projectName}}</p>
+              <p>
+                <span>{{validPeriod - parseInt((new Date() - new Date(oItem.listTime.replace(/-/g,'/'))) / 86400000)}}天</span>
+                <span>{{getLabel(oItem.productType,'asset')}}</span>
+              </p>
+            </div>
+          </div>
         </div>
+
+        <div class="look-more"  @click="toProductList('fund')" v-if="AorF=='fund'">查看更多({{lookFCount}})</div>
+        <div class="look-more"  @click="toProductList('asset')" v-if="AorF=='asset'">查看更多({{lookACount}})</div>
       </div>
     </div>
     <main-nav which="myInfo"></main-nav>
@@ -120,13 +124,22 @@ export default {
   },
   data () {
     return {
-      myData:[],
+      myData:{},
+      userInfoDetail:{},
       img_id: '',
       noAvatar:true,
       intro:'',
       myPhone:'',
       cityVal: [],
       cityList: Lib.M.cityList,
+      AorF:'',
+      fundList:[],
+      assetsList:[],
+      validPeriod:'',
+      lookFCount:'',
+      lookACount:'',
+
+
 
     }
   },
@@ -134,42 +147,97 @@ export default {
 
   },
   mounted(){
-    /*this.myPhone = localStorage.phoneNum;
-    this.getMyInfo();*/
+    this.localUserInfo = localStorage;
+    this.getValidPeriod();
+    this.getMyInfo();
+    this.getProjectList();
+
   },
   methods: {
-    /*getMyInfo(){
-      var self = this;
-      Lib.M.ajax({
-        url : '/info/getAboutUs',
-        success:function(res){
-          self.myData = res.data;
-          $(self.myData).each(function(index){
-            if(self.myData[index].key == 'aboutUs_intro'){
-              self.intro = self.myData[index].value;
-              console.log(self.intro);
-            }
-
-          });
-
-        },
-        error:function(err){
-          console.error(err);
-        }
-      });
-    },*/
     editInfo(){
       this.$router.push('./editInfo')
     },
-    toProductList(){
-      this.$router.push('./productList')
+    toProductList(AorF){
+      this.$router.push({'path':'./productList',query:{
+        AorF:AorF,
+      }})
     },
     toFans(){
       this.$router.push('./fans')
     },
     toAttention(){
       this.$router.push('./attention')
-    }
+    },
+    getMyInfo(){
+      var self = this;
+      Lib.M.ajax({
+        type:'post',
+        url: "/user/getUserInfoDetail",
+        data:{
+          'userId':self.localUserInfo.userId,
+        },
+        success:function (res) {
+          self.myData = res.data;
+          if(res.data.userInfoDetail !== null){
+            self.userInfoDetail = res.data.userInfoDetail;
+          }
+        }
+      })
+    },
+    getProjectList(){
+      var self = this;
+      Lib.M.ajax({
+        type:'post',
+        url: "/public/userListingProject",
+        data:{
+          'userId':'68f23f6b9ebb4dbd91f91b7ee21ba22a',/*self.localUserInfo.userId */
+        },
+        success:function (res) {
+          console.log(res.data);
+          if(self.AorF = 'fund'){
+            self.fundList = res.data.fund
+            self.lookFCount = res.data.fund.length - 3;
+            console.log(self.lookFCount);
+          }
+          if(self.AorF = 'asset'){
+            self.assetsList = res.data.asset
+            self.lookACount = res.data.asset.length - 3;
+            console.log(self.lookACount);
+          }
+
+
+        }
+      })
+    },
+    //资金资产类型数字转化为文字
+    getLabel(key,type){
+      var f;
+      if(type=='fund')
+        f = JSON.parse(localStorage.fundTypeList);
+      else
+        f = JSON.parse(localStorage.assetTypeList);
+      for(let i in f){
+        if(f[i].key == key) return f[i].label
+      }
+    },
+    // 获得资金资产统一的失效天数
+    getValidPeriod(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/config/getConfigByParameter',
+        data:{
+          'key':'unlistPeriod'
+        },
+        success:function (res) {
+          self.validPeriod = res.data[0].value;
+          /*console.log(111111);
+          console.log(self.validPeriod);*/
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
 
 
   }

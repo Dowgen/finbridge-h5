@@ -6,30 +6,69 @@
         <p>项目列表</p>
       </div>
       <div class="productList">
-        <div class="product-item">
-          <div class="product-item-l">
-            <p>7<span>%</span> - 12<span>%</span></p>
-            <p>资金成本区间</p>
-          </div>
-          <div class="product-item-r">
-            <p>中腾堡SJT-BL-171131</p>
-            <p>
-              <span>3天</span>
-              <span>车抵贷</span>
-            </p>
+        <div v-if="$route.query.AorF == 'fund'">
+          <div class="product-item" v-for="(item,index) in fundList" v-if="index > 3">
+            <div class="product-item-l">
+              <p>{{item.fundCostRegionFrom}}<span>%</span> - {{item.fundCostRegionTo}}<span>%</span></p>
+              <p>资金成本区间</p>
+            </div>
+            <div class="product-item-r">
+              <p>{{item.projectName}}</p>
+              <p>
+                <span>{{validPeriod - (parseInt((new Date() - new Date(item.listTime.replace(/-/g,'/'))) / 86400000))}}天</span>
+                <span>{{getLabel(item.fundType,'fund')}}</span>
+              </p>
+            </div>
           </div>
         </div>
-        <div class="product-item">
-          <div class="product-item-l">
-            <p>7<span>%</span> - 12<span>%</span></p>
-            <p>资金成本区间</p>
+
+        <div v-if="$route.query.AorF == 'asset'">
+          <div class="product-item" v-for="(oItem,index) in assetsList" v-if="index > 3">
+            <div class="product-item-l">
+              <p>{{oItem.fundCostRegionFrom}}<span>%</span> - {{oItem.fundCostRegionTo}}<span>%</span></p>
+              <p>资金成本区间</p>
+            </div>
+            <div class="product-item-r">
+              <p>{{oItem.projectName}}</p>
+              <p>
+                <span>{{validPeriod - parseInt((new Date() - new Date(oItem.listTime.replace(/-/g,'/'))) / 86400000)}}天</span>
+                <span>{{getLabel(oItem.productType,'asset')}}</span>
+              </p>
+            </div>
           </div>
-          <div class="product-item-r">
-            <p>中腾堡SJT-BL-171131</p>
-            <p>
-              <span>3天</span>
-              <span>车抵贷</span>
-            </p>
+        </div>
+
+        <div  v-if="$route.query.AorF == 'all'">
+          <div>
+            <div class="product-item" v-for="(item,index) in fundList">
+              <div class="product-item-l">
+                <p>{{item.fundCostRegionFrom}}<span>%</span> - {{item.fundCostRegionTo}}<span>%</span></p>
+                <p>资金成本区间</p>
+              </div>
+              <div class="product-item-r">
+                <p>{{item.projectName}}</p>
+                <p>
+                  <span>{{validPeriod - (parseInt((new Date() - new Date(item.listTime.replace(/-/g,'/'))) / 86400000))}}天</span>
+                  <span>{{getLabel(item.fundType,'fund')}}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="product-item" v-for="(oItem,index) in assetsList">
+              <div class="product-item-l">
+                <p>{{oItem.fundCostRegionFrom}}<span>%</span> - {{oItem.fundCostRegionTo}}<span>%</span></p>
+                <p>资金成本区间</p>
+              </div>
+              <div class="product-item-r">
+                <p>{{oItem.projectName}}</p>
+                <p>
+                  <span>{{validPeriod - parseInt((new Date() - new Date(oItem.listTime.replace(/-/g,'/'))) / 86400000)}}天</span>
+                  <span>{{getLabel(oItem.productType,'asset')}}</span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
         <div class="no-more">没有更多了...</div>
@@ -63,6 +102,10 @@ export default {
       img_id: '',
       noAvatar:true,
       intro:'',
+      AorF:'',
+      fundList:[],
+      assetsList:[],
+      validPeriod:'',
 
 
     }
@@ -71,10 +114,69 @@ export default {
 
   },
   mounted(){
-
+    this.getValidPeriod();
+    this.getProjectList();
   },
   methods: {
+    getProjectList(){
+      var self = this;
+      Lib.M.ajax({
+        type:'post',
+        url: "/public/userListingProject",
+        data:{
+          'userId':'68f23f6b9ebb4dbd91f91b7ee21ba22a',/*self.localUserInfo.userId */
+        },
+        success:function (res) {
+          console.log(res.data);
+          if(self.AorF = 'fund'){
+            self.fundList = res.data.fund
 
+          }
+          if(self.AorF = 'asset'){
+            self.assetsList = res.data.asset
+
+          }
+
+          if(self.AorF = 'all'){
+            self.fundList = res.data.fund
+
+            self.assetsList = res.data.asset
+
+          }
+
+
+        }
+      })
+    },
+    //资金资产类型数字转化为文字
+    getLabel(key,type){
+      var f;
+      if(type=='fund')
+        f = JSON.parse(localStorage.fundTypeList);
+      else
+        f = JSON.parse(localStorage.assetTypeList);
+      for(let i in f){
+        if(f[i].key == key) return f[i].label
+      }
+    },
+    // 获得资金资产统一的失效天数
+    getValidPeriod(){
+      var self = this;
+      Lib.M.ajax({
+        url:'/config/getConfigByParameter',
+        data:{
+          'key':'unlistPeriod'
+        },
+        success:function (res) {
+          self.validPeriod = res.data[0].value;
+          /*console.log(111111);
+          console.log(self.validPeriod);*/
+        },
+        error:function(err){
+          console.error(err);
+        }
+      });
+    },
 
   }
 }

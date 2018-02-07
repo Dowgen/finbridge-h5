@@ -74,7 +74,12 @@ var AFList = [{
   name: '资产方',
   value: '资产方',
   parent:0
-}];
+},
+  {
+    name: '平台方',
+    value: '平台方',
+    parent:0
+  }];
 
 var cityList = [{
     name: '北京',

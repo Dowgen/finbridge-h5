@@ -6,10 +6,10 @@
         <p>基本信息</p>
       </div>
       <div class="myIntro">
-        <div class="intro-item" @click="AddNick">
+        <div class="intro-item" @click="$router.push({path:'/AddNick'})"><!--@click="AddNick" -->
           <div class="intro-item-l">昵称</div>
           <div class="intro-item-r">
-            金毛豆丁酱
+            {{userInfoDetail.name}}
             <span><img src="./img/arrow.png" alt=""></span>
           </div>
         </div>
@@ -31,14 +31,12 @@
             </div>
           </div>
         </div>
-
-
       </div>
       <div class="myIntro" style="margin-top: 0.6rem;">
         <div class="intro-item self-intro" @click="AddMyIntro">
           <div class="intro-item-l">个人简介</div>
           <div class="intro-item-r">
-            一只高冷慢热型喜欢流行音乐泡韩剧撸美剧のa肥金毛
+            {{userInfoDetail.introduction}}
             <span><img src="./img/arrow.png" alt=""></span>
           </div>
         </div>
@@ -67,9 +65,20 @@ export default {
     MainNav, Loading, XButton, Confirm,myHead, PopupPicker,Cell
 
   },
+  watch: {
+    // 如果 `cityVal` 发生改变，这个函数就会运行
+    cityVal: function (newQuestion) {
+      console.log(this.cityVal)
+      this.submitMyInfo();
+    },
+    // 如果 `AFType` 发生改变，这个函数就会运行
+    AFType: function (newQuestion) {
+      console.log(this.AFType)
+      this.submitMyInfo();
+    }
+  },
   data () {
     return {
-      myData:[],
       img_id: '',
       noAvatar:true,
       intro:'',
@@ -77,14 +86,16 @@ export default {
       cityList: Lib.M.cityList,
       AFType:[],
       AFList: Lib.M.AFList,
-
-
+      myData:{},
+      userInfoDetail:{},
     }
   },
   computed:{
 
   },
   mounted(){
+    this.localUserInfo = localStorage;
+    this.getMyInfo();
 
   },
   methods: {
@@ -94,6 +105,48 @@ export default {
     AddMyIntro(){
       this.$router.push('./AddMyIntro')
     },
+    getMyInfo(){
+      var self = this;
+
+      Lib.M.ajax({
+        type:'post',
+        url: "/user/getUserInfoDetail",
+        data:{
+          'userId':self.localUserInfo.userId,
+        },
+        success:function (res) {
+          console.log(res.data);
+          self.myData = res.data;
+          if(res.data.userInfoDetail !== null){
+            self.userInfoDetail = res.data.userInfoDetail;
+          }
+
+
+        }
+      })
+    },
+    submitMyInfo(){
+      var self = this;
+
+      Lib.M.ajax({
+        type:'post',
+        url: "/user/submitUserInfoDetail",
+        data:{
+          'userId':self.localUserInfo.userId,
+          'name':'',
+          'address':self.cityVal.join(','),
+          'type':self.AFType.join(','),
+          'introduction':'',
+        },
+        success:function (res) {
+          console.log(res);
+
+        }
+      })
+    },
+
+
+
 
 
   }
@@ -101,6 +154,22 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:   #333333;
+    font-size: 0.875rem;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #333333;
+    font-size: 0.875rem;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #333333;
+    font-size: 0.875rem;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    #333333;
+    font-size: 0.875rem;
+  }
   .content{
     width: 100%;
     background: #EFEFF4;
