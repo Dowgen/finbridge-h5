@@ -3,10 +3,10 @@
     <myHead msg="昵称" backgroundColor="#fff"></myHead>
     <div class="fill_nick_name">
       <span>昵称</span>
-      <input type="text" placeholder="请输入昵称名" v-model="nickName" maxlength=6 @keyup.enter="KeyDown">
-      <span class="delete" @click="deleteName()" v-show="nickName!=''"><img src="./img/close.png" alt=""></span>
+      <input type="text" placeholder="请输入昵称名" v-model="name" maxlength=6 @keyup.enter="KeyDown">
+      <span class="delete" @click="deleteName()" v-show="name!=''"><img src="./img/close.png" alt=""></span>
     </div>
-    <div class="btn" >确定</div> <!--@click="ensure"-->
+    <div class="btn" @click="submitMyInfo">确定</div>
   </div>
 </template>
 
@@ -26,31 +26,40 @@ export default {
   },
   data () {
     return {
-      nickName:'',
+      name:'',
+      localUserInfo:{}
     }
   },
   computed:{
     
   },
   mounted(){
-    
+    this.localUserInfo = localStorage;
   },
   methods: {
-    /*ensure(){
+    submitMyInfo(){
       var self = this;
 
       Lib.M.ajax({
-        type:'get',
-        url: "cash-account/user/account/userInfo/name/"+self.localUserInfo.userInfo.phone+'/'+self.nickName,
+        type:'post',
+        url: "/user/submitUserInfoDetail",
+        data:{
+          'userId':self.localUserInfo.userId,
+          'name':self.name,
+          'address':'',
+          'type':'',
+          'introduction':'',
+        },
         success:function (res) {
           console.log(res);
-          /!*返回上一页*!/
+
+          /*返回上一页*/
           self.$router.go(-1);
         }
       })
-    },*/
+    },
     deleteName(){
-      this.nickName = '';
+      this.name = '';
     }
   }
 }

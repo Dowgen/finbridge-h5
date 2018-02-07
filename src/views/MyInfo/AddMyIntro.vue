@@ -6,7 +6,7 @@
       </textarea>
       <div class="wordsLimit">0/60</div>
     </div>
-    <div class="btn" >确定</div> <!--@click="ensure"-->
+    <div class="btn" @click="submitMyInfo">确定</div>
   </div>
 </template>
 
@@ -26,28 +26,37 @@ export default {
   data () {
     return {
       words:'',
+      localUserInfo:{}
     }
   },
   computed:{
     
   },
   mounted(){
-    
+    this.localUserInfo = localStorage;
   },
   methods: {
-    /*ensure(){
+    submitMyInfo(){
       var self = this;
 
       Lib.M.ajax({
-        type:'get',
-        url: "cash-account/user/account/userInfo/name/"+self.localUserInfo.userInfo.phone+'/'+self.nickName,
+        type:'post',
+        url: "/user/submitUserInfoDetail",
+        data:{
+          'userId':self.localUserInfo.userId,
+          'name':'',
+          'address':'',
+          'type':'',
+          'introduction':self.words,
+        },
         success:function (res) {
           console.log(res);
-          /!*返回上一页*!/
+
+          /*返回上一页*/
           self.$router.go(-1);
         }
       })
-    },*/
+    },
   }
 }
 </script>

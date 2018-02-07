@@ -7,7 +7,7 @@
       </div>
      <div class="fansList">
        <div class="fans-item" v-for="item in FollowOrFollowedList">
-         <div class="fans-item-l">
+         <div class="fans-item-l" @click="jumpTo(item.userId)">
            <div class="item-l">
              <img src="./img/famale_pic.png" alt="">
            </div>
@@ -67,6 +67,12 @@ export default {
     this.getUserFollowOrFollowedList();
   },
   methods: {
+    jumpTo(userId){
+      this.$router.push({'path':'/MyInfo2',query:{
+          userId:userId
+        }
+      })
+    },
     /* 获取关注和粉丝列表 */
     getUserFollowOrFollowedList(){
       var self = this;
@@ -122,7 +128,7 @@ export default {
         },
         success:function(res){
           if(res.code==200){
-            self.FollowOrFollowedList = res.data;
+            self.getUserFollowOrFollowedList();
           }else{
             self.$vux.toast.text(res.error, 'middle');
           }
