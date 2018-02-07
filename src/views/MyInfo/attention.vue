@@ -6,22 +6,22 @@
         <p>关注</p>
       </div>
      <div class="fansList">
-       <div class="fans-item">
+       <div class="fans-item" v-for="item in FollowOrFollowedList">
          <div class="fans-item-l">
            <div class="item-l">
              <img src="./img/famale_pic.png" alt="">
            </div>
            <div class="item-r">
-             <p>Rose Walsh</p>
-             <p>简介：一只高冷慢热型の肥金毛</p>
+             <p>{{item.name}}</p>
+             <p>{{item.introduction}}</p>
            </div>
          </div>
          <div class="fans-item-r">
-           <span class="addAttention" v-show="!attention">
+           <span class="addAttention" v-show="item.sign!=null?!item.sign:false" @click="addOrCancelFollow(item.userId,item.sign)">
               <img src="./img/ic_add.png" alt="">
              关注
            </span>
-           <span class="cancelAttention" v-show="attention">已关注</span>
+           <span class="cancelAttention" v-show="item.sign!=null?item.sign:true" @click="addOrCancelFollow(item.userId,item.sign)">已关注</span>
          </div>
        </div>
        <div class="no-more">没有更多了...</div>
@@ -56,7 +56,7 @@ export default {
       noAvatar:true,
       intro:'',
       attention:false,
-
+      FollowOrFollowedList:[]
 
     }
   },
@@ -64,10 +64,71 @@ export default {
 
   },
   mounted(){
-
+    this.getUserFollowOrFollowedList();
   },
   methods: {
-
+    /* 获取关注和粉丝列表 */
+    getUserFollowOrFollowedList(){
+      var self = this;
+      var key = '';
+      if(self.$route.query.AorF=='attention'){
+        key = 'follow'
+      }else if(self.$route.query.AorF=='fans'){
+        key = 'followed'
+      }
+      Lib.M.ajax({
+        url : '/user/getUserFollowOrFollowedList',
+        data:{
+          /*userId: localStorage.userId,*/
+          userId:'1',
+          key: key
+        },
+        success:function(res){
+          if(res.code==200){
+            self.FollowOrFollowedList = res.data;
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    },
+    /* 关注或取消关注 */
+    addOrCancelFollow(userId,sign){
+      var self = this;
+      var key = '';
+      if(sign==null){ //null表示关注页面
+        key = 'cancel'
+      }else{
+        if(sign == false){
+          key = 'add';
+        }else if(sign == true){
+          key = 'cancel';
+        }
+      }
+      /*if(self.$route.query.AorF=='attention'){
+        userId = userId;
+        followId = '1';
+      }else if(self.$route.query.AorF=='fans'){
+        userId = '1';
+        followId = userId;
+      }*/
+      Lib.M.ajax({
+        url : '/user/userAddOrCancelFollow',
+        data:{
+          /*userId: localStorage.userId,*/
+          userId: '1',
+          key: key,
+          followId: userId
+        },
+        success:function(res){
+          if(res.code==200){
+            self.FollowOrFollowedList = res.data;
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      });
+    }
   }
 }
 </script>

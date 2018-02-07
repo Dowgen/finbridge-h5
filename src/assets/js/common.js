@@ -13,8 +13,8 @@ var vm = new Vue({});
 
 //全局域名设置
 var webDomain = 'https://finbridge.cn';
-var apiDomain = 'https://api.moneyboom.cn';
-/*var apiDomain = 'http://192.168.2.169:8060';*/
+/*var apiDomain = 'https://api.moneyboom.cn';*/
+var apiDomain = 'http://192.168.2.169:8060';
 
 //localStorage清除
 localStorage.removeItem('addAssetParams');
@@ -285,6 +285,22 @@ Rxports.ajax({
     error:function(err){
       console.error(err);
     }
+});
+
+// 获得资金资产统一的失效天数
+Rxports.ajax({
+  url:'/config/getConfigByParameter',
+  data:{
+    'key':'unlistPeriod'
+  },
+  success:function (res) {
+    localStorage.validPeriod = res.data[0].value;
+    /*console.log(111111);
+    console.log(self.validPeriod);*/
+  },
+  error:function(err){
+    console.error(err);
+  }
 });
 
 export default Rxports;

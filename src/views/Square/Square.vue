@@ -9,7 +9,10 @@
       </div>
       <div class="zj" v-show="zj">
         <div class="zj-head">
-         <div @click="sortFund(1)" :class="isAsc_fund_time?'active':''">时间排序
+        <div @click="chooseType('.type0')">全部
+            <img src="./img/arrow_type_nor.png" alt="" class="arrow-down">
+         </div>
+         <div @click="sortFund(1)" :class="isAsc_fund_time?'active':''">时间
           <img v-show="!isAsc_fund_time" src="./img/ic_arrow_down.png" alt="">
           <img v-show="isAsc_fund_time" src="./img/arrow_up.png" alt="">
          </div>
@@ -17,17 +20,35 @@
            <img v-show="!isAsc" src="./img/ic_arrow_down.png" alt="">
            <img v-show="isAsc" src="./img/arrow_up.png" alt="">
          </div> -->
-         <div @click="chooseType('.type1')">资金规模
+         <div @click="chooseType('.type1')">规模
             <img src="./img/arrow_type_nor.png" alt="" class="arrow-down">
          </div>
-         <div @click="chooseType('.type2')">选择类型
+         <div @click="chooseType('.type2')">类型
             <img src="./img/arrow_type_nor.png" alt="" class="arrow-down">
             <!--<img v-show="key == 1" src="./img/arrow_type_sel.png" alt="">-->
          </div>
         </div>
-
+        <div class="type type0">
+          <span class="angle" style="right:19.5rem"><img src="./img/tri-angle.png" alt=""></span>
+          <div class="type-head">全部</div>
+          <div class="types">
+            <label>
+              <input v-model="recAuth_fund" type="radio" value="0" />全部
+            </label>
+            <label>
+              <input v-model="recAuth_fund" type="radio" value="1" />推荐项目
+            </label>
+            <label>
+              <input v-model="recAuth_fund" type="radio" value="2" />认证项目
+            </label>
+          </div>
+          <div class="btn">
+            <span class="confirm" @click="confirmFund">确定</span>
+            <span class="cancel" @click="cancel">取消</span>
+          </div>
+        </div>
         <div class="type type1">
-          <span class="angle" style="right:10.5rem"><img src="./img/tri-angle.png" alt=""></span>
+          <span class="angle" style="right:7.7rem"><img src="./img/tri-angle.png" alt=""></span>
           <div class="type-head">规模类型</div>
           <div class="types">
             <label v-for="item in fundAmountList">
@@ -75,7 +96,7 @@
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
-                  <p>{{validPeriod - (parseInt((new Date() - new Date(item.listTime.replace(/-/g,'/'))) / 86400000))}} <span>天</span></p>
+                  <p>{{ item.listTime?getCountDownDay(item.listTime):'null' }} <span>天</span></p>
                 </div>
               </div>
             </div>
@@ -84,20 +105,42 @@
       </div>
       <div class="zj" v-show="!zj">
         <div class="zj-head">
-          <div @click="sortAsset(1), isActive='comprehension'" :class="isActive=='comprehension'?'active':''">时间排序
+          <div @click="chooseType('.type6')">全部
+            <img src="./img/arrow_type_nor.png" alt="" class="arrow-down">
+          </div>
+          <div @click="sortAsset(1), isActive='comprehension'" :class="isActive=='comprehension'?'active':''">时间
             <img v-show="!isAsc_asset_time" src="./img/ic_arrow_down.png" alt="">
             <img v-show="isAsc_asset_time" src="./img/arrow_up.png" alt="">
           </div>
-          <div @click="sortAsset(2), isActive='total'" :class="isActive=='total'?'active':''">总放款规模
+          <div @click="sortAsset(2), isActive='total'" :class="isActive=='total'?'active':''">规模
             <img v-show="!isAsc_asset_total" src="./img/ic_arrow_down.png" alt="">
             <img v-show="isAsc_asset_total" src="./img/arrow_up.png" alt="">
           </div>
-          <div @click="chooseType('.type3')">选择类型
+          <div @click="chooseType('.type7')">类型
             <img  src="./img/arrow_type_nor.png" alt="">
            <!-- <img v-show="key == 1" src="./img/arrow_type_sel.png" alt="">-->
           </div>
         </div>
-        <div class="type type3">
+        <div class="type type6">
+          <span class="angle" style="right:19.5rem"><img src="./img/tri-angle.png" alt=""></span>
+          <div class="type-head">全部</div>
+          <div class="types">
+            <label>
+              <input v-model="recAuth_assest" type="radio" value="0" />全部
+            </label>
+            <label>
+              <input v-model="recAuth_assest" type="radio" value="1" />推荐项目
+            </label>
+            <label>
+              <input v-model="recAuth_assest" type="radio" value="2" />认证项目
+            </label>
+          </div>
+          <div class="btn">
+            <span class="confirm" @click="confirmAsset(1)">确定</span>
+            <span class="cancel" @click="cancel">取消</span>
+          </div>
+        </div>
+        <div class="type type7">
           <span class="angle"><img src="./img/tri-angle.png" alt=""></span>
           <div class="type-head">产品类型</div>
           <div class="types">
@@ -132,7 +175,7 @@
                 <div>
                   <p></p>
                   <p>项目倒计时</p>
-                  <p>{{validPeriod - parseInt((new Date() - new Date(oItem.listTime.replace(/-/g,'/'))) / 86400000)}} <span>天</span></p>
+                  <p>{{ oItem.listTime?getCountDownDay(oItem.listTime):'null' }} <span>天</span></p>
                 </div>
               </div>
             </div>
@@ -170,6 +213,8 @@ export default {
       key:2,
       items:[],
       oItems:[],
+      recAuth_fund:'0',
+      recAuth_assest:'0',
       fundAmountList:[],
       fundAnmountType:[],
       validPeriod:'',
@@ -202,7 +247,6 @@ export default {
   },
   mounted(){
     this.fundAmountList = JSON.parse(localStorage.fundAmountList);
-    this.getValidPeriod();
     this.sortFund();
     this.sortAsset(1);
     this.getFundList();
@@ -224,30 +268,15 @@ export default {
     cancel(){
       $('.type').css('display','none');
     },
+    getCountDownDay(beginDate){
+      return Lib.M.getCountDownDay(beginDate, localStorage.validPeriod)
+    },
     jumpToDetai(AorF,proId){
       this.$router.push({'path':'/sqProjectDetail',query:{
           AorF:AorF,
           proId:proId
         }
       })
-    },
-    // 获得资金资产统一的失效天数
-    getValidPeriod(){
-      var self = this;
-      Lib.M.ajax({
-        url:'/config/getConfigByParameter',
-        data:{
-          'key':'unlistPeriod'
-        },
-        success:function (res) {
-          self.validPeriod = res.data[0].value;
-          /*console.log(111111);
-          console.log(self.validPeriod);*/
-        },
-        error:function(err){
-          console.error(err);
-        }
-      });
     },
     sortAsset(chooseType){
       var self = this;
@@ -264,6 +293,7 @@ export default {
       Lib.M.ajax({
         url:url,
         data:{
+          'recAuth':self.recAuth_assest,
           'chooseType':chooseType == 1?'comprehensive':'total',
           'sortType': sortType,
           'type': self.assetType.toString(),
@@ -284,6 +314,7 @@ export default {
       Lib.M.ajax({
         url:url,
         data:{
+          'recAuth':self.recAuth_fund,
           'fundAnmountType': self.fundAnmountType.toString(),
           'sortType': self.isAsc_fund_time ?'asc':'desc',
           'fundType': self.fundType.toString(),
@@ -372,10 +403,11 @@ export default {
         display: flex;
         flex-direction: row;
         margin-top: 0.8rem;
+        color: #a0acc0;
         div{
           flex: 1;
         }
-        div:nth-of-type(1){
+        div:nth-of-type(2){
           position: relative;
           img{
             width: 0.315rem;
@@ -385,7 +417,7 @@ export default {
             right:1.15rem;
           }
         }
-        div:nth-of-type(2){
+        div:nth-of-type(3){
           position: relative;
           img{
             width: 0.315rem;
@@ -402,7 +434,7 @@ export default {
             right: 1.2rem;
           }
         }
-        div:nth-of-type(3){
+        div:nth-of-type(1),div:nth-of-type(4){
           position: relative;
           img{
             width: 0.315rem;
@@ -508,7 +540,7 @@ export default {
         }
 
       }
-      .type,.type1,.type2{
+      .type{
         height: 33rem;
         background: #fff;
         text-align: left;
@@ -520,7 +552,7 @@ export default {
           width: 2rem;
           height: 2rem;
           position: absolute;
-          right: 2.5rem;
+          right: 1.9rem;
           top: -1.2rem;
           img{
             width: 100%;
@@ -538,7 +570,8 @@ export default {
         .types{
           padding: 0 1rem;
           text-align: center;
-          input[type="checkbox"] {
+          margin-top: 1rem;
+          input[type="checkbox"],input[type="radio"] {
             display: inline-block;
             width: 1.19rem;
             height: 1.19rem;

@@ -165,10 +165,16 @@ export default {
       this.$router.push('./productList')
     },
     toFans(){
-      this.$router.push('./fans')
+      this.$router.push({'path':'/attention',query:{
+          AorF:'fans'
+        }
+      })
     },
     toAttention(){
-      this.$router.push('./attention')
+      this.$router.push({'path':'/attention',query:{
+          AorF:'attention'
+        }
+      })
     }
 
 
