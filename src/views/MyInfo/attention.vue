@@ -6,7 +6,7 @@
         <p>关注</p>
       </div>
      <div class="fansList">
-       <div class="fans-item" v-for="item in FollowOrFollowedList">
+       <div class="fans-item" v-for="item in FollowOrFollowedList" v-if="item.exist">
          <div class="fans-item-l" @click="jumpTo(item.userId)">
            <div class="item-l">
              <img src="./img/famale_pic.png" alt="">
@@ -69,7 +69,7 @@ export default {
   methods: {
     jumpTo(userId){
       this.$router.push({'path':'/MyInfo2',query:{
-          userId:userId
+          userId: userId
         }
       })
     },
@@ -85,8 +85,8 @@ export default {
       Lib.M.ajax({
         url : '/user/getUserFollowOrFollowedList',
         data:{
-          /*userId: localStorage.userId,*/
-          userId:'1',
+          userId: localStorage.userId,
+          /*userId:'1',*/
           key: key
         },
         success:function(res){
@@ -121,8 +121,8 @@ export default {
       Lib.M.ajax({
         url : '/user/userAddOrCancelFollow',
         data:{
-          /*userId: localStorage.userId,*/
-          userId: '1',
+          userId: localStorage.userId,
+          /*userId: '1',*/
           key: key,
           followId: userId
         },

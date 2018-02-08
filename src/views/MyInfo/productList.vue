@@ -124,7 +124,8 @@ export default {
         type:'post',
         url: "/public/userListingProject",
         data:{
-          'userId':'68f23f6b9ebb4dbd91f91b7ee21ba22a',/*self.localUserInfo.userId */
+          /*userId:'68f23f6b9ebb4dbd91f91b7ee21ba22a',*/
+          userId: self.localUserInfo.userId 
         },
         success:function (res) {
           console.log(res.data);

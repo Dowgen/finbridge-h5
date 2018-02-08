@@ -8,13 +8,13 @@
         <div class="avatar">
           <img src="./img/avatar2.png" alt="">
         </div>
-        <div class="nickName">{{userInfoDetail.name}}</div>
+        <div class="nickName">{{userInfoDetail.name || '无' }}</div>
         <div class="someNum">
           <p>关注 <span>{{myData.follow}}</span></p>
           <span class="middle-line"></span>
           <p>粉丝 <span>{{myData.followed}}</span></p>
         </div>
-        <div class="intro">简介：{{userInfoDetail.introduction}}</div>
+        <div class="intro">简介：{{userInfoDetail.introduction || '无' }}</div>
       </div>
       <div class="myIntro">
         <div class="intro-title">
@@ -23,19 +23,19 @@
         </div>
         <div class="intro-item">
           <div class="intro-item-l">昵称</div>
-          <div class="intro-item-r">{{userInfoDetail.name}}</div>
+          <div class="intro-item-r">{{userInfoDetail.name || '无' }}</div>
         </div>
         <div class="intro-item">
           <div class="intro-item-l">所在地</div>
-          <div class="intro-item-r">{{userInfoDetail.address}}</div>
+          <div class="intro-item-r">{{userInfoDetail.address || '无' }}</div>
         </div>
         <div class="intro-item">
           <div class="intro-item-l">类型</div>
-          <div class="intro-item-r">{{userInfoDetail.type}}</div>
+          <div class="intro-item-r">{{getUserType(userInfoDetail.type) || '无'}}</div>
         </div>
         <div class="intro-item self-intro">
           <div class="intro-item-l">个人简介</div>
-          <div class="intro-item-r">{{userInfoDetail.introduction}}</div>
+          <div class="intro-item-r">{{userInfoDetail.introduction || '无' }}</div>
         </div>
       </div>
       <div class="productList">
@@ -81,9 +81,12 @@
         <div class="look-more"  @click="toProductList('fund')" v-if="AorF=='fund'">查看更多({{lookFCount}})</div>
         <div class="look-more"  @click="toProductList('asset')" v-if="AorF=='asset'">查看更多({{lookACount}})</div>
       </div>
-      <div class="add">
-        <img src="./img/ic_add.png" alt="">
+      <div class="add" @click="addFollow" v-show="!followedOrNot">
+        <img src="./img/ic_add.png" alt="" >
         关注
+      </div>
+      <div class="add" v-show="followedOrNot">
+        已关注
       </div>
     </div>
   </div>
@@ -123,7 +126,7 @@ export default {
       validPeriod:'',
       lookFCount:'',
       lookACount:'',
-
+      followedOrNot:false
 
     }
   },
@@ -132,11 +135,34 @@ export default {
   },
   mounted(){
     this.localUserInfo = localStorage;
+    this.getFollowedStatus();
     this.getValidPeriod();
     this.getMyInfo();
     this.getProjectList();
   },
   methods: {
+    //判断该用户我是否关注过
+    getFollowedStatus(){
+      var self = this;
+      Lib.M.ajax({
+        type:'post',
+        url: "/user/userWhetherFollowOther",
+        data:{
+          'followedId': self.$route.query.userId,
+          'followId': localStorage.userId,
+        },
+        success:function (res) {
+          if(res.code==200){
+            self.followedOrNot = res.data;
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
+        }
+      })
+    },
+    getUserType(key){
+      return Lib.M.getUserType(key);
+    },
     toProductList(AorF){
       this.$router.push({'path':'./productList',query:{
         AorF:AorF,
@@ -164,19 +190,26 @@ export default {
         type:'post',
         url: "/public/userListingProject",
         data:{
-          'userId':'68f23f6b9ebb4dbd91f91b7ee21ba22a',/*self.localUserInfo.userId */
+          /*'userId':'68f23f6b9ebb4dbd91f91b7ee21ba22a',*/
+          'userId': self.$route.query.userId 
         },
         success:function (res) {
           console.log(res.data);
           if(self.AorF = 'fund'){
             self.fundList = res.data.fund
-            self.lookFCount = res.data.fund.length - 3;
-            console.log(self.lookFCount);
+            if(res.data.fund.length - 3 < 0){
+              self.lookFCount = 0;
+            }else {
+              self.lookFCount = res.data.fund.length - 3;
+            }
           }
           if(self.AorF = 'asset'){
             self.assetsList = res.data.asset
-            self.lookACount = res.data.asset.length - 3;
-            console.log(self.lookACount);
+            if(res.data.asset.length - 3 < 0){
+              self.lookACount = 0;
+            }else {
+              self.lookACount = res.data.asset.length - 3;
+            }
           }
 
 
@@ -212,7 +245,30 @@ export default {
         }
       });
     },
-
+    /* 关注或取消关注 */
+    addFollow(){
+      if(localStorage.userId==null && localStorage.userId=='undefined'){
+        this.$vux.toast.text('请先登录', 'middle');
+        this.$router.push('Home');
+      }else{
+        var self = this;
+        Lib.M.ajax({
+          url : '/user/userAddOrCancelFollow',
+          data:{
+            userId: localStorage.userId,
+            key: 'add',
+            followId: self.$route.query.userId
+          },
+          success:function(res){
+            if(res.code==200){
+              self.followedOrNot = true;
+            }else{
+              self.$vux.toast.text(res.error, 'middle');
+            }
+          }
+        });
+      }
+    }
   }
 }
 </script>

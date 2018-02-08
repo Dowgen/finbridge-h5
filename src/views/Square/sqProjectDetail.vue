@@ -234,7 +234,13 @@ export default {
   },
   methods:{
     enterMyInfo2(){
-      this.$router.push('./MyInfo2')
+      console.log(this.info.belongTo)
+      if(this.info.belongTo){
+        this.$router.push({'path':'/MyInfo2',query:{
+            userId: this.info.belongTo
+          }
+        })
+      }
     },
     showErweima(){
       $('.alert-erweima').css('display','block')
@@ -278,7 +284,7 @@ export default {
       Lib.M.ajax({
         url : '/user/addUserShareMap',
         data: {
-          userId:localStorage.userId,
+          userId:localStorage.belongTo,
           projectId: self.$route.query.proId
         },
         success:function(res){

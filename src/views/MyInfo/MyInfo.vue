@@ -2,17 +2,20 @@
   <div>
     <div class="content">
       <div class="header">
-        <span class="back">设置</span>
+        <span class="back" @click="$router.push('aboutUs')">设置</span>
         <p>我的</p>
       </div>
       <div class="aboutMe">
         <div class="infoDes">
           <div class="avatar">
-            <img src="./img/avatar.png" alt="">
+            <!-- <img src="./img/avatar.png" alt=""> -->
+            <img v-show="userInfoDetail.type==1" src="./img/ptf.png" alt="">
+            <img v-show="userInfoDetail.type==2" src="./img/zjf.png" alt="">
+            <img v-show="userInfoDetail.type==3" src="./img/zcf.png" alt="">
           </div>
           <div class="intro">
-            <p>{{userInfoDetail.name}}</p>
-            <p>简介：{{userInfoDetail.introduction}}</p>
+            <p>{{userInfoDetail.name || '无'}} </p>
+            <p>简介：{{userInfoDetail.introduction || '无'}}</p>
           </div>
         </div>
         <div class="someNum">
@@ -37,19 +40,19 @@
         </div>
         <div class="intro-item">
           <div class="intro-item-l">昵称</div>
-          <div class="intro-item-r">{{userInfoDetail.name}}</div>
+          <div class="intro-item-r">{{userInfoDetail.name || '无'}}</div>
         </div>
         <div class="intro-item">
           <div class="intro-item-l">所在地</div>
-          <div class="intro-item-r">{{userInfoDetail.address}}</div>
+          <div class="intro-item-r">{{userInfoDetail.address || '无'}}</div>
         </div>
         <div class="intro-item">
           <div class="intro-item-l">类型</div>
-          <div class="intro-item-r">{{userInfoDetail.type}}</div>
+          <div class="intro-item-r">{{ getUserType(userInfoDetail.type) || '无'}}</div>
         </div>
         <div class="intro-item self-intro">
           <div class="intro-item-l">个人简介</div>
-          <div class="intro-item-r">{{userInfoDetail.introduction}}</div>
+          <div class="intro-item-r">{{userInfoDetail.introduction || '无'}}</div>
         </div>
         <div class="revise-info" @click="editInfo">
           <img src="./img/ic_edit.png" alt="">
@@ -174,6 +177,9 @@ export default {
         }
       })
     },
+    getUserType(key){
+      return Lib.M.getUserType(key);
+    },
     getMyInfo(){
       var self = this;
       Lib.M.ajax({
@@ -196,19 +202,31 @@ export default {
         type:'post',
         url: "/public/userListingProject",
         data:{
-          userId:'68f23f6b9ebb4dbd91f91b7ee21ba22a',
-          /*userId: self.localUserInfo.userId */
+          /*userId:'68f23f6b9ebb4dbd91f91b7ee21ba22a',*/
+          userId: self.localUserInfo.userId 
         },
         success:function (res) {
           console.log(res.data);
           if(self.AorF = 'fund'){
             self.fundList = res.data.fund
-            self.lookFCount = res.data.fund.length - 3;
+
+            if(res.data.fund.length - 3 < 0){
+              self.lookFCount = 0;
+            }else {
+              self.lookFCount = res.data.fund.length - 3;
+            }
+
             console.log(self.lookFCount);
           }
           if(self.AorF = 'asset'){
             self.assetsList = res.data.asset
-            self.lookACount = res.data.asset.length - 3;
+
+            if(res.data.asset.length - 3 < 0){
+              self.lookACount = 0;
+            }else {
+              self.lookACount = res.data.asset.length - 3;
+            }
+
             console.log(self.lookACount);
           }
 

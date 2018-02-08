@@ -65,18 +65,6 @@ export default {
     MainNav, Loading, XButton, Confirm,myHead, PopupPicker,Cell
 
   },
-  watch: {
-    // 如果 `cityVal` 发生改变，这个函数就会运行
-    cityVal: function (newQuestion) {
-      console.log(this.cityVal)
-      this.submitMyInfo();
-    },
-    // 如果 `AFType` 发生改变，这个函数就会运行
-    AFType: function (newQuestion) {
-      console.log(this.AFType)
-      this.submitMyInfo();
-    }
-  },
   data () {
     return {
       img_id: '',
@@ -90,13 +78,24 @@ export default {
       userInfoDetail:{},
     }
   },
+  watch: {
+    // 如果 `cityVal` 发生改变，这个函数就会运行
+    cityVal: function (newQuestion) {
+      console.log(this.cityVal)
+      this.submitMyInfo();
+    },
+    // 如果 `AFType` 发生改变，这个函数就会运行
+    AFType: function (newQuestion) {
+      console.log(this.AFType)
+      this.submitMyInfo();
+    }
+  },
   computed:{
 
   },
   mounted(){
     this.localUserInfo = localStorage;
     this.getMyInfo();
-
   },
   methods: {
     AddNick(){
@@ -105,9 +104,11 @@ export default {
     AddMyIntro(){
       this.$router.push('./AddMyIntro')
     },
+    getUserType(key){
+      return Lib.M.getUserType(key);
+    },
     getMyInfo(){
       var self = this;
-
       Lib.M.ajax({
         type:'post',
         url: "/user/getUserInfoDetail",
@@ -115,19 +116,28 @@ export default {
           'userId':self.localUserInfo.userId,
         },
         success:function (res) {
-          console.log(res.data);
-          self.myData = res.data;
-          if(res.data.userInfoDetail !== null){
-            self.userInfoDetail = res.data.userInfoDetail;
+          if(res.code==200){
+            self.myData = res.data;
+            if(res.data.userInfoDetail !== null){
+              self.userInfoDetail = res.data.userInfoDetail;
+              self.cityVal[0] = self.userInfoDetail.address.split(' ')[0];
+              self.AFType[0] = self.getUserType(self.userInfoDetail.type);
+            }
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
           }
-
-
         }
       })
     },
     submitMyInfo(){
       var self = this;
-
+      /* 解析AFType */
+      var AFType = 0;
+      var f = JSON.parse(localStorage.userType);
+      for(let i in f){
+        if(f[i].label == self.AFType) 
+          AFType = f[i].key;
+      }
       Lib.M.ajax({
         type:'post',
         url: "/user/submitUserInfoDetail",
@@ -135,12 +145,15 @@ export default {
           'userId':self.localUserInfo.userId,
           'name':'',
           'address':self.cityVal.join(','),
-          'type':self.AFType.join(','),
+          'type': AFType,
           'introduction':'',
         },
         success:function (res) {
-          console.log(res);
-
+          if(res.code==200){
+            /*self.$vux.toast.text('修改成功', 'middle');*/
+          }else{
+            self.$vux.toast.text(res.error, 'middle');
+          }
         }
       })
     },

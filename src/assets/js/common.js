@@ -214,7 +214,14 @@ var Rxports = {
         return false;
       }
     },
-    /* 解析资金规模 */
+    /* 解析 */
+    //用户平台类型数字转化为文字
+    getUserType:function (key){
+      var f = JSON.parse(localStorage.userType);
+      for(let i in f){
+        if(f[i].key == key) return f[i].label
+      }
+    },
     //资金资产类型数字转化为文字
     getFundAmountType:function (key){
       var f = JSON.parse(localStorage.fundAmountList);
@@ -273,6 +280,19 @@ var Rxports = {
         });
     }
 };
+//获得用户平台类型列表
+Rxports.ajax({
+    url:'/dict/getDict',
+    data:{
+      'dictName':'userType'
+    },
+    success:function (res) {
+      localStorage.userType = JSON.stringify(res.data);
+    },
+    error:function(err){
+      console.error(err);
+    }
+});
 //获得资金规模类型列表
 Rxports.ajax({
     url:'/dict/getDict',

@@ -76,8 +76,8 @@ var AFList = [{
   parent:0
 },
   {
-    name: '平台方',
-    value: '平台方',
+    name: '平台型',
+    value: '平台型',
     parent:0
   }];
 
