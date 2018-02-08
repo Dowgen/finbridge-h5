@@ -148,21 +148,25 @@ export default {
     //判断该用户我是否关注过
     getFollowedStatus(){
       var self = this;
-      Lib.M.ajax({
-        type:'post',
-        url: "/user/userWhetherFollowOther",
-        data:{
-          'followedId': self.$route.query.userId,
-          'followId': localStorage.userId,
-        },
-        success:function (res) {
-          if(res.code==200){
-            self.followedOrNot = res.data;
-          }else{
-            self.$vux.toast.text(res.error, 'middle');
+      if(localStorage.userId==null || localStorage.userId=='undefined'){
+        /* do nothing */
+      }else{
+        Lib.M.ajax({
+          type:'post',
+          url: "/user/userWhetherFollowOther",
+          data:{
+            'followedId': self.$route.query.userId,
+            'followId': localStorage.userId,
+          },
+          success:function (res) {
+            if(res.code==200){
+              self.followedOrNot = res.data;
+            }else{
+              self.$vux.toast.text(res.error, 'middle');
+            }
           }
-        }
-      })
+        })
+      }
     },
     getUserType(key){
       return Lib.M.getUserType(key);
@@ -252,7 +256,7 @@ export default {
     addFollow(){
       if(localStorage.userId==null || localStorage.userId=='undefined'){
         this.$vux.toast.text('请先登录', 'middle');
-        this.$router.push('Home');
+        this.$router.push('Login');
       }else{
         var self = this;
         Lib.M.ajax({
