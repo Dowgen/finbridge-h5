@@ -7,9 +7,10 @@
       <div class="aboutMe">
         <div class="avatar">
             <!-- <img src="./img/avatar.png" alt=""> -->
-            <img v-show="userInfoDetail.type==1" src="./img/ptf.png" alt="">
+            <img src="./img/ptf.png" alt="">
+            <!-- <img v-show="userInfoDetail.type==1" src="./img/ptf.png" alt="">
             <img v-show="userInfoDetail.type==2" src="./img/zjf.png" alt="">
-            <img v-show="userInfoDetail.type==3" src="./img/zcf.png" alt="">
+            <img v-show="userInfoDetail.type==3" src="./img/zcf.png" alt=""> -->
           </div>
         <div class="nickName">{{userInfoDetail.name || '无' }}</div>
         <div class="someNum">
