@@ -6,8 +6,11 @@
       </div>
       <div class="aboutMe">
         <div class="avatar">
-          <img src="./img/avatar2.png" alt="">
-        </div>
+            <!-- <img src="./img/avatar.png" alt=""> -->
+            <img v-show="userInfoDetail.type==1" src="./img/ptf.png" alt="">
+            <img v-show="userInfoDetail.type==2" src="./img/zjf.png" alt="">
+            <img v-show="userInfoDetail.type==3" src="./img/zcf.png" alt="">
+          </div>
         <div class="nickName">{{userInfoDetail.name || '无' }}</div>
         <div class="someNum">
           <p>关注 <span>{{myData.follow}}</span></p>
@@ -166,6 +169,7 @@ export default {
     toProductList(AorF){
       this.$router.push({'path':'./productList',query:{
         AorF:AorF,
+        userId: this.$route.query.userId
       }})
     },
     getMyInfo(){
@@ -211,8 +215,6 @@ export default {
               self.lookACount = res.data.asset.length - 3;
             }
           }
-
-
         }
       })
     },
@@ -247,7 +249,7 @@ export default {
     },
     /* 关注或取消关注 */
     addFollow(){
-      if(localStorage.userId==null && localStorage.userId=='undefined'){
+      if(localStorage.userId==null || localStorage.userId=='undefined'){
         this.$vux.toast.text('请先登录', 'middle');
         this.$router.push('Home');
       }else{

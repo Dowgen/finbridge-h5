@@ -9,7 +9,7 @@
        <div class="fans-item" v-for="item in FollowOrFollowedList" v-if="item.exist">
          <div class="fans-item-l" @click="jumpTo(item.userId)">
            <div class="item-l">
-             <img src="./img/famale_pic.png" alt="">
+             <img src="./img/ptf.png" alt="">
            </div>
            <div class="item-r">
              <p>{{item.name}}</p>
@@ -17,11 +17,11 @@
            </div>
          </div>
          <div class="fans-item-r">
-           <span class="addAttention" v-show="item.sign!=null?!item.sign:false" @click="addOrCancelFollow(item.userId,item.sign)">
+           <span class="addAttention" v-show="item.sign!=null?!item.sign:false" @click="click(item.userId,item.sign)">
               <img src="./img/ic_add.png" alt="">
              关注
            </span>
-           <span class="cancelAttention" v-show="item.sign!=null?item.sign:true" @click="addOrCancelFollow(item.userId,item.sign)">已关注</span>
+           <span class="cancelAttention" v-show="item.sign!=null?item.sign:true" @click="click(item.userId,item.sign)">已关注</span>
          </div>
        </div>
        <div class="no-more">没有更多了...</div>
@@ -99,17 +99,17 @@ export default {
       });
     },
     /* 关注或取消关注 */
-    addOrCancelFollow(userId,sign){
+    click(userId,sign){
       var self = this;
-      var key = '';
-      if(sign==null){ //null表示关注页面
-        key = 'cancel'
+      if(sign==null || sign==true){ //null表示关注页面
+        this.$vux.confirm.show({
+          content: '是否取消关注?',
+          onConfirm () {
+            self.AddOrCancelFollow(userId,'cancel');
+          }
+        })
       }else{
-        if(sign == false){
-          key = 'add';
-        }else if(sign == true){
-          key = 'cancel';
-        }
+        this.AddOrCancelFollow(userId,'add');
       }
       /*if(self.$route.query.AorF=='attention'){
         userId = userId;
@@ -118,13 +118,17 @@ export default {
         userId = '1';
         followId = userId;
       }*/
+      
+    },
+    AddOrCancelFollow(userId,key){
+      var self = this;
       Lib.M.ajax({
         url : '/user/userAddOrCancelFollow',
         data:{
           userId: localStorage.userId,
           /*userId: '1',*/
-          key: key,
-          followId: userId
+          followId: userId,
+          key: key
         },
         success:function(res){
           if(res.code==200){

@@ -120,12 +120,16 @@ export default {
   methods: {
     getProjectList(){
       var self = this;
+      var userId = this.$route.query.userId;
+      if( userId== null || userId == 'undefined'){
+        userId = localStorage.userId;
+      }
       Lib.M.ajax({
         type:'post',
         url: "/public/userListingProject",
         data:{
           /*userId:'68f23f6b9ebb4dbd91f91b7ee21ba22a',*/
-          userId: self.localUserInfo.userId 
+          userId: userId 
         },
         success:function (res) {
           console.log(res.data);
