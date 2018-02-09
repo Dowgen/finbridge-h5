@@ -128,7 +128,7 @@
           <p v-if="fundTypeList">{{getLabel(info.findAssetType,'asset')}}</p>
         </div>
         <div>
-          <p>资金需求</p>
+          <p>资产要求</p>
           <p>{{info.findAssetRequire}}</p>
         </div>
         <div>
