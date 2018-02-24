@@ -284,7 +284,7 @@ export default {
       Lib.M.ajax({
         url : '/user/addUserShareMap',
         data: {
-          userId:localStorage.belongTo,
+          userId:localStorage.userId,
           projectId: self.$route.query.proId
         },
         success:function(res){
