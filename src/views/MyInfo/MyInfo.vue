@@ -52,7 +52,7 @@
           <div class="intro-item-r">{{ getUserType(userInfoDetail.type) || '无'}}</div>
         </div>
         <div class="intro-item self-intro">
-          <div class="intro-item-l">个人简介</div>
+          <div class="intro-item-l">公司简介</div>
           <div class="intro-item-r">{{userInfoDetail.introduction || '无'}}</div>
         </div>
         <div class="revise-info" @click="editInfo">
